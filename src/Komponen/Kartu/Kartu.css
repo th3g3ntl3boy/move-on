@@ -1,0 +1,5 @@
+.hov:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+    filter: blur(0.6px);
+}
