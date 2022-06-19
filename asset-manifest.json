@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-test-front/static/css/main.2788e378.css",
-    "main.js": "/react-test-front/static/js/main.a0bb609c.js",
+    "main.js": "/react-test-front/static/js/main.b11de586.js",
     "static/js/787.a036b0d6.chunk.js": "/react-test-front/static/js/787.a036b0d6.chunk.js",
     "static/media/bootstrap-icons.woff?": "/react-test-front/static/media/bootstrap-icons.7ff3ca6fa798de3f8ac2.woff",
     "static/media/bootstrap-icons.woff2?": "/react-test-front/static/media/bootstrap-icons.f2539a501be3a673de05.woff2",
@@ -11,11 +11,11 @@
     "static/media/1165953918_2.webp": "/react-test-front/static/media/1165953918_2.4747e4b65a78ff43dc14.webp",
     "index.html": "/react-test-front/index.html",
     "main.2788e378.css.map": "/react-test-front/static/css/main.2788e378.css.map",
-    "main.a0bb609c.js.map": "/react-test-front/static/js/main.a0bb609c.js.map",
+    "main.b11de586.js.map": "/react-test-front/static/js/main.b11de586.js.map",
     "787.a036b0d6.chunk.js.map": "/react-test-front/static/js/787.a036b0d6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2788e378.css",
-    "static/js/main.a0bb609c.js"
+    "static/js/main.b11de586.js"
   ]
 }
