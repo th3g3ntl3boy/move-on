@@ -29,7 +29,7 @@ class App extends Component {
   render(){
     return(
         <div>
-          <BrowserRouter basename="/react-test-front">
+          <BrowserRouter basename="/move-on">
             <ApolloProvider client={client}>
               <NavBar />
               <br></br>
