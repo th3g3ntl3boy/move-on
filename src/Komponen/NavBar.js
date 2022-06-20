@@ -8,7 +8,6 @@ import SearchBar from './SearchBar';
 // stylesheet
 import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
 
-
 const styles = {
     backgroundColor: "transparent",
     backgroundRepeat: "no-repeat",

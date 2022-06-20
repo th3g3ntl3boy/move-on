@@ -146,28 +146,28 @@ const DetailsMovies= () => {
                                         detail="Find out the best algorithm to prediction the data with the highest accuracy"
                                         list="Regression" />
                                 </Link>
-                                <Link to="/algorithm/prediction" style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1165953918_2.webp")}
                                         judul="Prediction" 
                                         detail="Find out the best algorithm to prediction the data with the highest accuracy"
                                         list="Regression" />
                                 </Link>
-                                <Link to="/algorithm/prediction" style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1166008798_2.webp")}
                                         judul="Prediction" 
                                         detail="Find out the best algorithm to prediction the data with the highest accuracy"
                                         list="Regression" />
                                 </Link>
-                                <Link to="/algorithm/prediction" style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1165974181_2.webp")}
                                         judul="Prediction" 
                                         detail="Find out the best algorithm to prediction the data with the highest accuracy"
                                         list="Regression" />
                                 </Link>
-                                <Link to="/algorithm/prediction" style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1166008798_2.webp")}
                                         judul="Prediction" 

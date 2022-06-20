@@ -4,6 +4,7 @@ import { useLazyQuery} from '@apollo/client'
 import { CARI_JUDUL } from '../Hooks/Querry'
 import { Link } from 'react-router-dom';
 
+import './NavBar.css'
 
 // stylesheet
 const styles = {
@@ -49,7 +50,7 @@ const SearchBar = () => {
     // console.log(data)
 
     return (
-        <div>
+        <div className="search-bar">
             <Form className="d-flex me-2">
                 <FormControl
                     type="search"
