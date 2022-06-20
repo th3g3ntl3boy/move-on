@@ -15,7 +15,7 @@ const breaker = [
     {width:1, itemsToShow: 1},
     {width:150, itemsToShow: 2, verticalMode: false},
     {width:300, itemsToShow: 2, verticalMode: false},
-    {width:450, itemsToShow: 4},
+    {width:450, itemsToShow: 2},
     {width:600, itemsToShow: 5},
     {width:750, itemsToShow: 6}
 ]
@@ -26,18 +26,18 @@ const DetailsMovies= () => {
             <Container>
                 <Row >
                     <Col style={{color: "white"}}>
-                    <br></br>
-                    <div className="video-responsive">
-                        <iframe
-                            width="700"
-                            height="400"
-                            src={`https://www.youtube.com/embed/8NnQs3EtoqU`}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            title="Embedded youtube"
-                        />
-                    </div>
+                        <br></br>
+                        <div className="video-responsive">
+                            <iframe
+                                width="700"
+                                height="400"
+                                src={`https://www.youtube.com/embed/8NnQs3EtoqU`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="Embedded youtube"
+                            />
+                        </div>
                         <h3>Neck Deep - December</h3>
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>
@@ -46,16 +46,12 @@ const DetailsMovies= () => {
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star"></i>
                             <p>4.3 (<i class="bi bi-people-fill"></i> 18)</p>
-                        </div>
-                        
+                        </div>           
+                       
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         <br></br>
                         <br></br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         
-                        <br></br>
-                        <br></br>
-
                         <Form className="d-flex">
                             <FormControl
                                 type="search"
@@ -67,6 +63,7 @@ const DetailsMovies= () => {
                             variant="outline-secondary"
                             >Post</Button>
                         </Form>
+
                         <br></br>
                         <div className="text-center">
                             <p><em><i>no comment just yet</i></em></p>
@@ -80,7 +77,17 @@ const DetailsMovies= () => {
                             You may also like
                         </h3>
                         <div className="styling-example">
-                            <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="4500" transitionMs="1000" showArrows={false} pagination={false} verticalMode={true} itemPadding={[10]} initialActiveIndex={1} outerSpacing={80}>
+                            <Carousel breakPoints={breaker} 
+                            enableAutoPlay="true" 
+                            autoPlaySpeed="4500" 
+                            transitionMs="1000" 
+                            showArrows={false} 
+                            pagination={false}
+                            itemPadding={[10]}
+                            verticalMode={true}   
+                            initialActiveIndex={1} 
+                            outerSpacing={80}
+                            >
                                 <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1166008798_2.webp")}
@@ -131,7 +138,18 @@ const DetailsMovies= () => {
                             More Romance Movies
                         </h3>
                         <div className="styling-example" onMouseMove={(e) => console.log(e.pageX - e.target.offsetTop)}>
-                            <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="5000" transitionMs="1000" showArrows={false} pagination={false} verticalMode={true} itemPadding={[10]} initialActiveIndex={1} outerSpacing={80}>
+                            <Carousel 
+                            breakPoints={breaker} 
+                            enableAutoPlay="true" 
+                            autoPlaySpeed="5000" 
+                            transitionMs="1000" 
+                            showArrows={false} 
+                            pagination={false}
+                            itemPadding={[10]}
+                            verticalMode={true}  
+                            initialActiveIndex={1} 
+                            outerSpacing={80}
+                            >
                                 <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={require("../../Aset/1166008798_2.webp")}

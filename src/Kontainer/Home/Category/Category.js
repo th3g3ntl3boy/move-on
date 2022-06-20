@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Bounce } from 'react-reveal';
-// Komponen
+import Jello from 'react-reveal/Jello'
+//Komponen
 
 import Animasi from '../../../Komponen/Animasi';
 import Kartu from '../../../Komponen/Kartu/Kartu';
@@ -18,6 +19,7 @@ const styles = {
 };
 
 const Category= () => {
+    const [animate, setAnimate] = useState(false)
     return(
         <Animasi>
                 <div className="text-center" style={{color: "white"}}>
@@ -140,8 +142,12 @@ const Category= () => {
                     </Row>
                     <br></br>
                     <div className="text-center" >
-                        <button style={styles}>
-                            <p style={{color: "white"}}><em><i>load more</i></em></p>
+                        <button style={styles} onClick={()=> setAnimate(true)}>
+                            <Jello when={animate}>
+                            <p style={{color: "white"}}><em>
+                                <i>load more <i class="bi bi-arrow-clockwise"></i>
+                                </i></em></p>
+                            </Jello> 
                         </button>
                     </div>
                     </Bounce>

@@ -4,7 +4,7 @@ import { useLazyQuery} from '@apollo/client'
 import { CARI_JUDUL } from '../Hooks/Querry'
 import { Link } from 'react-router-dom';
 
-import './NavBar.css'
+import './SearchBar.css'
 
 // stylesheet
 const styles = {
@@ -61,7 +61,7 @@ const SearchBar = () => {
                         setAlg(event.target.value);
                     }}
                 />
-                <Link to={`/algorithm/article/search/${searchAlg}`} style={{ textDecoration: 'none', color: 'black',textAlign: 'left' }}>
+                <Link to={`/search/${searchAlg}`} style={{ textDecoration: 'none', color: 'black',textAlign: 'left' }}>
                     <button style={styles}>
                         <i class="bi bi-search" style={{ fontSize: 20 }}></i>
                     </button>

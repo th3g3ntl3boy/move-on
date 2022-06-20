@@ -5,7 +5,7 @@ import { UPDATELIKE, UPDATEDISLIKE, UPDATESAD, UPDATESMILE, UPDATENAH, TAMBAHKOM
 import { useParams } from 'react-router';
 
 
-import './emot.css'
+import './KomentarRating.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown, faFaceSmile, faFaceSadCry, faFaceMeh } from '@fortawesome/free-regular-svg-icons';
 import { Button, Form, FormControl } from 'react-bootstrap';
@@ -21,7 +21,7 @@ const styles = {
 };
   
 
-const KomentarLike = () => {
+const KomentarRating = () => {
     // ambil parameter
     const {id} = useParams()
     // querry parameter id
@@ -193,7 +193,7 @@ const KomentarLike = () => {
                     }}
                 />
                 <Button 
-                variant="outline-secondary"
+                variant="primary"
                 onClick={()=>tambahKomentar()}
                 >Post</Button>
             </Form>
@@ -201,4 +201,4 @@ const KomentarLike = () => {
   )
 }
 
-export default KomentarLike
+export default KomentarRating

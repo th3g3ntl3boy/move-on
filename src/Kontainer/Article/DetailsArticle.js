@@ -10,7 +10,7 @@ import { faEye} from '@fortawesome/free-regular-svg-icons';
 import { Container, Row, Col, Spinner, Alert, Form,  Badge, Figure, FormControl, Button} from 'react-bootstrap';
 import Animasi from '../../Komponen/Animasi';
 import SearchBar from '../../Komponen/SearchBar';
-import KomentarLike from '../../Komponen/Log/KomentarLike';
+import KomentarRating from '../../Komponen/Log/KomentarRating';
 import Komen from '../../Komponen/Komen';
 import { useQuery, useMutation } from '@apollo/client';
 import { Bounce, Fade } from 'react-reveal';
@@ -111,7 +111,7 @@ const DetailsArticle = () => {
                             <br></br>              
                         </div>
                         {/* komponen komentar dan like */}
-                        <KomentarLike />
+                        <KomentarRating />
                         <br></br>
 
                         {/* menampilkan komentar yang sudah ada */}

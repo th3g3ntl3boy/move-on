@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 // stylesheet
 import { Card } from 'react-bootstrap';
-import { Fade} from 'react-reveal';
 import './Kartu.css'
 
 
@@ -12,8 +11,26 @@ const styles = {
     cursor: "pointer",
     overflow: "hidden",
     outline: "none",
-    color: "#7a4de2"
+    color: "white"
 };
+
+const hovStar = {
+    top: "4px", 
+    right:"9px", 
+    position: "absolute",
+    backgroundColor: "black", 
+    opacity: "60%",
+    fontSize: "15px"
+}
+
+const hovJudul = {
+    bottom: "4px",
+    left: "9px",  
+    position: "absolute",
+    backgroundColor: "black", 
+    opacity: "75%",
+    fontSize: "15px"
+}
 
 
 const Kartu = (props) => {
@@ -35,13 +52,18 @@ const Kartu = (props) => {
                             <Card.ImgOverlay >
                                 {
                                     isHover &&
-                                    <Fade duration={350}>
-                                        <Card.Title>
-                                            <small style={{backgroundColor: "black", opacity: "65%"}}>
-                                                <i class="bi bi-star-fill"></i> 4.5
+                                    <Fragment>
+                                        <Card.Title style={hovStar}>
+                                            <small>
+                                                <i class="bi bi-star-fill"></i> <b>4.5</b>
                                             </small>
                                         </Card.Title>
-                                    </Fade>
+                                        <Card.Text style={hovJudul}>
+                                        <small>
+                                            <b>Title movies</b>
+                                        </small>
+                                        </Card.Text>
+                                    </Fragment>
                                 }
                         </Card.ImgOverlay>
                     </button> 

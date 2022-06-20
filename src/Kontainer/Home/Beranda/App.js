@@ -17,6 +17,7 @@ import NavBar from '../../../Komponen/NavBar.js';
 
 // Stylesheet
 import 'bootstrap/dist/css/bootstrap.min.css';
+import User from '../User/User.js';
 
 // client
 const client = new ApolloClient({
@@ -41,6 +42,7 @@ class App extends Component {
                     <Route path="moviesdetail" element={<DetailsMovies />} />
                     <Route path="film/:id" element={<DetailsArticle />} />
                     <Route path="search/:name" element={<SearchResult/>} />
+                    <Route path="user" element={<User />} />
               </Routes>
             </ApolloProvider>
           </BrowserRouter>

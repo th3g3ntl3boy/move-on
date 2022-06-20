@@ -34,7 +34,7 @@ const Beranda = () => {
                         <Row className="flex-column-reverse flex-md-row align-items-center" onMouseMove={(e) => console.log(e.pageX - e.target.offsetTop)}>
                                 <Col>
                                 <div className="styling-example">
-                                <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="4500" transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={1}>
+                                <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="4500" transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={1} itemsToScroll={2}>
                                         <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                                 <Kartu
                                                 sumber={require("../../../Aset/1166008798_2.webp")}

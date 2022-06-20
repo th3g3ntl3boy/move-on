@@ -39,9 +39,11 @@ const NavBar = () =>{
                         </Nav>
                     </Navbar.Collapse>
                     <SearchBar/>
-                    <button style={styles}>
-                        <i class="bi bi-person-circle" style={{ fontSize: 25 }}></i>
-                    </button> 
+                    <Link to={`/user`} style={{ textDecoration: 'none'}}>
+                        <button style={styles}>
+                            <i class="bi bi-person-circle" style={{ fontSize: 25 }}></i>
+                        </button> 
+                    </Link>
                 </Container>
             </Navbar>
             <br></br>
