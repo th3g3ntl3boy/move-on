@@ -43,7 +43,7 @@ const  SearchResult = () => {
     if(error){
         return(
             <Alert variant="danger">
-                Coming soon...
+                Under Progress..
             </Alert>
         )
     }

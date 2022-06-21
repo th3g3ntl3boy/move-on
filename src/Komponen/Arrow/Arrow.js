@@ -1,6 +1,5 @@
 import React from 'react';
 import './Arrow.scss';
-import LightSpeed from 'react-reveal/LightSpeed';
 
 const styles = {
   backgroundColor: "transparent",
@@ -15,7 +14,6 @@ const styles = {
 
 const Arrow = (props) => {
   return (
-    <LightSpeed right duration={1000}>
       <div>
           <button className="animated-arrow" style={styles}>
               <span className="the-arrow -left">
@@ -30,7 +28,6 @@ const Arrow = (props) => {
           </button>
       </div>
 
-    </LightSpeed>
   )
 }
 

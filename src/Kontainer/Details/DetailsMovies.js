@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Row, Col} from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
-
+import Arrow from '../../Komponen/Arrow/Arrow.js';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -10,6 +10,17 @@ import Kartu from '../../Komponen/Kartu/Kartu.js';
 // stylesheet
 import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
+import RatingKomen from '../../Komponen/RatingKomen.js';
+
+const styles = {
+    backgroundColor: "transparent",
+    backgroundRepeat: "no-repeat",
+    border: "none",
+    cursor: "pointer",
+    overflow: "hidden",
+    outline: "none",
+    color: "white"
+};
 
 const breaker = [
     {width:1, itemsToShow: 1},
@@ -21,6 +32,10 @@ const breaker = [
 ]
 
 const DetailsMovies= () => {
+    const [show, setShow] = useState("d-none")
+    const [details, setDetails] = useState("Show more")
+    const [counter, setCounter]= useState(0)
+
     return(
         <Animasi>
             <Container>
@@ -48,21 +63,34 @@ const DetailsMovies= () => {
                             <p>4.3 (<i class="bi bi-people-fill"></i> 18)</p>
                         </div>           
                        
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                        <p className={`${show}`}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                        </p>
+
+                        <small>
+                            <button
+                            style={styles} 
+                            onClick={async ()=>{
+                                await setCounter(counter+1);
+                                if(counter%2===0){
+                                    setShow("d-block")
+                                    setDetails("Show less")
+                                }
+                                else{
+                                    setShow("d-none")
+                                    setDetails("Show more")
+                                }
+                                }}
+                                >
+                                <Arrow halaman={details}/>
+                            </button>
+                        </small>
+
                         <br></br>
                         <br></br>
-                        
-                        <Form className="d-flex">
-                            <FormControl
-                                type="search"
-                                placeholder="Comment.."
-                                className="me-2"
-                                aria-label="Search"
-                            />
-                            <Button 
-                            variant="outline-secondary"
-                            >Post</Button>
-                        </Form>
+
+                        <RatingKomen />
 
                         <br></br>
                         <div className="text-center">
