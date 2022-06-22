@@ -68,11 +68,7 @@ const DetailsMovies= () => {
                             />
                         </div>
                         <h3>Titibo-Tibo - Moira Dela Torre</h3>
-                        <button style={styles}>
-                            <span class="badge rounded-pill text-bg-light">romance</span>
-                        </button>
-                        
-                        <br></br>
+                       
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
@@ -124,6 +120,14 @@ const DetailsMovies= () => {
                         <h3 style={{color: "white"}}>
                             You may also like
                         </h3>
+                        <button style={styles}>
+                            <small>
+                            <span class="badge rounded-pill text-bg-light">Show All</span>
+                            </small>
+                        </button>
+                        <div className="text-end">
+                        
+                        </div>
                         <div className="styling-example">
                             <Carousel breakPoints={breaker} 
                             enableAutoPlay="true" 
@@ -186,6 +190,11 @@ const DetailsMovies= () => {
                         <h3 style={{color: "white"}}>
                             More Romance Movies
                         </h3>
+                        <button style={styles}>
+                            <small>
+                            <span class="badge rounded-pill text-bg-light">Show All</span>
+                            </small>
+                        </button>
                         <div className="styling-example" onMouseMove={(e) => console.log(e.pageX - e.target.offsetTop)}>
                             <Carousel 
                             breakPoints={breaker} 
