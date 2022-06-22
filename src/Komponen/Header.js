@@ -15,7 +15,7 @@ const Header = () =>{
                           }}
                     />
                 </h3>
-                <p>Let's move on to your favorite movies</p>
+                <p>What do we have here</p>
                 <hr style={{color: "#7a4de2"}}></hr>
             </div>
         </div>

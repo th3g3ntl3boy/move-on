@@ -20,6 +20,7 @@ const styles = {
 
 const Category= () => {
     const [animate, setAnimate] = useState(false)
+    const [disapear, setDisapear] = useState("")
     return(
         <Animasi>
                 <div className="text-center" style={{color: "white"}}>
@@ -141,8 +142,8 @@ const Category= () => {
                         </Col>
                     </Row>
                     <br></br>
-                    <div className="text-center" >
-                        <button style={styles} onClick={()=> setAnimate(true)}>
+                    <div className={`text-center ${disapear}`} >
+                        <button style={styles} onClick={()=> {setAnimate(true); setDisapear("d-none")}}>
                             <Jello when={animate}>
                             <p style={{color: "white"}}><em>
                                 <i>load more <i class="bi bi-arrow-clockwise"></i>

@@ -5,7 +5,7 @@ const Komen = (props) => {
   return (
     <div>
         <Container>
-                <Row>
+                <Row className="align-items-center">
                     <Col xs={3} className="my-4 left-center align-center">
                         <Figure>
                             <Figure.Image
@@ -15,7 +15,7 @@ const Komen = (props) => {
                                 alt="GIGACHAD"
                                 src={require("../Aset/chad.png")}
                             />
-                            <Figure.Caption>
+                            <Figure.Caption className="text-center">
                                 anonymous user
                             </Figure.Caption>
                         </Figure>

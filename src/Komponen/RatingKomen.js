@@ -1,3 +1,4 @@
+import { selectHttpOptionsAndBodyInternal } from '@apollo/client';
 import React, {useState, useEffect} from 'react'
 import {Form, FormControl, Button} from 'react-bootstrap'
 
@@ -20,6 +21,8 @@ const RatingKomen = () => {
     const [star3, setStar3 ] = useState("")
     const [star4, setStar4 ] = useState("")
     const [star5, setStar5 ] = useState("")
+
+    const [hide, setHide] = useState("d-none")
     
     function handleStar(){
         if(rating===1){
@@ -56,7 +59,8 @@ const RatingKomen = () => {
     }
 
     useEffect(()=>{
-        handleStar()
+        handleStar();
+        console.log(rating)
     }, [rating])
 
     return (
@@ -68,7 +72,7 @@ const RatingKomen = () => {
                 style={styles}
                 onClick={()=>{
                     handleStar(setRating(1));
-                    console.log(rating)
+                    setHide("d-block")
                 }}
                 >
                     <i class={`bi bi-star${star1}`}></i>
@@ -78,7 +82,7 @@ const RatingKomen = () => {
                 style={styles}
                 onClick={()=>{
                     handleStar(setRating(2));
-                    console.log(rating);
+                    setHide("d-block")
                 }}
                 >
                     <i class={`bi bi-star${star2}`}></i>
@@ -88,7 +92,7 @@ const RatingKomen = () => {
                 style={styles}
                 onClick={()=>{
                     handleStar(setRating(3));
-                    console.log(rating)
+                    setHide("d-block")
                 }}
                 >
                     <i class={`bi bi-star${star3}`}></i>
@@ -98,7 +102,7 @@ const RatingKomen = () => {
                 style={styles}
                 onClick={()=>{
                     handleStar(setRating(4));
-                    console.log(rating)
+                    setHide("d-block")
                 }}
                 >
                     <i class={`bi bi-star${star4}`}></i>
@@ -108,14 +112,23 @@ const RatingKomen = () => {
                 style={styles}
                 onClick={()=>{
                     handleStar(setRating(5));
-                    console.log(rating)
+                    setHide("d-block")
                 }}
                 >
                     <i class={`bi bi-star${star5}`}></i>
                 </button>
             </div>
-            <p className='text-center'>
-                {`${rating}`}
+            <p className={`text-center ${hide}`}>
+                { 
+                <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
+                onClick={()=>{
+                    setHide("d-none");
+
+                }}
+                >
+                    send
+                </button>
+                }
             </p>
             <br></br>
             

@@ -26,7 +26,7 @@ const breaker = [
     {width:1, itemsToShow: 1},
     {width:150, itemsToShow: 2, verticalMode: false},
     {width:300, itemsToShow: 2, verticalMode: false},
-    {width:450, itemsToShow: 2},
+    {width:450, itemsToShow: 2, verticalMode: false},
     {width:600, itemsToShow: 5},
     {width:750, itemsToShow: 6}
 ]
@@ -46,14 +46,14 @@ const DetailsMovies= () => {
                             <iframe
                                 width="700"
                                 height="400"
-                                src={`https://www.youtube.com/embed/8NnQs3EtoqU`}
+                                src={`https://www.youtube.com/embed/OoYE9blsbvA`}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="Embedded youtube"
                             />
                         </div>
-                        <h3>Neck Deep - December</h3>
+                        <h3>Titibo-Tibo - Moira Dela Torre</h3>
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
@@ -68,6 +68,7 @@ const DetailsMovies= () => {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
                         </p>
 
+                        {/* show details */}
                         <small>
                             <button
                             style={styles} 
@@ -89,7 +90,7 @@ const DetailsMovies= () => {
 
                         <br></br>
                         <br></br>
-
+                        
                         <RatingKomen />
 
                         <br></br>

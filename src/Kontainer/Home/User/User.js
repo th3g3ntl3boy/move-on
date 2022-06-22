@@ -9,7 +9,7 @@ const breaker = [
     {width:1, itemsToShow: 1},
     {width:150, itemsToShow: 2},
     {width:300, itemsToShow: 2, outerSpacing: 80},
-    {width:450, itemsToShow: 4},
+    {width:450, itemsToShow: 3, outerSpacing: 80},
     {width:600, itemsToShow: 5},
     {width:750, itemsToShow: 6, outerSpacing: 80}
 ]
