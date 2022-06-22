@@ -23,6 +23,16 @@ const breaker = [
     {width:750, itemsToShow: 5, outerSpacing: 80 }
 ]
 
+const styles = {
+        backgroundColor: "transparent",
+        backgroundRepeat: "no-repeat",
+        border: "none",
+        cursor: "pointer",
+        overflow: "hidden",
+        outline: "none",
+        color: "white"
+};
+
 const Beranda = () => {
         return(
                 <Animasi>
@@ -35,8 +45,15 @@ const Beranda = () => {
                                 <Row className="flex-column-reverse flex-md-row align-items-center" 
                                 onMouseMove={(e) => console.log(e.pageX - e.target.offsetTop)}
                                 >
-                                       
                                         <Col>
+                                        <div className="text-end">
+                                        <button style={styles}>
+                                                <small>
+                                                <span class="badge rounded-pill text-bg-light">Show All</span>
+                                                </small>
+                                        </button>
+                                        </div>
+
                                         <div className="styling-example"
                                         >
                                         
@@ -134,6 +151,14 @@ const Beranda = () => {
                                 <br></br>
                                 <Row className="flex-column-reverse flex-md-row align-items-center" >
                                         <Col>
+                                        <div className="text-end">
+                                        <button style={styles}>
+                                                <small>
+                                                <span class="badge rounded-pill text-bg-light">Show All</span>
+                                                </small>
+                                        </button>
+                                        </div>
+
                                         <div className="styling-example">
                                         <Carousel 
                                         breakPoints={breaker} 
