@@ -48,7 +48,7 @@ const Beranda = () => {
                                         showArrows={false} 
                                         pagination={false} 
                                         initialActiveIndex={1} 
-                                        itemsToScroll={1}
+                                        itemsToScroll={2}
                                         >
                                                 <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                                         <Kartu
@@ -134,7 +134,16 @@ const Beranda = () => {
                                 <Row className="flex-column-reverse flex-md-row align-items-center" >
                                         <Col>
                                         <div className="styling-example">
-                                        <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="6000" transitionMs="750" showArrows={false} pagination={false} initialActiveIndex={1}>
+                                        <Carousel 
+                                        breakPoints={breaker} 
+                                        enableAutoPlay="true" 
+                                        autoPlaySpeed="6000" 
+                                        transitionMs="750" 
+                                        showArrows={false} 
+                                        pagination={false} 
+                                        initialActiveIndex={1}
+                                        itemsToScroll={2}  
+                                        >
                                                 <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                                         <Kartu
                                                         sumber={require("../../../Aset/1166008798_2.webp")}

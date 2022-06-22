@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col} from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
+import { gql, useQuery } from '@apollo/client';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -11,6 +12,16 @@ import Kartu from '../../Komponen/Kartu/Kartu.js';
 import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
+
+const TES = gql`
+query{
+  films{
+    data{
+      id
+    }
+  }
+}
+`
 
 const styles = {
     backgroundColor: "transparent",
@@ -35,7 +46,10 @@ const DetailsMovies= () => {
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
     const [counter, setCounter]= useState(0)
+    
+    const {error, loading, data} = useQuery(TES)
 
+    console.log(data)
     return(
         <Animasi>
             <Container>
@@ -54,6 +68,11 @@ const DetailsMovies= () => {
                             />
                         </div>
                         <h3>Titibo-Tibo - Moira Dela Torre</h3>
+                        <button style={styles}>
+                            <span class="badge rounded-pill text-bg-light">romance</span>
+                        </button>
+                        
+                        <br></br>
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
@@ -113,7 +132,8 @@ const DetailsMovies= () => {
                             showArrows={false} 
                             pagination={false}
                             itemPadding={[10]}
-                            verticalMode={true}   
+                            verticalMode={true} 
+                            itemsToScroll={2}  
                             initialActiveIndex={1} 
                             outerSpacing={80}
                             >
@@ -175,6 +195,7 @@ const DetailsMovies= () => {
                             showArrows={false} 
                             pagination={false}
                             itemPadding={[10]}
+                            itemsToScroll={2}  
                             verticalMode={true}  
                             initialActiveIndex={1} 
                             outerSpacing={80}

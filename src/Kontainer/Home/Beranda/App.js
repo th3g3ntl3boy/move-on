@@ -21,7 +21,7 @@ import User from '../User/User.js';
 
 // client
 const client = new ApolloClient({
-  uri: 'http://localhost:1337/graphql',
+  uri: 'https://strapi-heroku9.herokuapp.com/graphql',
   cache: new InMemoryCache()
 })
 
