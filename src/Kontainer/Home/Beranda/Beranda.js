@@ -49,6 +49,7 @@ const Beranda = () => {
                                         pagination={false} 
                                         initialActiveIndex={1} 
                                         itemsToScroll={2}
+                                        focusOnSelect={true}
                                         >
                                                 <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                                         <Kartu
@@ -142,7 +143,8 @@ const Beranda = () => {
                                         showArrows={false} 
                                         pagination={false} 
                                         initialActiveIndex={1}
-                                        itemsToScroll={2}  
+                                        itemsToScroll={2}
+                                        focusOnSelect={true}  
                                         >
                                                 <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                                         <Kartu
