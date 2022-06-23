@@ -60,7 +60,7 @@ const Kartu = (props) => {
                                         </Card.Title>
                                         <Card.Text style={hovJudul}>
                                         <small>
-                                            <b>Title movies</b>
+                                            <b>{props.judul}</b>
                                         </small>
                                         </Card.Text>
                                     </Fragment>

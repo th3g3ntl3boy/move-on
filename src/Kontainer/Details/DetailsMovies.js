@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
+import { Container, Row, Col, Spinner, Alert, } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { MOVIESDETAIL } from '../../Hooks/Querry.js';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -13,15 +14,15 @@ import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
 
-const TES = gql`
-query{
-  films{
-    data{
-      id
-    }
-  }
+const center = {
+    width: "50px",
+    height: "50px",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    margin: "-25px 0 0 -25px"
 }
-`
+
 
 const styles = {
     backgroundColor: "transparent",
@@ -43,13 +44,30 @@ const breaker = [
 ]
 
 const DetailsMovies= () => {
+    const {id} = useParams()
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
     const [counter, setCounter]= useState(0)
     
-    const {error, loading, data} = useQuery(TES)
+    const {error, loading, data} = useQuery(MOVIESDETAIL,{
+        variables: {id : id}
+    })
 
-    console.log(data)
+    if(loading){
+        return (
+            <Spinner animation="border" variant="secondary" style={center}/>
+        )
+    }
+    if(error){
+            return(
+                    <Alert variant="danger">
+                    API not found
+                    </Alert>
+            )
+    }
+
+    const data1 = JSON.parse(JSON.stringify(data))
+    
     return(
         <Animasi>
             <Container>
@@ -60,14 +78,14 @@ const DetailsMovies= () => {
                             <iframe
                                 width="700"
                                 height="400"
-                                src={`https://www.youtube.com/embed/OoYE9blsbvA`}
+                                src={`https://www.youtube.com/embed/${data1.movie.data.attributes.ytlink}`}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="Embedded youtube"
                             />
                         </div>
-                        <h3>Titibo-Tibo - Moira Dela Torre</h3>
+                        <h3>{data1.movie.data.attributes.title}</h3>
                        
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>

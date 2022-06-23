@@ -21,7 +21,7 @@ import User from '../User/User.js';
 
 // client
 const client = new ApolloClient({
-  uri: 'https://strapi-heroku9.herokuapp.com/graphql',
+  uri: 'https://backend-artikel.herokuapp.com/graphql',
   cache: new InMemoryCache()
 })
 
@@ -39,7 +39,7 @@ class App extends Component {
                     <Route exact path="/" element={<Beranda />} />
                     <Route path="category" element={<Category/>} />
                     <Route path="about" element={<About/>} />
-                    <Route path="moviesdetail" element={<DetailsMovies />} />
+                    <Route path="moviesdetail/:id" element={<DetailsMovies />} />
                     <Route path="film/:id" element={<DetailsArticle />} />
                     <Route path="search/:name" element={<SearchResult/>} />
                     <Route path="user" element={<User />} />

@@ -1,5 +1,63 @@
 import { gql } from "@apollo/client";
 
+export const TOPMOVIES = gql`
+query{
+  movies{
+    data{
+      id
+      attributes{
+        title
+        thumb{
+          data{
+            attributes{
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+export const MOVIESDETAIL = gql`
+query getMovies($id: ID!){
+  movie(id: $id){
+    data{
+      id
+      attributes{
+        title
+        ytlink
+        category
+        description
+        release_date
+      }
+    }
+  }
+}
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const ARTIKELS = gql`
     query getArtikel{    
         algoritmas{
