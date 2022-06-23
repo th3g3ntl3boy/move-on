@@ -2,7 +2,7 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import Carousel from 'react-elastic-carousel';
-import { TOPMOVIES } from '../../../Hooks/Querry.js';
+import { TOPMOVIES, GETIDMOVIES } from '../../../Hooks/Querry.js';
 import {useQuery } from '@apollo/client';
 // komponen
 import Kartu from '../../../Komponen/Kartu/Kartu.js';
@@ -46,8 +46,11 @@ const center = {
 const link = `https://backend-artikel.herokuapp.com`
 
 const Beranda = () => {
-
+        const ID = "ID"
         const {error, loading, data} = useQuery(TOPMOVIES)
+        const {data: dataIndo}= useQuery(GETIDMOVIES,{
+                variables: {code:{eq:ID}}
+        })
         if(loading){
                 return (
                     <Spinner animation="border" variant="secondary" style={center}/>
@@ -61,7 +64,9 @@ const Beranda = () => {
                 )
         }
         const data1 = JSON.parse(JSON.stringify(data))
+        
         console.log(data1)
+        console.log(dataIndo)
         return(
                 <Animasi>
                 <Fragment>
@@ -140,76 +145,18 @@ const Beranda = () => {
                                         itemsToScroll={2}
                                         focusOnSelect={true}  
                                         >
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1165953918_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1165974181_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
-                                                <Link to="moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                                        <Kartu
-                                                        sumber={require("../../../Aset/1166008798_2.webp")}
-                                                        judul="Prediction" 
-                                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                                        list="Regression" />
-                                                </Link>
+                                                {dataIndo?.movies.data.map((movie)=>(
+                                                <div key={movie.id}>
+                                                        <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                <Kartu
+                                                                sumber={`${link}${movie.attributes.thumb.data.attributes.url}`}
+                                                                judul={`${movie.attributes.title.substring(0, 20)}`} 
+                                                                />
+                                                        </Link>
+                                                </div>
+
+                                        ))
+                                        }
                                         </Carousel>
                                         </div>
                                         </Col>

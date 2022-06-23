@@ -96,9 +96,9 @@ const DetailsMovies= () => {
                             <p>4.3 (<i class="bi bi-people-fill"></i> 18)</p>
                         </div>           
                        
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                        {data1.movie.data.attributes.description.substring(0,147)}
                         <p className={`${show}`}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                        {data1.movie.data.attributes.description.substring(147,99999)}
                         </p>
 
                         {/* show details */}

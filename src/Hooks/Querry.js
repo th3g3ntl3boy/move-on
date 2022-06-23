@@ -37,10 +37,26 @@ query getMovies($id: ID!){
 }
 `
 
+export const GETIDMOVIES =gql`
+query getIDmovies($code: StringFilterInput!){
+  movies(filters: {Region: $code}){
+    data{
+      id
+      attributes{
+        title
+        thumb{
+          data{
+            attributes{
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
-
-
-
+`
 
 
 
