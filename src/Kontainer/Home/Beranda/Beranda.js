@@ -99,11 +99,11 @@ const Beranda = () => {
                                         itemsToScroll={2}
                                         focusOnSelect={true}
                                         >
-                                        {data1?.movies.data.map((movie)=>(
+                                        {data1?.movies.data?.map((movie)=>(
                                                 <div key={movie.id}>
                                                         <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                 <Kartu
-                                                                sumber={`${link}${movie.attributes.thumb.data.attributes.url}`}
+                                                                sumber={`${link}${movie.attributes.thumb.data?.attributes.url}`}
                                                                 judul={`${movie.attributes.title.substring(0, 20)}`} 
                                                                 />
                                                         </Link>
@@ -145,11 +145,11 @@ const Beranda = () => {
                                         itemsToScroll={2}
                                         focusOnSelect={true}  
                                         >
-                                                {dataIndo?.movies.data.map((movie)=>(
+                                                {dataIndo?.movies.data?.map((movie)=>(
                                                 <div key={movie.id}>
                                                         <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                 <Kartu
-                                                                sumber={`${link}${movie.attributes.thumb.data.attributes.url}`}
+                                                                sumber={`${link}${movie.attributes.thumb.data?.attributes.url}`}
                                                                 judul={`${movie.attributes.title.substring(0, 20)}`} 
                                                                 />
                                                         </Link>

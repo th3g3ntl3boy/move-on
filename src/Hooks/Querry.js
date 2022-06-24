@@ -58,6 +58,41 @@ query getIDmovies($code: StringFilterInput!){
 
 `
 
+export const GETCATEGORY = gql`
+query getCat{
+    movies{
+        data{
+            attributes{
+                category
+            }
+        }
+    }
+}
+`
+
+export const GETCATEGORYMOV = gql`
+query getCategory($code: StringFilterInput, $halaman: Int){
+  movies(
+    filters: {category: $code},
+    pagination: {page: $halaman, pageSize: 12},
+    sort: ["id"]
+    ){
+    data{
+      id
+      attributes{
+        title
+        thumb{
+          data{
+            attributes{
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 
 
@@ -69,10 +104,7 @@ query getIDmovies($code: StringFilterInput!){
 
 
 
-
-
-
-
+// -----------------------------------------------------------------------------------------------------------
 
 export const ARTIKELS = gql`
     query getArtikel{    
