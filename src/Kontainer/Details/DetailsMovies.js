@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Container, Row, Col, Spinner, Alert, } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Alert, Button, } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery } from '@apollo/client';
-import { MOVIESDETAIL } from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV } from '../../Hooks/Querry.js';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -23,7 +23,7 @@ const center = {
     margin: "-25px 0 0 -25px"
 }
 
-
+const link = `https://backend-artikel.herokuapp.com`
 const styles = {
     backgroundColor: "transparent",
     backgroundRepeat: "no-repeat",
@@ -48,10 +48,18 @@ const DetailsMovies= () => {
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
     const [counter, setCounter]= useState(0)
-    
+    const [view, setView] = useState(0)
+
+
     const {error, loading, data} = useQuery(MOVIESDETAIL,{
         variables: {id : id}
     })
+
+    const {data : dataCat} = useQuery(GETCATEGORYMOV,{
+        variables: {code: {eq:data?.movie.data.attributes.category}, halaman:1}
+    })
+    console.log(dataCat)
+   
 
     if(loading){
         return (
@@ -65,8 +73,10 @@ const DetailsMovies= () => {
                     </Alert>
             )
     }
+    
 
     const data1 = JSON.parse(JSON.stringify(data))
+
     
     return(
         <Animasi>
@@ -75,6 +85,7 @@ const DetailsMovies= () => {
                     <Col style={{color: "white"}}>
                         <br></br>
                         <div className="video-responsive">
+                            <Button>
                             <iframe
                                 width="700"
                                 height="400"
@@ -83,7 +94,9 @@ const DetailsMovies= () => {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title="Embedded youtube"
-                            />
+                            />                          
+
+                            </Button>
                         </div>
                         <h3>{data1.movie.data.attributes.title}</h3>
                        
@@ -206,14 +219,14 @@ const DetailsMovies= () => {
 
 
                         <h3 style={{color: "white"}}>
-                            More Romance Movies
+                            {`More ${data1?.movie.data?.attributes.category} Movies`}
                         </h3>
                         <button style={styles}>
                             <small>
                             <span class="badge rounded-pill text-bg-light">Show All</span>
                             </small>
                         </button>
-                        <div className="styling-example" onMouseMove={(e) => console.log(e.pageX - e.target.offsetTop)}>
+                        <div className="styling-example">
                             <Carousel 
                             breakPoints={breaker} 
                             enableAutoPlay="true" 
@@ -227,48 +240,15 @@ const DetailsMovies= () => {
                             initialActiveIndex={1} 
                             outerSpacing={80}
                             >
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1165953918_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1165974181_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
+                                {dataCat?.movies.data?.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                    <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                            <Kartu
+                                            sumber={`${link}${cat.attributes.thumb.data?.attributes.url}`}
+                                            judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                            />
+                                    </Link>
+                                    ))
+                                }
                             </Carousel>
                         </div>
                     </Col>

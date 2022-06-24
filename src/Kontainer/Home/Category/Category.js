@@ -72,7 +72,7 @@ const Category= () => {
                         ))
                         }
                     </Row>
-                    <br></br>
+                    {/* <br></br>
                     <div className={`text-center ${disapear}`} >
                         <button style={styles} onClick={()=> {setAnimate(true); setDisapear("d-none")}}>
                             <Jello when={animate}>
@@ -81,11 +81,12 @@ const Category= () => {
                                 </i></em></p>
                             </Jello> 
                         </button>
-                    </div>
+                    </div> */}
                     </Bounce>
                     </div>
 
                 </Container>
+                
         </Animasi>
       
     )

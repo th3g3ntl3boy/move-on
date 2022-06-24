@@ -1,17 +1,28 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom';
-import { CARI_JUDUL} from '../../Hooks/Querry'
-import SearchBar from '../../Komponen/SearchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { SEARCHMOV} from '../../Hooks/Querry'
 import { useLazyQuery } from '@apollo/client';
 
 
 // stylesheet
-import { Container, Row, Col, Spinner, Alert, Form,Badge} from 'react-bootstrap';
-import Arrow from '../../Komponen/Arrow/Arrow';
+import { Container, Row, Col, Spinner, Alert} from 'react-bootstrap';
 import Animasi from '../../Komponen/Animasi';
 import Bounce from 'react-reveal/Bounce';
+import Kartu from '../../Komponen/Kartu/Kartu';
+import Jello from 'react-reveal/Jello'
+
+
+
+const link = `https://backend-artikel.herokuapp.com`
+
+const styles = {
+    backgroundColor: "transparent",
+    backgroundRepeat: "no-repeat",
+    border: "none",
+    cursor: "pointer",
+    overflow: "hidden",
+    outline: "none",
+};
 
 const center = {
     width: "50px",
@@ -25,8 +36,10 @@ const center = {
 
 const  SearchResult = () => {
     const {name} = useParams()
-    const [cari,{loading, error, data}] = useLazyQuery(CARI_JUDUL,{
-        variables: {judul: {contains: name},
+    const [animate, setAnimate] = useState(false)
+    const [disapear, setDisapear] = useState("")
+    const [cari,{loading, error, data}] = useLazyQuery(SEARCHMOV,{
+        variables: {search: {containsi: name},
         onCompleted: (data)=>console.log(data)
     }})
 
@@ -43,77 +56,61 @@ const  SearchResult = () => {
     if(error){
         return(
             <Alert variant="danger">
-                Under Progress..
+                Fail Connection
             </Alert>
         )
     }
-    
     console.log(data)
     
     return (
-        <Animasi>  
-            <Container>
-                <Row className="align-items-center">
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <div className="text-center">    
-                            <h1>Machine Learning Algorithm</h1>
-                            <p><i>"learn something about data"</i></p>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-            <hr></hr>
+        <Animasi>
+                <div className="text-center" style={{color: "white"}}>
+                    <h1>Search Results</h1>
+                    <hr style={{color: "#7a4de2"}}></hr>
+                </div>
 
-            
-            <Container>
-                <Row className="flex-column-reverse flex-md-row">
-                    <Col>
-                        <Bounce left duration={500}>
-                            <div>
-                            {data?.algoritmas.data?.map((algoritma) =>(
-                                <div key={algoritma.id}>
-                                    <h3>{algoritma.attributes.judul}</h3>
-                                    <Badge pill bg="light" text="dark">{algoritma.attributes.kategoris.data.attributes.jenis}</Badge>
-                                    <Badge pill bg="light" text="dark">{algoritma.attributes.ordo.data.attributes.judul}</Badge>
-                                    <FontAwesomeIcon icon={faEye} fade/>
-                                    <small>
-                                        {` ${algoritma.attributes.views} views`}
-                                    </small>
-                                    <hr></hr>
-                                    <p>{algoritma.attributes.deskripsi.substring(0, 200)}...</p>
-                                    <Link to={`/algorithm/article/${algoritma.id}`} style={{ textDecoration: 'none', color: 'black',textAlign: 'left' }}>
-                                        <Arrow halaman="Learn More">
-                                        </Arrow>
-                                    </Link>
-                                    <br></br>              
-                                </div>
-                            ))}
+                <Container >
+                    <div className="text-start">
+                        <h4 style={{color: "white"}}>
+                            {`There are ${data?.movies.meta.pagination.total} result for `}"<i>{name}</i>"
+                        </h4>
+                    </div>
+                    <div style={{overflow: 'hidden'}}>
+                    <Bounce bottom>
+                    <Row justify-content-md-center>
+                        {data?.movies.data?.map((cat)=>(
+                            <Col lg={2} xs={6} md={3} className="my-2">
+                                <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <Kartu
+                                        sumber={`${link}${cat.attributes.thumb.data?.attributes.url}`}
+                                        judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                        />
+                                </Link>
+                            </Col>
+                        ))
+                        }
+                    </Row>
+                    {/* {
+                        data?.movies.meta.pagination.total &&
+                        <div>
+                            <br></br>
+                            <div className={`text-center ${disapear}`} >
+                                <button style={styles} onClick={()=> {setAnimate(true); setDisapear("d-none")}}>
+                                    <Jello when={animate}>
+                                    <p style={{color: "white"}}><em>
+                                        <i>load more <i class="bi bi-arrow-clockwise"></i>
+                                        </i></em></p>
+                                    </Jello> 
+                                </button>
                             </div>
-                        </Bounce>
-                    </Col>
-                    <Col md="auto"></Col>
-                    <Col xs lg="4" className= "my-4 ">
-                        <SearchBar/>
-                        <div key={`inline-radio`} className="mb-3">
-                            <Form.Check
-                                inline
-                                label="Supervised"
-                                name="group1"
-                                type="radio"
-                                id={`inline-radio-1`}
-                            />
-                            <Form.Check
-                                inline
-                                label="Unsupervised"
-                                name="group1"
-                                type="radio"
-                                id={`inline-radio-2`}
-                            />
                         </div>
-                    </Col>
-                   
-                </Row>
-            </Container>
+                        
+                    }
+                     */}
+                    </Bounce>
+                    </div>
+
+                </Container>
         </Animasi>
     )
 }

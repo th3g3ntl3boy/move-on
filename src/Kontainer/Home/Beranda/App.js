@@ -19,6 +19,7 @@ import NavBar from '../../../Komponen/NavBar.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import User from '../User/User.js';
 
+
 // client
 const client = new ApolloClient({
   uri: 'https://backend-artikel.herokuapp.com/graphql',
@@ -44,6 +45,14 @@ class App extends Component {
                     <Route path="search/:name" element={<SearchResult/>} />
                     <Route path="user" element={<User />} />
               </Routes>
+              <footer style={{position: "relative", left: "0", bottom:"0", width:"100%", height:"80px"}}>
+                <div style={{color: "#7a4de2"}}>
+                  <hr></hr>
+                  <div class="text-center p-4" >
+                      © 2022 Copyright: Kelompok 9
+                  </div>
+                </div>
+              </footer>
             </ApolloProvider>
           </BrowserRouter>
         </div>

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const TOPMOVIES = gql`
 query{
-  movies{
+  movies(pagination: {page: 1, pageSize: 12}){
     data{
       id
       attributes{
@@ -37,12 +37,13 @@ query getMovies($id: ID!){
 }
 `
 
-export const GETIDMOVIES =gql`
+export const GETIDMOVIES = gql`
 query getIDmovies($code: StringFilterInput!){
   movies(filters: {Region: $code}){
     data{
       id
       attributes{
+        category
         title
         thumb{
           data{
@@ -81,6 +82,7 @@ query getCategory($code: StringFilterInput, $halaman: Int){
       id
       attributes{
         title
+        category
         thumb{
           data{
             attributes{
@@ -94,9 +96,55 @@ query getCategory($code: StringFilterInput, $halaman: Int){
 }
 `
 
+export const GETMOVRECOMEND = gql`
+query getCategory($code: StringFilterInput, $halaman: Int){
+  movies(
+    filters: {category: $code},
+    pagination: {page: $halaman, pageSize: 12},
+    sort: ["id"]
+    ){
+    data{
+      id
+      attributes{
+        title
+        category
+        thumb{
+          data{
+            attributes{
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
 
-
-
+export const SEARCHMOV = gql`
+query searchMov($search: StringFilterInput){
+    movies(filters:{title: $search}){
+    	meta{
+          pagination{
+            total
+          }
+        }
+        data{
+          	id
+            attributes{
+              	title
+                thumb{
+                  data{
+                    attributes{
+                      url
+                    }
+                  }
+                }
+            }
+        }
+    }
+}
+`
 
 
 
