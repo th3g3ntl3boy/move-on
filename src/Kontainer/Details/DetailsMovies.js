@@ -98,7 +98,7 @@ const DetailsMovies= () => {
 
                             </Button>
                         </div>
-                        <h3>{data1.movie.data.attributes.title}</h3>
+                        <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
                        
                         <div style={{display: "inline"}}>
                             <i class="bi bi-star-fill"></i>
@@ -174,7 +174,7 @@ const DetailsMovies= () => {
                             >
                                 <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
+                                        sumber={"https://i.postimg.cc/vHJS2vkX/220px-Habibie-Ainun-3-poster.jpg"}
                                         judul="Prediction" 
                                         detail="Find out the best algorithm to prediction the data with the highest accuracy"
                                         list="Regression" />
@@ -243,7 +243,7 @@ const DetailsMovies= () => {
                                 {dataCat?.movies.data?.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                     <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                             <Kartu
-                                            sumber={`${link}${cat.attributes.thumb.data?.attributes.url}`}
+                                            sumber={`${cat.attributes.linkgambar}`}
                                             judul={`${cat.attributes.title.substring(0, 20)}`} 
                                             />
                                     </Link>

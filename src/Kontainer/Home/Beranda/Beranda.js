@@ -103,7 +103,7 @@ const Beranda = () => {
                                                 <div key={movie.id}>
                                                         <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                 <Kartu
-                                                                sumber={`${link}${movie.attributes.thumb.data?.attributes.url}`}
+                                                                sumber={`${movie.attributes.linkgambar}`}
                                                                 judul={`${movie.attributes.title.substring(0, 20)}`} 
                                                                 />
                                                         </Link>
@@ -149,7 +149,7 @@ const Beranda = () => {
                                                 <div key={movie.id}>
                                                         <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                 <Kartu
-                                                                sumber={`${link}${movie.attributes.thumb.data?.attributes.url}`}
+                                                                sumber={`${movie.attributes.linkgambar}`}
                                                                 judul={`${movie.attributes.title.substring(0, 20)}`} 
                                                                 />
                                                         </Link>

@@ -82,7 +82,7 @@ const  SearchResult = () => {
                             <Col lg={2} xs={6} md={3} className="my-2">
                                 <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
-                                        sumber={`${link}${cat.attributes.thumb.data?.attributes.url}`}
+                                        sumber={`${cat.attributes.linkgambar}`}
                                         judul={`${cat.attributes.title.substring(0, 20)}`} 
                                         />
                                 </Link>

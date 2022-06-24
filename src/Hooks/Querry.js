@@ -7,13 +7,7 @@ query{
       id
       attributes{
         title
-        thumb{
-          data{
-            attributes{
-              url
-            }
-          }
-        }
+        linkgambar
       }
     }
   }
@@ -27,6 +21,7 @@ query getMovies($id: ID!){
       id
       attributes{
         title
+        release_date
         ytlink
         category
         description
@@ -45,30 +40,12 @@ query getIDmovies($code: StringFilterInput!){
       attributes{
         category
         title
-        thumb{
-          data{
-            attributes{
-              url
-            }
-          }
-        }
+        linkgambar
       }
     }
   }
 }
 
-`
-
-export const GETCATEGORY = gql`
-query getCat{
-    movies{
-        data{
-            attributes{
-                category
-            }
-        }
-    }
-}
 `
 
 export const GETCATEGORYMOV = gql`
@@ -83,13 +60,7 @@ query getCategory($code: StringFilterInput, $halaman: Int){
       attributes{
         title
         category
-        thumb{
-          data{
-            attributes{
-              url
-            }
-          }
-        }
+        linkgambar
       }
     }
   }
@@ -108,13 +79,7 @@ query getCategory($code: StringFilterInput, $halaman: Int){
       attributes{
         title
         category
-        thumb{
-          data{
-            attributes{
-              url
-            }
-          }
-        }
+        linkgambar
       }
     }
   }
@@ -133,13 +98,7 @@ query searchMov($search: StringFilterInput){
           	id
             attributes{
               	title
-                thumb{
-                  data{
-                    attributes{
-                      url
-                    }
-                  }
-                }
+                linkgambar
             }
         }
     }
