@@ -85,7 +85,6 @@ const DetailsMovies= () => {
                     <Col style={{color: "white"}}>
                         <br></br>
                         <div className="video-responsive">
-                            <Button>
                             <iframe
                                 width="700"
                                 height="400"
@@ -95,8 +94,6 @@ const DetailsMovies= () => {
                                 allowFullScreen
                                 title="Embedded youtube"
                             />                          
-
-                            </Button>
                         </div>
                         <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
                        

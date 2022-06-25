@@ -5,16 +5,16 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import App from './Kontainer/Home/Beranda/App';
 import reportWebVitals from './reportWebVitals';
-
+import { AuthProvider } from './Hooks/authContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-
-      <App />
-   
-  </React.StrictMode>
+  <AuthProvider>
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+  </AuthProvider>
 );
 
 

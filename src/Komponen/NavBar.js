@@ -1,12 +1,14 @@
 // library
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 // komponen
 import SearchBar from './SearchBar';
 
 
 // stylesheet
 import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
+import User from './User';
+import { AuthContext } from '../Hooks/authContext';
 
 const styles = {
     backgroundColor: "transparent",
@@ -20,7 +22,15 @@ const styles = {
 
 
 const NavBar = () =>{
+    const {user, logout} = useContext(AuthContext)
     const [show, setShow] = useState(false)
+    const navigate = useNavigate()
+
+    const onLogout = () => {
+        logout();
+        navigate('/')
+    }
+    console.log(user)
     return(
         <div >
             <Navbar bg="dark" expand="lg" fixed="top" style={{backgroundColor: "#7a4de2"}}>
@@ -43,11 +53,12 @@ const NavBar = () =>{
                         </Nav>
                     </Navbar.Collapse>
                     <SearchBar/>
-                    <Link to={`/user`} style={{ textDecoration: 'none'}}>
+                    <User />
+                    {/* <Link to={`/user`} style={{ textDecoration: 'none'}}>
                         <button style={styles}>
                             <i class="bi bi-person-circle" style={{ fontSize: 25 }}></i>
                         </button> 
-                    </Link>
+                    </Link> */}
                 </Container>
             </Navbar>
             <br></br>

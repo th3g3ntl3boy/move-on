@@ -14,6 +14,37 @@ query{
 }
 `
 
+export const LOGIN = gql`
+mutation logUser($name: String!, $pass: String!) {
+  login(input: {identifier: $name, password: $pass} ) {
+    jwt 
+    user {
+      id
+      username
+      role {
+        name
+      }
+    }
+  }
+}
+`
+
+export const SIGNUP = gql`
+mutation regUser($name: String!, $pass: String!, $mail: String! ) {
+  register(input: {username: $name, password: $pass, email: $mail} ) {
+    jwt 
+    user {
+      id
+      username
+      role {
+        name
+      }
+    }
+  }
+}
+`
+
+
 export const MOVIESDETAIL = gql`
 query getMovies($id: ID!){
   movie(id: $id){
