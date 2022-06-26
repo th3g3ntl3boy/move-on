@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
-
+import { CREATERATING } from '../Hooks/Querry';
 
 import {Form, FormControl, Button} from 'react-bootstrap'
+
+import { useMutation } from '@apollo/client/react';
+import { useParams } from 'react-router';
 
 
 const styles = {
@@ -16,10 +19,9 @@ const styles = {
 };
 
 const RatingKomen = () => {
-    
-    const context = useContext(AuthContext)
+    const {id: movId} = useParams() 
     const {user} = useContext(AuthContext)
-  
+    
     const [rating, setRating] = useState(0)
     const [star1, setStar1 ] = useState("")
     const [star2, setStar2 ] = useState("")
@@ -28,7 +30,12 @@ const RatingKomen = () => {
     const [star5, setStar5 ] = useState("")
 
     const [hide, setHide] = useState("d-none")
-    
+
+    const [createRate, {loading, data}] = useMutation(CREATERATING,{
+        variables: {bintang: rating, userId: user?.id, movieId: movId},
+        onCompleted: (data)=>console.log(data)
+    })
+
     function handleStar(){
         if(rating===1){
             setStar1("-fill");
@@ -62,6 +69,9 @@ const RatingKomen = () => {
             setStar5("-fill");
         }
     }
+
+    
+    
 
     useEffect(()=>{
         handleStar();
@@ -125,7 +135,9 @@ const RatingKomen = () => {
             <p className={`text-center ${hide}`}>
                 { 
                 <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
-                onClick={()=>{
+                onClick={async ()=>{
+                    createRate(await setRating(rating));
+                    console.log(rating)
                     setHide("d-none");
                 }}
                 >

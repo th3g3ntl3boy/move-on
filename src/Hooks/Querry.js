@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+
+// query
 export const TOPMOVIES = gql`
 query{
   movies(pagination: {page: 1, pageSize: 12}){
@@ -69,6 +71,7 @@ query getMovies($id: ID!){
         category
         description
         release_date
+        view
       }
     }
   }
@@ -148,6 +151,61 @@ query searchMov($search: StringFilterInput){
 }
 `
 
+
+export const GETRATINGMOV = gql`
+query getRatingsMov($id:ID){
+  ratings(filters : {movie: {id: {eq:$id}}}){
+    data{
+      attributes{
+        star
+        movie{
+          data{
+            id
+          }
+        }
+      }
+    }
+    meta{
+      pagination{
+        total
+      }
+    }
+  }
+}
+`
+
+export const CREATERATING = gql `
+mutation updateRating($bintang: Int, $userId: ID, $movieId: ID){
+  createRating(data: 
+    {
+      star: $bintang, 
+      movie: $movieId,
+      users_permissions_user: $userId
+    } 
+  ){
+    data{
+      id
+      attributes{
+        star
+      }
+    }
+  }
+}
+`
+
+export const UPDATEVIEWS = gql`
+mutation updateView($id: ID!, $watch: Int){
+  updateMovie(id: $id, data: {view: $watch}){
+    data{
+      id
+      attributes{
+        view
+      }
+    }
+  }
+}
+
+`
 
 
 
@@ -361,7 +419,7 @@ export const TAMBAHKOMENTAR= gql`
     }
 `
 
-export const UPDATEVIEWS = gql`
+export const UPDATEVIEWSs = gql`
     mutation updateViews($id: ID!, $views: Long){
 		updateAlgoritma(id: $id, data: {views: $views}) {
             data{

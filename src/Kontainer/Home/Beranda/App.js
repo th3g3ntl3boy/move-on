@@ -1,14 +1,13 @@
 // Library
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-
+import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
+import {setContext} from "@apollo/client/link/context"
 // Halaman
 import Beranda from './Beranda.js';
 import Category from '../Category/Category.js';
 import About from '../About/About.js';
 import DetailsMovies from '../../Details/DetailsMovies.js';
-import DetailsArticle from '../../Article/DetailsArticle.js';
 import SearchResult from '../../Article/SearchResult.js';
 
 // komponen
@@ -21,10 +20,34 @@ import User from '../User/User.js';
 
 
 // client
+
+
+const httpLink = createHttpLink({
+  uri: 'https://backend-artikel.herokuapp.com/graphql'
+})
+
+const authorizationLink = setContext((_,{headers})=>{
+  return {
+      headers :{
+          ...headers,
+          Authorization: localStorage.getItem("token") !== null && 'Bearer '+ localStorage.getItem("token") ||  ""
+      }
+  }
+})
+
 const client = new ApolloClient({
-  uri: 'https://backend-artikel.herokuapp.com/graphql',
+  link: authorizationLink.concat(httpLink),
   cache: new InMemoryCache()
 })
+
+
+
+
+
+// const public2 = new ApolloClient({
+//   uri: 'https://backend-artikel.herokuapp.com/graphql',
+//   cache: new InMemoryCache()
+// })
 
 
 class App extends Component {
@@ -41,7 +64,6 @@ class App extends Component {
                     <Route path="category/:genre" element={<Category/>} />
                     <Route path="about" element={<About/>} />
                     <Route path="moviesdetail/:id" element={<DetailsMovies />} />
-                    <Route path="film/:id" element={<DetailsArticle />} />
                     <Route path="search/:name" element={<SearchResult/>} />
                     <Route path="user" element={<User />} />
               </Routes>

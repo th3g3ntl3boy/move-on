@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Container, Row, Col, Spinner, Alert, Button, } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
-import { useQuery } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV } from '../../Hooks/Querry.js';
+import { useQuery, useMutation } from '@apollo/client';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, UPDATEVIEWS } from '../../Hooks/Querry.js';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -52,15 +52,96 @@ const DetailsMovies= () => {
     const [view, setView] = useState(0)
 
 
+    const [rating, setRating] = useState(0)
+    
+    const [star1, setStar1 ] = useState("")
+    const [star2, setStar2 ] = useState("")
+    const [star3, setStar3 ] = useState("")
+    const [star4, setStar4 ] = useState("")
+    const [star5, setStar5 ] = useState("")
+    
+
     const {error, loading, data} = useQuery(MOVIESDETAIL,{
-        variables: {id : id}
+        variables: {id : id},
+        onCompleted: (data) =>{
+            const data3 = JSON.parse(JSON.stringify(data));
+            console.log(data3.movie.data.attributes.view);
+            setView(data3.movie.data.attributes.view+1);
+            console.log(view)
+        }
     })
 
     const {data : dataCat} = useQuery(GETCATEGORYMOV,{
         variables: {code: {eq:data?.movie.data.attributes.category}, halaman:1}
     })
+
+    const {data : dataRate} = useQuery(GETRATINGMOV,{
+        variables: {id:id},
+        onCompleted: (dataRate) => {
+            let total = 0;
+            dataRate.ratings.data.map((bintang)=>{
+                total=bintang.attributes.star+total
+            });
+            setRating(total/dataRate.ratings.meta.pagination.total);
+        }
+    })
+
+    const [updateViewss,{data: dataView}] = useMutation(UPDATEVIEWS,{
+        variables: {id:id, watch: view},
+        onCompleted: (dataView) =>{
+            console.log(dataView)
+        }
+    })
+
     console.log(dataCat)
-   
+    console.log(dataRate)
+
+    function handleStar(){
+        if(rating<1){
+            setStar1("");
+            setStar2("");
+            setStar3("");
+            setStar4("");
+            setStar5("");
+        }if(rating>=1 && rating <2){
+            setStar1("-fill");
+            setStar2("");
+            setStar3("");
+            setStar4("");
+            setStar5("");
+        }if(rating>=2 && rating<3){
+            setStar1("-fill");
+            setStar2("-fill");
+            setStar3("");
+            setStar4("");
+            setStar5("");
+        }if(rating>=3 && rating<4){
+            setStar1("-fill");
+            setStar2("-fill");
+            setStar3("-fill");
+            setStar4("");
+            setStar5("");
+        }if(rating>=4 && rating<5){
+            setStar1("-fill");
+            setStar2("-fill");
+            setStar3("-fill");
+            setStar4("-fill");
+            setStar5("");
+        }if(rating==5){
+            setStar1("-fill");
+            setStar2("-fill");
+            setStar3("-fill");
+            setStar4("-fill");
+            setStar5("-fill");
+        }
+    }
+
+    useEffect(()=>{
+        updateViewss()
+        handleStar();
+        console.log(rating)
+    }, [rating])
+
 
     if(loading){
         return (
@@ -75,10 +156,10 @@ const DetailsMovies= () => {
             )
     }
     
-
     const data1 = JSON.parse(JSON.stringify(data))
 
     
+
     return(
         <Animasi>
             <Container>
@@ -99,12 +180,12 @@ const DetailsMovies= () => {
                         <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
                        
                         <div style={{display: "inline"}}>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star"></i>
-                            <p>4.3 (<i class="bi bi-people-fill"></i> 18)</p>
+                            <i class={`bi bi-star${star1}`}></i>
+                            <i class={`bi bi-star${star2}`}></i>
+                            <i class={`bi bi-star${star3}`}></i>
+                            <i class={`bi bi-star${star4}`}></i>
+                            <i class={`bi bi-star${star5}`}></i>
+                            <p>{rating} (<i class="bi bi-people-fill"></i> {dataRate?.ratings.meta.pagination.total})</p>
                         </div>           
                        
                         {data1.movie.data.attributes.description.substring(0,147)}
