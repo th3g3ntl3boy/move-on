@@ -1,5 +1,5 @@
 // library
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 // komponen
 import SearchBar from './SearchBar';
@@ -29,10 +29,10 @@ const NavBar = () =>{
     const onLogout = () => {
         logout();
         localStorage.clear();
-        navigate('/')
+        window.location.reload()
     }
+
     console.log(user)
-    console.log(user?.id)
     console.log(localStorage.getItem("name"))
     return(
         <div >

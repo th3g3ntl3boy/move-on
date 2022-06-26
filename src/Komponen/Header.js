@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import Typewriter from 'typewriter-effect';
 import { useContext } from 'react';
 import { AuthContext } from '../Hooks/authContext';
+import { GETIDENTITY } from '../Hooks/Querry';
+import { useQuery } from '@apollo/client/react';
 
 const Header = () =>{
-    const {user, logout} = useContext(AuthContext)
-    const [name, setName] = useState("")
+    const {user} = useContext(AuthContext)
 
-    useEffect(() => {
-        setName(localStorage.getItem("name"))
-    },[name])
+    const {data: identity} = useQuery(GETIDENTITY,{
+        variables: {id:user?.id}
+    })
 
-    const t ="${user?.user.username}"
+    console.log(identity)
+
+    const dir = "identity?.usersPermissionsUser.data.attributes.username"
+
     return(
         <div>
             <div className="text-center" style={{color: "white"}}>
@@ -23,9 +27,7 @@ const Header = () =>{
                         <>
                             <Typewriter
                                     onInit={(typewriter) => {
-                                    typewriter.typeString(`
-                                    ${localStorage.getItem("name")}
-                                    !`)
+                                    typewriter.typeString(localStorage.getItem("name") + " !")
                                     .start();
                                 }}
                             />

@@ -44,6 +44,7 @@ const breaker = [
 ]
 
 const DetailsMovies= () => {
+    
     const {id} = useParams()
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")

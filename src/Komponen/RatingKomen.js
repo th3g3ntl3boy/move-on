@@ -1,5 +1,7 @@
-import { selectHttpOptionsAndBodyInternal } from '@apollo/client';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { AuthContext } from '../Hooks/authContext';
+
+
 import {Form, FormControl, Button} from 'react-bootstrap'
 
 
@@ -15,6 +17,9 @@ const styles = {
 
 const RatingKomen = () => {
     
+    const context = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
+  
     const [rating, setRating] = useState(0)
     const [star1, setStar1 ] = useState("")
     const [star2, setStar2 ] = useState("")
@@ -67,7 +72,6 @@ const RatingKomen = () => {
         <div>
             <div className="text-center">
                 <p><em>Rate this movie</em></p>
-
                 <button 
                 style={styles}
                 onClick={()=>{
@@ -123,7 +127,6 @@ const RatingKomen = () => {
                 <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
                 onClick={()=>{
                     setHide("d-none");
-
                 }}
                 >
                     send
@@ -137,7 +140,8 @@ const RatingKomen = () => {
                     type="search"
                     placeholder="Comment.."
                     className="me-2"
-                    aria-label="Search"
+                    aria-label="Search" 
+                    
                 />
                 <Button 
                 variant="outline-secondary"

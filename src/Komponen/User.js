@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { AuthContext } from '../Hooks/authContext';
 // stylesheet
 import {Button, Modal, Form, Alert} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 
 
@@ -17,14 +17,14 @@ const styles = {
     outline: "none",
     color: "#7a4de2"
 };
+
+
 const User = () => {
     // koteks
     const context = useContext(AuthContext)
-
+    const {user} = useContext(AuthContext)
+   
     // regis
-    const [namauser, setNamauser] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirm, setConfirm] = useState("")
     const [email, setEmail] = useState("")
 
     // login
@@ -47,10 +47,11 @@ const User = () => {
     let navigate = useNavigate()
     const [eror, setEror] = useState([])
     
+    // regis mutation
     const [regis, {data : dataRegis}] = useMutation(SIGNUP,{
         update(proxy, {data: {regis: userData} }){
             context.login(userData);
-            navigate('/')
+            window.location.reload()
         },
         onError({graphQLErrors}){
             setEror(graphQLErrors)
@@ -59,15 +60,17 @@ const User = () => {
         onCompleted: (dataRegis)=>console.log(dataRegis)
     })
 
+    // login mutation
     const [login, {data : dataLogin}]= useMutation(LOGIN,{
         update(proxy, {data: {login: userData} }){
             context.login(userData);
-            navigate('/')
+            console.log(userData);
+            localStorage.setItem("name", userData.user.username);
+            window.location.reload()
+            
         },
         variables: {name: nama, pass: pass},
         onCompleted: (dataLogin)=>{
-            localStorage.setItem("id",dataLogin.login.user.id);
-            localStorage.setItem("name",dataLogin.login.user.username);
             console.log(dataLogin)
         },
         onError({graphQLErrors}){
@@ -77,9 +80,9 @@ const User = () => {
 
     return (
         <div>
-
-            <button style={styles}>
-                <i class="bi bi-person-circle" style={{ fontSize: 25 }} onClick={handleShow}></i>
+         
+            <button style={styles} onClick={handleShow}>
+                <i class="bi bi-person-circle" style={{ fontSize: 25 }} ></i>
             </button> 
 
             <Modal 
@@ -114,11 +117,12 @@ const User = () => {
                         <Button variant="primary" type="submit" className="text-end"
                         onClick={async (event) => {
                             await event.preventDefault();
-                            login();
+                            await login();
                         }}
                         >
                             Login
                         </Button>
+                        
                     </Form>
                 </Modal.Body>
 
@@ -172,7 +176,7 @@ const User = () => {
                         onClick={async (event) => {
                             await event.preventDefault();
                             await regis();
-                            login();
+                            await login();
                         }}
                         >
                             Regist

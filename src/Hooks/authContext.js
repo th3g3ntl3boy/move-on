@@ -14,12 +14,17 @@ if(localStorage.getItem("token")){
     }
 }
 
+
+
 const AuthContext = createContext({
     user: null,
     login: (userData) => {},
     logout: () => {}
-
 })
+
+
+
+
 
 function AuthReducer(state, action){
     switch(action.type){
@@ -44,7 +49,6 @@ function AuthProvider(props) {
     const[state, dispatch] = useReducer(AuthReducer, initalState)
     const login = (userData) => {
         localStorage.setItem("token", userData.jwt);
-        
         dispatch({
             type: 'LOGIN',
             payload: userData
