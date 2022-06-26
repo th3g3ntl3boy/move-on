@@ -32,37 +32,44 @@ const User = () => {
     const [pass, setPass] = useState("")
 
 
-    // modal trigger
+    // modal trigger login
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // regis trigger
-    const [showReg, setShowReg] = useState(false)
+    // modal trigger sign in
+    const [show1, setShow1] = useState(false);
+    const handleClose1 = () => setShow1(false);
+    const handleShow1 = () => setShow1(true);
+
 
     // mutasi
     let navigate = useNavigate()
     const [eror, setEror] = useState([])
     
     const [regis, {data : dataRegis}] = useMutation(SIGNUP,{
-        update(proxy, {dataRegis: {regis: userData} }){
+        update(proxy, {data: {regis: userData} }){
             context.login(userData);
             navigate('/')
         },
         onError({graphQLErrors}){
             setEror(graphQLErrors)
         },
-        variables: {name: namauser, pass: password, mail: email}, 
+        variables: {name: nama, pass: pass, mail: email}, 
         onCompleted: (dataRegis)=>console.log(dataRegis)
     })
 
     const [login, {data : dataLogin}]= useMutation(LOGIN,{
-        update(proxy, {dataLogin: {login: userData} }){
+        update(proxy, {data: {login: userData} }){
             context.login(userData);
-            navigate('/move-on')
+            navigate('/')
         },
         variables: {name: nama, pass: pass},
-        onCompleted: (dataLogin)=>console.log(dataLogin),
+        onCompleted: (dataLogin)=>{
+            localStorage.setItem("id",dataLogin.login.user.id);
+            localStorage.setItem("name",dataLogin.login.user.username);
+            console.log(dataLogin)
+        },
         onError({graphQLErrors}){
             setEror(graphQLErrors)
         },
@@ -116,8 +123,71 @@ const User = () => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <button style={styles}>
+                    <button style={styles}
+                    onClick={()=>{
+                        handleClose();
+                        handleShow1();
+                    }}
+                    >
                         <p>Create Account </p>
+                    </button>
+                </Modal.Footer>
+            </Modal>
+
+
+            
+            <Modal 
+            show={show1} 
+            onHide={handleClose1} 
+            backdrop="static"
+            keyboard={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Register</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail2" size="sm">
+                            <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value);}}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicEmail3" size="sm">
+                            <Form.Control type="text" placeholder="Email" onChange={(event)=>{setEmail(event.target.value);}}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword1" size="sm">
+                            <Form.Control type="password" placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox1">
+                            <Form.Check type="checkbox" label="Show password" />
+                        </Form.Group>
+                        {
+                            eror.map((error) =>{
+                                return(
+                                    <Alert variant='danger'>
+                                        {error.message}
+                                    </Alert>
+                                )
+                            })
+                        }
+                        <Button variant="primary" type="submit" className="text-end"
+                        onClick={async (event) => {
+                            await event.preventDefault();
+                            await regis();
+                            login();
+                        }}
+                        >
+                            Regist
+                        </Button>
+                    </Form>
+                </Modal.Body>
+                
+                <Modal.Footer>
+                    <button style={styles}
+                    onClick={()=>{
+                        handleClose1();
+                        handleShow();
+                    }}
+                    >
+                        <p>Already have account ?</p>
                     </button>
                 </Modal.Footer>
             </Modal>

@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 
 
 // stylesheet
-import {Navbar, Container, Nav, NavDropdown} from 'react-bootstrap';
+import {Navbar, Container, Nav, NavDropdown, Button} from 'react-bootstrap';
 import User from './User';
 import { AuthContext } from '../Hooks/authContext';
 
@@ -28,9 +28,12 @@ const NavBar = () =>{
 
     const onLogout = () => {
         logout();
+        localStorage.clear();
         navigate('/')
     }
     console.log(user)
+    console.log(user?.id)
+    console.log(localStorage.getItem("name"))
     return(
         <div >
             <Navbar bg="dark" expand="lg" fixed="top" style={{backgroundColor: "#7a4de2"}}>
@@ -53,7 +56,25 @@ const NavBar = () =>{
                         </Nav>
                     </Navbar.Collapse>
                     <SearchBar/>
-                    <User />
+
+                    {
+                        user ?
+
+                        <>
+                        <Button
+                        onClick={onLogout}
+                        >
+                            Log out
+                        </Button>
+                        </>
+
+                        :
+
+                        <>
+                        <User />
+                        </>
+                    }
+                    
                     {/* <Link to={`/user`} style={{ textDecoration: 'none'}}>
                         <button style={styles}>
                             <i class="bi bi-person-circle" style={{ fontSize: 25 }}></i>
