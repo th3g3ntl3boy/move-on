@@ -1,10 +1,11 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useState, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Container, Row, Col, Spinner, Alert, Button, } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, UPDATEVIEWS } from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY } from '../../Hooks/Querry.js';
+import { AuthContext } from '../../Hooks/authContext.js';
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -46,6 +47,9 @@ const breaker = [
 const DetailsMovies= () => {
     
     const {id} = useParams()
+    const {user} = useContext(AuthContext)
+
+
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
     const [counter, setCounter]= useState(0)
@@ -60,14 +64,25 @@ const DetailsMovies= () => {
     const [star4, setStar4 ] = useState("")
     const [star5, setStar5 ] = useState("")
     
+    
+    const [createWatchHist, {data: dataHist}] = useMutation(VIEWHISTORY, {
+        variables: {movid: id, userID: user?.id},
+        onCompleted: (dataHist) => {
+            console.log(dataHist)
+        }
+    })
+
+    const {data: dataView} = useQuery(VIEWSCOUNT,{
+        variables: {movid: id},
+        onCompleted: (dataView) => {
+            console.log(dataView)
+        }
+    }) 
 
     const {error, loading, data} = useQuery(MOVIESDETAIL,{
         variables: {id : id},
         onCompleted: (data) =>{
-            const data3 = JSON.parse(JSON.stringify(data));
-            console.log(data3.movie.data.attributes.view);
-            setView(data3.movie.data.attributes.view+1);
-            console.log(view)
+            createWatchHist()
         }
     })
 
@@ -83,13 +98,7 @@ const DetailsMovies= () => {
                 total=bintang.attributes.star+total
             });
             setRating(total/dataRate.ratings.meta.pagination.total);
-        }
-    })
-
-    const [updateViewss,{data: dataView}] = useMutation(UPDATEVIEWS,{
-        variables: {id:id, watch: view},
-        onCompleted: (dataView) =>{
-            console.log(dataView)
+            
         }
     })
 
@@ -137,7 +146,6 @@ const DetailsMovies= () => {
     }
 
     useEffect(()=>{
-        updateViewss()
         handleStar();
         console.log(rating)
     }, [rating])
@@ -178,14 +186,18 @@ const DetailsMovies= () => {
                             />                          
                         </div>
                         <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
-                       
+                        <small>
+                            <p>
+                            <i class="bi bi-eye"></i>  {dataView?.histories.meta.pagination.total} views
+                            </p>
+                        </small>
                         <div style={{display: "inline"}}>
                             <i class={`bi bi-star${star1}`}></i>
                             <i class={`bi bi-star${star2}`}></i>
                             <i class={`bi bi-star${star3}`}></i>
                             <i class={`bi bi-star${star4}`}></i>
                             <i class={`bi bi-star${star5}`}></i>
-                            <p>{rating} (<i class="bi bi-people-fill"></i> {dataRate?.ratings.meta.pagination.total})</p>
+                            <p>{rating} (<i class="bi bi-people-fill"></i> {dataRate?.ratings.meta.pagination.total}) </p>
                         </div>           
                        
                         {data1.movie.data.attributes.description.substring(0,147)}

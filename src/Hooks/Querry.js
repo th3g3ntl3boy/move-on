@@ -193,13 +193,12 @@ mutation updateRating($bintang: Int, $userId: ID, $movieId: ID){
 }
 `
 
-export const UPDATEVIEWS = gql`
-mutation updateView($id: ID!, $watch: Int){
-  updateMovie(id: $id, data: {view: $watch}){
-    data{
-      id
-      attributes{
-        view
+export const VIEWSCOUNT = gql`
+query ($movid : ID){
+  histories(filters: {movie: {id: {eq: $movid}}}){
+    meta{
+      pagination{
+        total
       }
     }
   }
@@ -207,6 +206,15 @@ mutation updateView($id: ID!, $watch: Int){
 
 `
 
+export const VIEWHISTORY = gql`
+mutation watch($movid: ID, $userID: ID) {
+  createHistory(data: {movie: $movid, users_permissions_user: $userID}){
+    data{
+      id
+    }
+  }
+}
+`
 
 
 

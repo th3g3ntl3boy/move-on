@@ -42,6 +42,8 @@ const User = () => {
     const handleClose1 = () => setShow1(false);
     const handleShow1 = () => setShow1(true);
 
+    // show pass
+    const [showPass, setShowPass] = useState("password")
 
     // mutasi
     let navigate = useNavigate()
@@ -100,10 +102,14 @@ const User = () => {
                             <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value);}}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword" size="sm">
-                            <Form.Control type="password" placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
+                            <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Show password" />
+                            <Form.Check type="checkbox" label="Show password" 
+                            onClick={()=>{
+                                showPass==="password" ?
+                                setShowPass("text") : setShowPass("password")
+                                }}/>
                         </Form.Group>
                         {
                             eror.map((error) =>{
@@ -114,28 +120,34 @@ const User = () => {
                                 )
                             })
                         }
-                        <Button variant="primary" type="submit" className="text-end"
-                        onClick={async (event) => {
-                            await event.preventDefault();
-                            await login();
-                        }}
-                        >
-                            Login
-                        </Button>
+                        <div className="text-end">
+                            <Button variant="primary" type="submit" 
+                            onClick={async (event) => {
+                                await event.preventDefault();
+                                await login();
+                            }}
+                            >
+                                Login
+                            </Button>
+
+                        </div>
                         
                     </Form>
                 </Modal.Body>
-
-                <Modal.Footer>
-                    <button style={styles}
-                    onClick={()=>{
-                        handleClose();
-                        handleShow1();
-                    }}
-                    >
-                        <p>Create Account </p>
-                    </button>
-                </Modal.Footer>
+                    <Modal.Footer  >
+                
+                        <button style={styles}
+                        onClick={()=>{
+                            handleClose();
+                            handleShow1();
+                        }}
+                        >
+                            <small>
+                                <em>Create Account ?</em>
+                            </small>
+                        </button>
+              
+                    </Modal.Footer>
             </Modal>
 
 
@@ -158,10 +170,14 @@ const User = () => {
                             <Form.Control type="text" placeholder="Email" onChange={(event)=>{setEmail(event.target.value);}}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword1" size="sm">
-                            <Form.Control type="password" placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
+                            <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCheckbox1">
-                            <Form.Check type="checkbox" label="Show password" />
+                            <Form.Check type="checkbox" label="Show password" 
+                            onClick={()=>{
+                                showPass==="password" ?
+                                setShowPass("text") : setShowPass("password")
+                                }}/>
                         </Form.Group>
                         {
                             eror.map((error) =>{
@@ -172,15 +188,17 @@ const User = () => {
                                 )
                             })
                         }
-                        <Button variant="primary" type="submit" className="text-end"
-                        onClick={async (event) => {
-                            await event.preventDefault();
-                            await regis();
-                            await login();
-                        }}
-                        >
-                            Regist
-                        </Button>
+                        <div className="text-end">
+                            <Button variant="primary" type="submit" className="text-end"
+                            onClick={async (event) => {
+                                await event.preventDefault();
+                                await regis();
+                                await login();
+                            }}
+                            >
+                                Regist
+                            </Button>
+                        </div>
                     </Form>
                 </Modal.Body>
                 
@@ -191,7 +209,9 @@ const User = () => {
                         handleShow();
                     }}
                     >
-                        <p>Already have account ?</p>
+                        <small>
+                            <em>Already have account ?</em>
+                        </small>
                     </button>
                 </Modal.Footer>
             </Modal>

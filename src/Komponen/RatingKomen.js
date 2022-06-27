@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
-import { CREATERATING } from '../Hooks/Querry';
+import { CREATERATING, GETRATINGMOV } from '../Hooks/Querry';
 
 import {Form, FormControl, Button} from 'react-bootstrap'
 
@@ -33,7 +33,12 @@ const RatingKomen = () => {
 
     const [createRate, {loading, data}] = useMutation(CREATERATING,{
         variables: {bintang: rating, userId: user?.id, movieId: movId},
-        onCompleted: (data)=>console.log(data)
+        onCompleted: (data)=>console.log(data),
+        refetchQueries :[
+            {
+                query: GETRATINGMOV
+            }, 'getRatingsMov'
+        ]
     })
 
     function handleStar(){
