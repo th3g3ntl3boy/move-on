@@ -14,6 +14,7 @@ import Kartu from '../../Komponen/Kartu/Kartu.js';
 import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
+import Komen from '../../Komponen/Komen.js';
 
 const center = {
     width: "50px",
@@ -93,12 +94,15 @@ const DetailsMovies= () => {
     const {data : dataRate} = useQuery(GETRATINGMOV,{
         variables: {id:id},
         onCompleted: (dataRate) => {
-            let total = 0;
-            dataRate.ratings.data.map((bintang)=>{
-                total=bintang.attributes.star+total
-            });
-            setRating(total/dataRate.ratings.meta.pagination.total);
-            
+            if (dataRate.ratings.data.length>0){
+                let total = 0;
+                dataRate.ratings.data?.map((bintang)=>{
+                    total=bintang.attributes.star+total
+                });
+                setRating(total/dataRate.ratings.meta.pagination.total);
+            }else{
+                setRating(0)
+            }
         }
     })
 
@@ -188,7 +192,7 @@ const DetailsMovies= () => {
                         <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
                         <small>
                             <p>
-                            <i class="bi bi-eye"></i>  {dataView?.histories.meta.pagination.total} views
+                            <i class="bi bi-eye"></i>  {dataView?.histories.meta.pagination.total} Views
                             </p>
                         </small>
                         <div style={{display: "inline"}}>
@@ -231,9 +235,12 @@ const DetailsMovies= () => {
                         <RatingKomen />
 
                         <br></br>
-                        <div className="text-center">
+
+                        <Komen />
+                        <Komen />
+                        {/* <div className="text-center">
                             <p><em><i>no comment just yet</i></em></p>
-                        </div>
+                        </div> */}
 
                     </Col>
                     <Col md="auto">

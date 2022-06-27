@@ -1,0 +1,11 @@
+@media only screen and (max-width: 420px) {
+    .repons{
+        font-size: xx-small;
+    }
+    .respons-comment{
+        font-size: small;
+    }
+    .up{
+        font-size: smaller;
+    }
+}

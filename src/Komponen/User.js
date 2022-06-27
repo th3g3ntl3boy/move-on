@@ -93,8 +93,9 @@ const User = () => {
             {
                 user? 
                 
-                <>
-                    <Dropdown>
+                <>  
+
+                    <Dropdown align="end">
                         <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary" style={styles}>
                             <i class="bi bi-person-circle" style={{ fontSize: 25 }} ></i>
                         </Dropdown.Toggle>
