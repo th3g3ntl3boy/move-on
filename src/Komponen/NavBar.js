@@ -56,25 +56,7 @@ const NavBar = () =>{
                         </Nav>
                     </Navbar.Collapse>
                     <SearchBar/>
-
-                    {
-                        user ?
-
-                        <>
-                        <Button
-                        onClick={onLogout}
-                        >
-                            Log out
-                        </Button>
-                        </>
-
-                        :
-
-                        <>
-                        <User />
-                        </>
-                    }
-                    
+                    <User />
                     {/* <Link to={`/user`} style={{ textDecoration: 'none'}}>
                         <button style={styles}>
                             <i class="bi bi-person-circle" style={{ fontSize: 25 }}></i>

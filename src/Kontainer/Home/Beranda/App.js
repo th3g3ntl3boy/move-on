@@ -65,13 +65,13 @@ class App extends Component {
                     <Route path="about" element={<About/>} />
                     <Route path="moviesdetail/:id" element={<DetailsMovies />} />
                     <Route path="search/:name" element={<SearchResult/>} />
-                    <Route path="user" element={<User />} />
+                    <Route path="user/:id" element={<User />} />
               </Routes>
               <footer style={{position: "relative", left: "0", bottom:"0", width:"100%", height:"80px"}}>
                 <div style={{color: "#7a4de2"}}>
                   <hr></hr>
                   <div class="text-center p-4" >
-                      © 2022 Copyright: Kelompok 9
+                      Kelompok 9
                   </div>
                 </div>
               </footer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Typewriter from 'typewriter-effect';
 import { useContext } from 'react';
 import { AuthContext } from '../Hooks/authContext';

@@ -1,10 +1,30 @@
+@media only screen and (max-width: 420px) {
+    .search-bar {
+        overflow: hidden;
+        position: relative;
+    }
+    .search-bar form{
+        width:220px;
+    }
+}
+
+
 @media only screen and (max-width: 360px) {
     .search-bar {
         overflow: hidden;
         position: relative;
     }
     .search-bar form{
-        width:180px;
+        width:200px;
     }
 }
 
+@media only screen and (max-width: 320px) {
+    .search-bar {
+        overflow: hidden;
+        position: relative;
+    }
+    .search-bar form{
+        width:160px;
+    }
+}

@@ -47,17 +47,34 @@ mutation regUser($name: String!, $pass: String!, $mail: String! ) {
 `
 
 export const GETIDENTITY = gql`
-query getUser($id :ID){
+query getUser ($id : ID){
   usersPermissionsUser(id: $id){
     data{
       attributes{
         username
+        gender
+        histories(filters: {
+          users_permissions_user: {id: {eq: $id}}
+        }){
+          data{
+            attributes{
+              movie{
+                data{
+                  id
+                  attributes{
+                    title
+                    linkgambar
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 }
 `
-
 
 export const MOVIESDETAIL = gql`
 query getMovies($id: ID!){
