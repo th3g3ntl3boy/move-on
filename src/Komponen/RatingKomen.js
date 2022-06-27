@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
-import { CREATERATING, GETRATINGMOV } from '../Hooks/Querry';
+import { CREATERATING, GETRATINGMOV, MOVIESDETAIL,CREATECOMMENT} from '../Hooks/Querry';
 
 import {Form, FormControl, Button} from 'react-bootstrap'
 
@@ -31,6 +31,8 @@ const RatingKomen = () => {
 
     const [hide, setHide] = useState("d-none")
 
+    const [komentar, setKomentar] = useState("")
+
     const [createRate, {loading, data}] = useMutation(CREATERATING,{
         variables: {bintang: rating, userId: user?.id, movieId: movId},
         onCompleted: (data)=>console.log(data),
@@ -38,6 +40,18 @@ const RatingKomen = () => {
             {
                 query: GETRATINGMOV
             }, 'getRatingsMov'
+        ]
+    })
+
+    const [createComment, {data: commentid}] = useMutation(CREATECOMMENT, {
+        variables: {movid: movId, userid: user?.id, komen: komentar},
+        onCompleted: (commentid) => {
+            console.log(commentid)
+        },
+        refetchQueries: [
+            {
+                query: MOVIESDETAIL
+            }, 'getMovies'
         ]
     })
 
@@ -158,10 +172,11 @@ const RatingKomen = () => {
                     placeholder="Comment.."
                     className="me-2"
                     aria-label="Search" 
-                    
+                    onChange={(event)=>setKomentar(event.target.value)}
                 />
                 <Button 
                 variant="outline-secondary"
+                onClick={()=>createComment()}
                 >Post</Button>
             </Form>
         </div>

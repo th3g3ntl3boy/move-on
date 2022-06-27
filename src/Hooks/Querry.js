@@ -89,6 +89,24 @@ query getMovies($id: ID!){
         description
         release_date
         view
+        comments{
+          data{
+            id
+            attributes{
+              comment
+              createdAt
+              likes
+              users_permissions_user{
+                data{
+                  id
+                  attributes{
+                    username
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -233,7 +251,20 @@ mutation watch($movid: ID, $userID: ID) {
 }
 `
 
+export const CREATECOMMENT = gql`
+mutation($movid: ID, $userid: ID, $komen: String){
+  createComment(data: {
+    movie: $movid,
+    users_permissions_user: $userid,
+    comment: $komen
+  }){
+    data{
+      id
+    }
+  }
+}
 
+`
 
 
 

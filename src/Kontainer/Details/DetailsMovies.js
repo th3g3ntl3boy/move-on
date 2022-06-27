@@ -4,7 +4,7 @@ import { Container, Row, Col, Spinner, Alert, Button, } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY } from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY} from '../../Hooks/Querry.js';
 import { AuthContext } from '../../Hooks/authContext.js';
 
 // komponen
@@ -15,6 +15,7 @@ import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
 import Komen from '../../Komponen/Komen.js';
+import { Bounce } from 'react-reveal';
 
 const center = {
     width: "50px",
@@ -65,6 +66,8 @@ const DetailsMovies= () => {
     const [star4, setStar4 ] = useState("")
     const [star5, setStar5 ] = useState("")
     
+
+    
     
     const [createWatchHist, {data: dataHist}] = useMutation(VIEWHISTORY, {
         variables: {movid: id, userID: user?.id},
@@ -72,6 +75,8 @@ const DetailsMovies= () => {
             console.log(dataHist)
         }
     })
+
+   
 
     const {data: dataView} = useQuery(VIEWSCOUNT,{
         variables: {movid: id},
@@ -83,6 +88,7 @@ const DetailsMovies= () => {
     const {error, loading, data} = useQuery(MOVIESDETAIL,{
         variables: {id : id},
         onCompleted: (data) =>{
+            console.log(data);
             createWatchHist()
         }
     })
@@ -235,12 +241,33 @@ const DetailsMovies= () => {
                         <RatingKomen />
 
                         <br></br>
-
-                        <Komen />
-                        <Komen />
-                        {/* <div className="text-center">
-                            <p><em><i>no comment just yet</i></em></p>
-                        </div> */}
+                        {
+                            data1.movie.data.attributes.comments.data.length>0? 
+                            <>
+                            {
+                                
+                                data1.movie.data.attributes.comments.data.slice(0).reverse().map((komen)=>(
+                                    <Bounce bottom duration={500}>
+                                        <div key={komen.id}>
+                                            <Komen
+                                            user={komen.attributes.users_permissions_user.data.attributes.username}
+                                            comment={komen.attributes.comment}
+                                            date={komen.attributes.createdAt.substring(11,16)}
+                                            like={komen.attributes.likes}
+                                            />
+                                        </div>
+                                    </Bounce>
+                                ))
+                            }
+                            </>
+                            :
+                            <>
+                                <div className="text-center">
+                                    <p><em><i>no comment just yet</i></em></p>
+                                </div>
+                            </>
+                        }
+                        
 
                     </Col>
                     <Col md="auto">
