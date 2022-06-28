@@ -123,54 +123,69 @@ const Beranda = () => {
                                         </Col>
                                 </Row>
                                 <br></br>
-                                <Row className="flex-column-reverse flex-md-row align-items-center" >
-                                        <Col>
-                                        <div className="text-end">
-                                        <button style={styles}>
-                                                <small>
-                                                <span class="badge rounded-pill text-bg-light">Show All</span>
-                                                </small>
-                                        </button>
-                                        </div>
-
-                                        <div className="styling-example">
-                                        <Carousel 
-                                        breakPoints={breaker} 
-                                        enableAutoPlay="true" 
-                                        autoPlaySpeed="6000" 
-                                        transitionMs="750" 
-                                        showArrows={false} 
-                                        pagination={false} 
-                                        initialActiveIndex={1}
-                                        itemsToScroll={2}
-                                        focusOnSelect={true}  
-                                        >
-                                                {dataIndo?.movies.data?.map((movie)=>(
-                                                <div key={movie.id}>
-                                                        <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                                                <Kartu
-                                                                sumber={`${movie.attributes.linkgambar}`}
-                                                                judul={`${movie.attributes.title.substring(0, 20)}`} 
-                                                                />
-                                                        </Link>
-                                                </div>
-
-                                        ))
-                                        }
-                                        </Carousel>
-                                        </div>
-                                        </Col>
-                                        <Col md="auto"></Col>
-                                        <Col xs lg="2" className="my-4">
-                                        <h2 className="text-center" style={{color: "white"}}>
-                                                
-                                        Top Indonesian Movies
-                                                
-                                        </h2>
-                                        </Col>
-                                </Row>
-                                <br></br>
                                 </Bounce>
+
+                                {
+                                        dataIndo?
+                                        <>
+                                        <Bounce right>
+
+                                                <Row className="flex-column-reverse flex-md-row align-items-center" >   
+                                                        <Col>
+                                                        <div className="text-end">
+                                                        <button style={styles}>
+                                                                <small>
+                                                                <span class="badge rounded-pill text-bg-light">Show All</span>
+                                                                </small>
+                                                        </button>
+                                                        </div>
+
+                                                        <div className="styling-example">
+                                                        <Carousel 
+                                                        breakPoints={breaker} 
+                                                        enableAutoPlay="true" 
+                                                        autoPlaySpeed="6000" 
+                                                        transitionMs="750" 
+                                                        showArrows={false} 
+                                                        pagination={false} 
+                                                        initialActiveIndex={1}
+                                                        itemsToScroll={2}
+                                                        focusOnSelect={true}  
+                                                        >
+                                                                {dataIndo?.movies.data?.map((movie)=>(
+                                                                <div key={movie.id}>
+                                                                        <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                                <Kartu
+                                                                                sumber={`${movie.attributes.linkgambar}`}
+                                                                                judul={`${movie.attributes.title.substring(0, 20)}`} 
+                                                                                />
+                                                                        </Link>
+                                                                </div>
+
+                                                        ))
+                                                        }
+                                                        </Carousel>
+                                                        </div>
+                                                        </Col>
+                                                        <Col md="auto"></Col>
+                                                        <Col xs lg="2" className="my-4">
+                                                        <h2 className="text-center" style={{color: "white"}}>
+                                                        Top Indonesian Movies
+                                                        </h2>
+                                                        </Col>
+                                                </Row>
+                                                <br></br>
+                                        </Bounce>
+                                        </>
+
+                                        :
+
+                                        <>
+                                        
+                                        </>
+                                }
+                                
+                                
                         </div>
                         </Container>
                 </Fragment>

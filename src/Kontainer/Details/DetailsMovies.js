@@ -187,17 +187,32 @@ const DetailsMovies= () => {
                 <Row >
                     <Col style={{color: "white"}}>
                         <br></br>
-                        <div className="video-responsive">
-                            <iframe
-                                width="700"
-                                height="400"
-                                src={`https://www.youtube.com/embed/${data1.movie.data.attributes.ytlink}`}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                title="Embedded youtube"
-                            />                          
-                        </div>
+                            {
+                                data1.movie.data.attributes.ytlink?
+
+                                <>
+                                <Bounce left duration={2500}>
+                                    <div className="video-responsive">
+                                        <iframe
+                                            width="700"
+                                            height="400"
+                                            src={`https://www.youtube.com/embed/${data1.movie.data.attributes.ytlink}`}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                            title="Embedded youtube"
+                                        />                          
+                                    </div>
+                                </Bounce>
+                                </>
+
+                                :
+
+                                <>
+                                </>
+
+                            }
+                            
                         <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
                         <small>
                             <p>
@@ -277,74 +292,98 @@ const DetailsMovies= () => {
                     </Col>
                     <Col xs lg="4" className="my-4">
 
-                        <h3 style={{color: "white"}}>
-                            {`More ${dataCat2?.category.data?.attributes.category} Movies`}
-                        </h3>
-                        <button style={styles}>
-                            <small>
-                            <span class="badge rounded-pill text-bg-light">Show All</span>
-                            </small>
-                        </button>
-                        <div className="styling-example">
-                            <Carousel 
-                            breakPoints={breaker} 
-                            enableAutoPlay="true" 
-                            autoPlaySpeed="5000" 
-                            transitionMs="1000" 
-                            showArrows={false} 
-                            pagination={false}
-                            itemPadding={[10]}
-                            itemsToScroll={2}  
-                            verticalMode={true}  
-                            initialActiveIndex={1} 
-                            outerSpacing={80}
-                            >
-                                {dataCat2?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
-                                    <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                            <Kartu
-                                            sumber={`${cat.attributes.linkgambar}`}
-                                            judul={`${cat.attributes.title.substring(0, 20)}`} 
-                                            />
-                                    </Link>
-                                    ))
-                                }
-                            </Carousel>
-                        </div>
+                        {
+                            dataCat2?
 
+                            <>
+                            <Bounce right>
+                                <h3 style={{color: "white"}}>
+                                    {`More ${dataCat2?.category.data?.attributes.category} Movies`}
+                                </h3>
+                                <button style={styles}>
+                                    <small>
+                                    <span class="badge rounded-pill text-bg-light">Show All</span>
+                                    </small>
+                                </button>
+                                <div className="styling-example">
+                                    <Carousel 
+                                    breakPoints={breaker} 
+                                    enableAutoPlay="true" 
+                                    autoPlaySpeed="5000" 
+                                    transitionMs="1000" 
+                                    showArrows={false} 
+                                    pagination={false}
+                                    itemPadding={[10]}
+                                    itemsToScroll={2}  
+                                    verticalMode={true}  
+                                    initialActiveIndex={1} 
+                                    outerSpacing={80}
+                                    >
+                                        {dataCat2?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                            <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                    <Kartu
+                                                    sumber={`${cat.attributes.linkgambar}`}
+                                                    judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                                    />
+                                            </Link>
+                                            ))
+                                        }
+                                    </Carousel>
+                                </div>
+                            </Bounce>
+                            </>
 
-                        <h3 style={{color: "white"}}>
-                            {`More ${dataCat1?.category.data?.attributes.category} Movies`}
-                        </h3>
-                        <button style={styles}>
-                            <small>
-                            <span class="badge rounded-pill text-bg-light">Show All</span>
-                            </small>
-                        </button>
-                        <div className="styling-example">
-                            <Carousel 
-                            breakPoints={breaker} 
-                            enableAutoPlay="true" 
-                            autoPlaySpeed="5000" 
-                            transitionMs="1000" 
-                            showArrows={false} 
-                            pagination={false}
-                            itemPadding={[10]}
-                            itemsToScroll={2}  
-                            verticalMode={true}  
-                            initialActiveIndex={1} 
-                            outerSpacing={80}
-                            >
-                                {dataCat1?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
-                                    <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                            <Kartu
-                                            sumber={`${cat.attributes.linkgambar}`}
-                                            judul={`${cat.attributes.title.substring(0, 20)}`} 
-                                            />
-                                    </Link>
-                                    ))
-                                }
-                            </Carousel>
-                        </div>
+                            :
+
+                            <></>
+                        }
+
+                        {
+                            dataCat1?
+
+                            <>
+                            <Bounce right>
+
+                                <h3 style={{color: "white"}}>
+                                    {`More ${dataCat1?.category.data?.attributes.category} Movies`}
+                                </h3>
+                                <button style={styles}>
+                                    <small>
+                                    <span class="badge rounded-pill text-bg-light">Show All</span>
+                                    </small>
+                                </button>
+                                <div className="styling-example">
+                                    <Carousel 
+                                    breakPoints={breaker} 
+                                    enableAutoPlay="true" 
+                                    autoPlaySpeed="5000" 
+                                    transitionMs="1000" 
+                                    showArrows={false} 
+                                    pagination={false}
+                                    itemPadding={[10]}
+                                    itemsToScroll={2}  
+                                    verticalMode={true}  
+                                    initialActiveIndex={1} 
+                                    outerSpacing={80}
+                                    >
+                                        {dataCat1?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                            <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                    <Kartu
+                                                    sumber={`${cat.attributes.linkgambar}`}
+                                                    judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                                    />
+                                            </Link>
+                                            ))
+                                        }
+                                    </Carousel>
+                                </div>
+                            </Bounce>
+                            </>
+
+                            :
+                            <></>
+                        }
+                       
                     </Col>
                 </Row>
             </Container>
