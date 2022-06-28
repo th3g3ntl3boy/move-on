@@ -191,7 +191,7 @@ const DetailsMovies= () => {
                                 data1.movie.data.attributes.ytlink?
 
                                 <>
-                                <Bounce left duration={2500}>
+                                <Bounce left duration={2000} delay={1000}>
                                     <div className="video-responsive">
                                         <iframe
                                             width="700"
@@ -301,9 +301,11 @@ const DetailsMovies= () => {
                                     {`More ${dataCat2?.category.data?.attributes.category} Movies`}
                                 </h3>
                                 <button style={styles}>
-                                    <small>
-                                    <span class="badge rounded-pill text-bg-light">Show All</span>
-                                    </small>
+                                    <Link to={`/category/${dataCat2?.category.data?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <small>
+                                        <span class="badge rounded-pill text-bg-light">Show All</span>
+                                        </small>
+                                    </Link>
                                 </button>
                                 <div className="styling-example">
                                     <Carousel 
@@ -343,14 +345,15 @@ const DetailsMovies= () => {
 
                             <>
                             <Bounce right>
-
                                 <h3 style={{color: "white"}}>
                                     {`More ${dataCat1?.category.data?.attributes.category} Movies`}
                                 </h3>
                                 <button style={styles}>
-                                    <small>
-                                    <span class="badge rounded-pill text-bg-light">Show All</span>
-                                    </small>
+                                    <Link to={`/category/${dataCat1?.category.data?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <small>
+                                        <span class="badge rounded-pill text-bg-light">Show All</span>
+                                        </small>
+                                    </Link>
                                 </button>
                                 <div className="styling-example">
                                     <Carousel 

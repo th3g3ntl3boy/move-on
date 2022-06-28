@@ -73,57 +73,67 @@ const Beranda = () => {
                         <Header></Header>
                         <Container fluid="sm">
                                 <div style={{overflow: 'hidden'}}>
-                                        
-                                <Bounce right>
-                                <Row className="flex-column-reverse flex-md-row align-items-center">
-                                        <Col>
-                                        <div className="text-end">
-                                        <button style={styles}>
-                                                <small>
-                                                <span class="badge rounded-pill text-bg-light">Show All</span>
-                                                </small>
-                                        </button>
-                                        </div>
+                                
+                                {
+                                        data1?
 
-                                        <div className="styling-example"
-                                        >
-                                        
-                                        <Carousel 
-                                        breakPoints={breaker} 
-                                        enableAutoPlay="true" 
-                                        autoPlaySpeed="4500" 
-                                        transitionMs="1000" 
-                                        showArrows={false} 
-                                        pagination={false} 
-                                        initialActiveIndex={1} 
-                                        itemsToScroll={2}
-                                        focusOnSelect={true}
-                                        >
-                                        {data1?.movies.data?.map((movie)=>(
-                                                <div key={movie.id}>
-                                                        <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                                                <Kartu
-                                                                sumber={`${movie.attributes.linkgambar}`}
-                                                                judul={`${movie.attributes.title.substring(0, 20)}`} 
-                                                                />
-                                                        </Link>
+                                        <>
+                                        <Bounce right>
+                                        <Row className="flex-column-reverse flex-md-row align-items-center">
+                                                <Col>
+                                                <div className="text-end">
+                                                <button style={styles}>
+                                                        <small>
+                                                        <span class="badge rounded-pill text-bg-light">Show All</span>
+                                                        </small>
+                                                </button>
                                                 </div>
 
-                                        ))
-                                        }
+                                                <div className="styling-example"
+                                                >
                                                 
-                                        </Carousel>
-                                        </div>
-                                        </Col>
-                                        <Col md="auto"></Col>
-                                        <Col xs lg="2" className="my-4">
-                                        <h2 className="text-center" style={{color: "white"}}>
-                                                Top Movies Ratings <i class="bi bi-star-half"></i>
-                                        </h2>
-                                        </Col>
-                                </Row>
-                                <br></br>
-                                </Bounce>
+                                                <Carousel 
+                                                breakPoints={breaker} 
+                                                enableAutoPlay="true" 
+                                                autoPlaySpeed="4500" 
+                                                transitionMs="1000" 
+                                                showArrows={false} 
+                                                pagination={false} 
+                                                initialActiveIndex={1} 
+                                                itemsToScroll={2}
+                                                focusOnSelect={true}
+                                                >
+                                                {data1?.movies.data?.map((movie)=>(
+                                                        <div key={movie.id}>
+                                                                <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        <Kartu
+                                                                        sumber={`${movie.attributes.linkgambar}`}
+                                                                        judul={`${movie.attributes.title.substring(0, 20)}`} 
+                                                                        />
+                                                                </Link>
+                                                        </div>
+
+                                                ))
+                                                }
+                                                        
+                                                </Carousel>
+                                                </div>
+                                                </Col>
+                                                <Col md="auto"></Col>
+                                                <Col xs lg="2" className="my-4">
+                                                <h2 className="text-center" style={{color: "white"}}>
+                                                        Top Movies Ratings <i class="bi bi-star-half"></i>
+                                                </h2>
+                                                </Col>
+                                        </Row>
+                                        <br></br>
+                                        </Bounce>
+                                        </>
+
+                                        :
+
+                                        <></>
+                                }
 
                                 {
                                         dataIndo?

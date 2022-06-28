@@ -156,6 +156,7 @@ export const GETCATEGORYMOV = gql`
 query getCategoryMov($id: ID, $halaman: Int){
 	category(id: $id){
     data{
+      id
       attributes{
         category
         movies(pagination: {page: $halaman, pageSize: 12}){
