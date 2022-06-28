@@ -89,6 +89,14 @@ query getMovies($id: ID!){
         description
         release_date
         view
+        categories{
+          data{
+            id
+            attributes{
+              category
+            }
+          }
+        }
         comments{
           data{
             id
@@ -129,19 +137,43 @@ query getIDmovies($code: StringFilterInput!){
 
 `
 
-export const GETCATEGORYMOV = gql`
-query getCategory($code: StringFilterInput, $halaman: Int){
-  movies(
-    filters: {category: $code},
-    pagination: {page: $halaman, pageSize: 12},
-    sort: ["id"]
-    ){
+export const GETCATEGORY= gql `
+query getCategory{
+  categories{
     data{
       id
       attributes{
-        title
         category
-        linkgambar
+      }
+    }
+  }
+}
+
+`
+
+
+export const GETCATEGORYMOV = gql`
+query getCategoryMov($id: ID, $halaman: Int){
+	category(id: $id){
+    data{
+      attributes{
+        category
+        movies(pagination: {page: $halaman, pageSize: 12}){
+          data{
+            id
+            attributes{
+              title
+              linkgambar
+              ratings(pagination: {limit: 999999}){
+                data{
+                  attributes{
+                    star
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

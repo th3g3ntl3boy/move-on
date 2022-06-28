@@ -61,7 +61,7 @@ class App extends Component {
               <br></br>
               <Routes>
                     <Route exact path="/" element={<Beranda />} />
-                    <Route path="category/:genre" element={<Category/>} />
+                    <Route path="category/:id" element={<Category/>} />
                     <Route path="about" element={<About/>} />
                     <Route path="moviesdetail/:id" element={<DetailsMovies />} />
                     <Route path="search/:name" element={<SearchResult/>} />

@@ -8,7 +8,6 @@ import Animasi from '../../../Komponen/Animasi';
 import Kartu from '../../../Komponen/Kartu/Kartu';
 import { Container, Col, Row, Spinner, Alert } from 'react-bootstrap';
 import { Bounce } from 'react-reveal';
-import Jello from 'react-reveal/Jello'
 
 const styles = {
     backgroundColor: "transparent",
@@ -27,14 +26,11 @@ const center = {
     left: "50%",
     margin: "-25px 0 0 -25px"
 }
-const link = `https://backend-artikel.herokuapp.com`
 
 const Category= () => {
-    const {genre} = useParams()
-    const [animate, setAnimate] = useState(false)
-    const [disapear, setDisapear] = useState("")
+    const {id} = useParams()
     const {loading, error, data} = useQuery(GETCATEGORYMOV,{
-        variables: {code: {eq:genre}, halaman:1}
+        variables: {id:id, halaman:1}
     })
     if(loading){
         return (
@@ -52,7 +48,7 @@ const Category= () => {
     return(
         <Animasi>
                 <div className="text-center" style={{color: "white"}}>
-                    <h1>{genre}</h1>
+                    <h1>{data.category.data.attributes.category}</h1>
                     <hr style={{color: "#7a4de2"}}></hr>
                 </div>
 
@@ -60,7 +56,7 @@ const Category= () => {
                     <div style={{overflow: 'hidden'}}>
                     <Bounce bottom>
                     <Row justify-content-md-center>
-                        {data.movies.data?.map((cat)=>(
+                        {data.category.data.attributes.movies.data?.map((cat)=>(
                             <Col lg={2} xs={6} md={3} className="my-2">
                                 <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu

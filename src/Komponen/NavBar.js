@@ -1,14 +1,14 @@
 // library
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import { GETCATEGORY } from '../Hooks/Querry';
+import { useQuery } from '@apollo/client/react';
 // komponen
 import SearchBar from './SearchBar';
-
-
 // stylesheet
 import {Navbar, Container, Nav, NavDropdown, Button} from 'react-bootstrap';
 import User from './User';
-import { AuthContext } from '../Hooks/authContext';
+
 
 const styles = {
     backgroundColor: "transparent",
@@ -22,18 +22,10 @@ const styles = {
 
 
 const NavBar = () =>{
-    const {user, logout} = useContext(AuthContext)
+    const {data} = useQuery(GETCATEGORY)
+    console.log(data)
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
-
-    const onLogout = () => {
-        logout();
-        localStorage.clear();
-        window.location.reload()
-    }
-
-    console.log(user)
-    console.log(localStorage.getItem("name"))
     return(
         <div >
             <Navbar bg="dark" expand="lg" fixed="top" style={{backgroundColor: "#7a4de2"}}>
@@ -43,14 +35,11 @@ const NavBar = () =>{
                         <Nav className="me-auto">
                             <Nav.Link as={Link} to={"/"} style={{color: "#7a4de2"}}><b>Home</b></Nav.Link>
                             <NavDropdown title="Category" id="basic-nav-dropdown" style={{backgroundColor: "#7a4de2"}}>
-                                <NavDropdown.Item as={Link} to={"/category/Comedy"} style={{color: "#7a4de2"}}>Comedy</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Adventure"} style={{color: "#7a4de2"}}>Adventure</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Romance"} style={{color: "#7a4de2"}}>Romance</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/School"} style={{color: "#7a4de2"}}>School</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Action"} style={{color: "#7a4de2"}}>Action</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Horor"} style={{color: "#7a4de2"}}>Horor</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Sci-Fi"} style={{color: "#7a4de2"}}>Sci-Fi</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to={"/category/Conscpiracy"} style={{color: "#7a4de2"}}>Conscpiracy</NavDropdown.Item>
+                                {   
+                                    data?.categories.data.map((cat)=>(
+                                        <NavDropdown.Item as={Link} to={`/category/${cat.id}`} style={{color: "#7a4de2"}}>{cat.attributes.category}</NavDropdown.Item>
+                                    ))
+                                }
                             </NavDropdown>
                             <Nav.Link as={Link} to={"/about"} style={{color: "#7a4de2"}}><b>About</b></Nav.Link>
                         </Nav>

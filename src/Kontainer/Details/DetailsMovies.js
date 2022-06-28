@@ -93,8 +93,12 @@ const DetailsMovies= () => {
         }
     })
 
-    const {data : dataCat} = useQuery(GETCATEGORYMOV,{
-        variables: {code: {eq:data?.movie.data.attributes.category}, halaman:1}
+    const {data : dataCat1} = useQuery(GETCATEGORYMOV,{
+        variables: {id: data?.movie.data.attributes.categories.data[0]?.id, halaman:1}
+    })
+
+    const {data : dataCat2} = useQuery(GETCATEGORYMOV,{
+        variables: {id: data?.movie.data.attributes.categories.data[1]?.id, halaman:1}
     })
 
     const {data : dataRate} = useQuery(GETRATINGMOV,{
@@ -112,7 +116,6 @@ const DetailsMovies= () => {
         }
     })
 
-    console.log(dataCat)
     console.log(dataRate)
 
     function handleStar(){
@@ -273,78 +276,9 @@ const DetailsMovies= () => {
                     <Col md="auto">
                     </Col>
                     <Col xs lg="4" className="my-4">
-                        <h3 style={{color: "white"}}>
-                            You may also like
-                        </h3>
-                        <button style={styles}>
-                            <small>
-                            <span class="badge rounded-pill text-bg-light">Show All</span>
-                            </small>
-                        </button>
-                        <div className="text-end">
-                        
-                        </div>
-                        <div className="styling-example">
-                            <Carousel breakPoints={breaker} 
-                            enableAutoPlay="true" 
-                            autoPlaySpeed="4500" 
-                            transitionMs="1000" 
-                            showArrows={false} 
-                            pagination={false}
-                            itemPadding={[10]}
-                            verticalMode={true} 
-                            itemsToScroll={2}  
-                            initialActiveIndex={1} 
-                            outerSpacing={80}
-                            >
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={"https://i.postimg.cc/vHJS2vkX/220px-Habibie-Ainun-3-poster.jpg"}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1165953918_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1165974181_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                                <Link to="/moviesdetail" style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={require("../../Aset/1166008798_2.webp")}
-                                        judul="Prediction" 
-                                        detail="Find out the best algorithm to prediction the data with the highest accuracy"
-                                        list="Regression" />
-                                </Link>
-                            </Carousel>
-                        </div>
-
 
                         <h3 style={{color: "white"}}>
-                            {`More ${data1?.movie.data?.attributes.category} Movies`}
+                            {`More ${dataCat2?.category.data?.attributes.category} Movies`}
                         </h3>
                         <button style={styles}>
                             <small>
@@ -365,7 +299,42 @@ const DetailsMovies= () => {
                             initialActiveIndex={1} 
                             outerSpacing={80}
                             >
-                                {dataCat?.movies.data?.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                {dataCat2?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                    <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                            <Kartu
+                                            sumber={`${cat.attributes.linkgambar}`}
+                                            judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                            />
+                                    </Link>
+                                    ))
+                                }
+                            </Carousel>
+                        </div>
+
+
+                        <h3 style={{color: "white"}}>
+                            {`More ${dataCat1?.category.data?.attributes.category} Movies`}
+                        </h3>
+                        <button style={styles}>
+                            <small>
+                            <span class="badge rounded-pill text-bg-light">Show All</span>
+                            </small>
+                        </button>
+                        <div className="styling-example">
+                            <Carousel 
+                            breakPoints={breaker} 
+                            enableAutoPlay="true" 
+                            autoPlaySpeed="5000" 
+                            transitionMs="1000" 
+                            showArrows={false} 
+                            pagination={false}
+                            itemPadding={[10]}
+                            itemsToScroll={2}  
+                            verticalMode={true}  
+                            initialActiveIndex={1} 
+                            outerSpacing={80}
+                            >
+                                {dataCat1?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                     <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                             <Kartu
                                             sumber={`${cat.attributes.linkgambar}`}
