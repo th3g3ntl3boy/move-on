@@ -29,8 +29,11 @@ const center = {
 
 const Category= () => {
     const {id} = useParams()
+    const [disapear, setDisapear] =  useState(false)
+    const [pageCounter, setPageCounter] = useState(1)
+
     const {loading, error, data} = useQuery(GETCATEGORYMOV,{
-        variables: {id:id, halaman:1}
+        variables: {id:id, halaman: pageCounter}
     })
     if(loading){
         return (
@@ -69,16 +72,25 @@ const Category= () => {
                         ))
                         }
                     </Row>
-                    {/* <br></br>
-                    <div className={`text-center ${disapear}`} >
-                        <button style={styles} onClick={()=> {setAnimate(true); setDisapear("d-none")}}>
-                            <Jello when={animate}>
-                            <p style={{color: "white"}}><em>
-                                <i>load more <i class="bi bi-arrow-clockwise"></i>
+                    {
+                        data.category.data.attributes.movies.data.length>11?
+
+                        <>
+                        <br></br>
+                        <div className={`text-center ${disapear}`} >
+                            <button style={styles} onClick={()=> {setPageCounter(pageCounter+1);setDisapear("d-none")}}>
+                                <p style={{color: "white"}}><em>
+                                    <i>load more <i class="bi bi-arrow-clockwise"></i>
                                 </i></em></p>
-                            </Jello> 
-                        </button>
-                    </div> */}
+                            </button>
+                        </div>
+                        </>
+
+                        :
+
+                        <></>
+                    }
+                   
                    
                     </div>
 

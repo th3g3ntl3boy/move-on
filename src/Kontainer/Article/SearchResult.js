@@ -76,16 +76,17 @@ const  SearchResult = () => {
                         </h4>
                     </div>
                     <div style={{overflow: 'hidden'}}>
-                    <Bounce bottom>
                     <Row justify-content-md-center>
                         {data?.movies.data?.map((cat)=>(
                             <Col lg={2} xs={6} md={3} className="my-2">
+                                <Bounce bottom>
                                 <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={`${cat.attributes.linkgambar}`}
                                         judul={`${cat.attributes.title.substring(0, 20)}`} 
                                         />
                                 </Link>
+                                </Bounce>
                             </Col>
                         ))
                         }
@@ -107,7 +108,7 @@ const  SearchResult = () => {
                         
                     }
                      */}
-                    </Bounce>
+                    
                     </div>
 
                 </Container>

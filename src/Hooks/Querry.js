@@ -85,7 +85,6 @@ query getMovies($id: ID!){
         title
         release_date
         ytlink
-        category
         description
         release_date
         view
@@ -127,7 +126,6 @@ query getIDmovies($code: StringFilterInput!){
     data{
       id
       attributes{
-        category
         title
         linkgambar
       }
