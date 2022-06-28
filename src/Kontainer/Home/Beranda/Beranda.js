@@ -19,10 +19,10 @@ import Animasi from '../../../Komponen/Animasi.js';
 const breaker = [
     {width:1, itemsToShow: 1},
     {width:150, itemsToShow: 2},
-    {width:300, itemsToShow: 2, outerSpacing: 80},
-    {width:450, itemsToShow: 3, outerSpacing: 80},
-    {width:600, itemsToShow: 5},
-    {width:750, itemsToShow: 5, outerSpacing: 80 }
+    {width:300, itemsToShow: 2, outerSpacing: -30},
+    {width:450, itemsToShow: 3, outerSpacing: -30},
+    {width:600, itemsToShow: 5, showArrows: true, outerSpacing: -10 },
+    {width:750, itemsToShow: 5, showArrows: true, outerSpacing: -10 }
 ]
 
 const styles = {
@@ -99,7 +99,7 @@ const Beranda = () => {
                                                 transitionMs="1000" 
                                                 showArrows={false} 
                                                 pagination={false} 
-                                                initialActiveIndex={1} 
+                                                initialActiveIndex={0} 
                                                 itemsToScroll={2}
                                                 focusOnSelect={true}
                                                 >
@@ -158,7 +158,7 @@ const Beranda = () => {
                                                         transitionMs="750" 
                                                         showArrows={false} 
                                                         pagination={false} 
-                                                        initialActiveIndex={1}
+                                                        initialActiveIndex={0}
                                                         itemsToScroll={2}
                                                         focusOnSelect={true}  
                                                         >

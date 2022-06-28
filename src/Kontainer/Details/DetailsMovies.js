@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Container, Row, Col, Spinner, Alert, Button, } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Alert, Button, Table } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
@@ -15,7 +15,8 @@ import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
 import Komen from '../../Komponen/Komen.js';
-import { Bounce } from 'react-reveal';
+import { Bounce, Zoom } from 'react-reveal';
+import Flash from 'react-reveal/Flash';
 
 const center = {
     width: "50px",
@@ -50,7 +51,6 @@ const DetailsMovies= () => {
     
     const {id} = useParams()
     const {user} = useContext(AuthContext)
-
 
     const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
@@ -191,7 +191,7 @@ const DetailsMovies= () => {
                                 data1.movie.data.attributes.ytlink?
 
                                 <>
-                                <Bounce left duration={2000} delay={1000}>
+                                <Bounce left duration={2500}>
                                     <div className="video-responsive">
                                         <iframe
                                             width="700"
@@ -225,14 +225,65 @@ const DetailsMovies= () => {
                             <i class={`bi bi-star${star3}`}></i>
                             <i class={`bi bi-star${star4}`}></i>
                             <i class={`bi bi-star${star5}`}></i>
-                            <p>{rating} (<i class="bi bi-people-fill"></i> {dataRate?.ratings.meta.pagination.total}) </p>
+                            <p>{rating.toFixed(1)} (<i class="bi bi-people-fill"></i> {dataRate?.ratings.meta.pagination.total}) </p>
+                            
                         </div>           
-                       
+                        
                         {data1.movie.data.attributes.description.substring(0,147)}
-                        <p className={`${show}`}>
-                        {data1.movie.data.attributes.description.substring(147,99999)}
-                        </p>
 
+                        {
+                            counter%2!==0?
+
+                            <>
+                            {data1.movie.data.attributes.description.substring(147,99999)}
+                            <br></br>
+                            <br></br>
+                            <div className="tableRespons">
+
+                            <Row>
+                                <Col sm={3} className="my-2 d-none d-sm-block">
+                                    <Kartu
+                                        sumber={`${data1.movie.data.attributes.linkgambar}`}
+                                        judul={`${data1.movie.data.attributes.title.substring(0, 20)}`} 
+                                    />
+                                </Col>
+                                <Col sm={8}>
+                                    <Table style={{color: "white"}}>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>Title </td>
+                                        <td>{data1.movie.data.attributes.title}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Release Date </td>
+                                        <td>{data1.movie.data.attributes.release_date}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Genre </td>
+                                        <td>
+                                            {data1.movie.data.attributes.categories.data.map((cat)=>(
+                                                <Link to={`/category/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                    <small>
+                                                        <span class="badge rounded-pill text-bg-light">{cat.attributes.category}</span>
+                                                    </small> {' '}
+                                                </Link> 
+                                            ))}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    </Table>
+                                </Col>
+                               
+                            </Row>
+                            </div>
+                            </>
+                            :
+                            <>
+                            
+                            </>
+                        }
+                      
                         {/* show details */}
                         <small>
                             <button
@@ -240,11 +291,9 @@ const DetailsMovies= () => {
                             onClick={async ()=>{
                                 await setCounter(counter+1);
                                 if(counter%2===0){
-                                    setShow("d-block")
                                     setDetails("Show less")
                                 }
                                 else{
-                                    setShow("d-none")
                                     setDetails("Show more")
                                 }
                                 }}
@@ -318,8 +367,8 @@ const DetailsMovies= () => {
                                     itemPadding={[10]}
                                     itemsToScroll={2}  
                                     verticalMode={true}  
-                                    initialActiveIndex={1} 
-                                    outerSpacing={80}
+                                    initialActiveIndex={0} 
+                                    outerSpacing={-30}
                                     >
                                         {dataCat2?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -366,8 +415,8 @@ const DetailsMovies= () => {
                                     itemPadding={[10]}
                                     itemsToScroll={2}  
                                     verticalMode={true}  
-                                    initialActiveIndex={1} 
-                                    outerSpacing={80}
+                                    initialActiveIndex={0} 
+                                    outerSpacing={-30}
                                     >
                                         {dataCat1?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>

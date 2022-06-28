@@ -3,7 +3,7 @@ import { SIGNUP, LOGIN } from '../Hooks/Querry'
 import { useMutation } from '@apollo/client';
 import { AuthContext } from '../Hooks/authContext';
 // stylesheet
-import {Button, Modal, Form, Alert, Dropdown} from 'react-bootstrap'
+import {Button, Modal, Form, Alert, Dropdown, Row, Col, FloatingLabel} from 'react-bootstrap'
 import { Link, useNavigate} from 'react-router-dom';
 
 
@@ -32,7 +32,13 @@ const User = () => {
    
     // regis
     const [email, setEmail] = useState("")
-
+    const [gender, setGender]= useState()
+    const sex = {
+        Man: 0,
+        Woman: 1,
+        0: "Man",
+        1: "Woman"
+    }
     // login
     const [nama, setNama] = useState("")
     const [pass, setPass] = useState("")
@@ -64,7 +70,7 @@ const User = () => {
         onError({graphQLErrors}){
             setEror(graphQLErrors)
         },
-        variables: {name: nama, pass: pass, mail: email}, 
+        variables: {name: nama, pass: pass, mail: email, gender: gender}, 
         onCompleted: (dataRegis)=>console.log(dataRegis)
     })
 
@@ -135,12 +141,12 @@ const User = () => {
 
                         <Modal.Body>
                             <Form>
-                                <Form.Group className="mb-3" controlId="formBasicEmail" size="sm">
-                                    <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value);}}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword" size="sm">
+                                <FloatingLabel className="mb-3" controlId="floatingInputGrid" label="User Name">
+                                    <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value)}}/>
+                                </FloatingLabel>
+                                <FloatingLabel className="mb-3" controlId="floatingPassword" label="Password">
                                     <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
-                                </Form.Group>
+                                </FloatingLabel>
                                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                     <Form.Check type="checkbox" label="Show password" 
                                     onClick={()=>{
@@ -200,15 +206,27 @@ const User = () => {
 
                         <Modal.Body>
                             <Form>
-                                <Form.Group className="mb-3" controlId="formBasicEmail2" size="sm">
+                                <FloatingLabel className="mb-3" controlId="floatingInputGrid1" label="User Name" size="sm">
                                     <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value);}}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicEmail3" size="sm">
-                                    <Form.Control type="text" placeholder="Email" onChange={(event)=>{setEmail(event.target.value);}}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword1" size="sm">
+                                </FloatingLabel>
+                                <Row className="g-2">
+                                    <Col md>
+                                        <FloatingLabel className="mb-3" controlId="floatingInputGrid" label="Email address">
+                                            <Form.Control type="text" placeholder="Email" onChange={(event)=>{setEmail(event.target.value);}}/>
+                                        </FloatingLabel>
+                                    </Col>
+                                    <Col md>
+                                        <FloatingLabel className="mb-3" controlId="floatingSelectGrid" label="Choose Gender">
+                                        <Form.Select aria-label="Floating label select example" onChange={(event)=>{setGender(event.target.value)}}>
+                                            <option value={sex[0]}>Man</option>
+                                            <option value={sex[1]}>Woman</option>
+                                        </Form.Select>
+                                        </FloatingLabel>
+                                    </Col>
+                                </Row>
+                                <FloatingLabel className="mb-3" controlId="floatingPassword1" label="Password">
                                     <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
-                                </Form.Group>
+                                </FloatingLabel>
                                 <Form.Group className="mb-3" controlId="formBasicCheckbox1">
                                     <Form.Check type="checkbox" label="Show password" 
                                     onClick={()=>{
@@ -230,7 +248,8 @@ const User = () => {
                                     onClick={async (event) => {
                                         await event.preventDefault();
                                         await regis();
-                                        await login();
+                                        login();
+                                        
                                     }}
                                     >
                                         Regist

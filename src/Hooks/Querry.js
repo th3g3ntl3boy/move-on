@@ -31,16 +31,17 @@ mutation logUser($name: String!, $pass: String!) {
 }
 `
 
+
 export const SIGNUP = gql`
-mutation regUser($name: String!, $pass: String!, $mail: String! ) {
-  register(input: {username: $name, password: $pass, email: $mail} ) {
-    jwt 
-    user {
+mutation regUser($name: String, $pass: String, $mail: String, $gender: ENUM_USERSPERMISSIONSUSER_GENDER){
+  createUsersPermissionsUser(data:{
+    username: $name,
+    email: $mail,
+    password: $pass,
+    gender: $gender
+  }){
+    data{
       id
-      username
-      role {
-        name
-      }
     }
   }
 }
@@ -88,6 +89,7 @@ query getMovies($id: ID!){
         description
         release_date
         view
+        linkgambar
         categories{
           data{
             id

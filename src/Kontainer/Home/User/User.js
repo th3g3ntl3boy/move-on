@@ -10,12 +10,12 @@ import Kartu from '../../../Komponen/Kartu/Kartu'
 import {Flip} from 'react-reveal';
 
 const breaker = [
-    {width:1, itemsToShow: 1},
-    {width:150, itemsToShow: 2},
-    {width:300, itemsToShow: 2, outerSpacing: 80},
-    {width:450, itemsToShow: 3, outerSpacing: 80},
-    {width:600, itemsToShow: 5},
-    {width:750, itemsToShow: 6, outerSpacing: 80}
+        {width:1, itemsToShow: 1},
+        {width:150, itemsToShow: 2},
+        {width:300, itemsToShow: 2, outerSpacing: -30},
+        {width:450, itemsToShow: 3, outerSpacing: -30},
+        {width:600, itemsToShow: 5, showArrows: true, outerSpacing: -10},
+        {width:750, itemsToShow: 6, showArrows: true, outerSpacing: -20 }
 ]
 
 const center = {
