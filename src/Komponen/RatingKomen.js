@@ -2,11 +2,11 @@ import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
 import { CREATERATING, GETRATINGMOV, MOVIESDETAIL,CREATECOMMENT, GETUSERRATING, UPDATESTAR} from '../Hooks/Querry';
 
-import {Form, FormControl, Button} from 'react-bootstrap'
+import {Form, FormControl, Button, Toast, ToastContainer} from 'react-bootstrap'
 
 import { useMutation, useQuery } from '@apollo/client/react';
 import { useParams } from 'react-router';
-import { Bounce } from 'react-reveal';
+import { Fade } from 'react-reveal';
 
 
 const styles = {
@@ -19,10 +19,15 @@ const styles = {
     color: "white"
 };
 
+
+
 const RatingKomen = () => {
     const {id: movId} = useParams() 
     const {user} = useContext(AuthContext)
-    
+
+    const [showUpdate, setShowUpdate] = useState(false);
+    const [showCreate, setShowCreate] = useState(false);
+
     const [rating, setRating] = useState(0)
     const [star1, setStar1 ] = useState("")
     const [star2, setStar2 ] = useState("")
@@ -44,7 +49,7 @@ const RatingKomen = () => {
 
     const [updateRating, {data: hasUpdate}] = useMutation(UPDATESTAR,{
         variables: {rateID: userRating?.usersPermissionsUser.data?.attributes.ratings.data[0]?.id, starUpdate: rating },
-        onCompleted: console.log("has Updated"),
+        onCompleted: ()=>{ setShowUpdate(true)},
         refetchQueries :[
             {
                 query: GETRATINGMOV
@@ -54,11 +59,15 @@ const RatingKomen = () => {
     
     const [createRate, {error:errorRating, loading, data}] = useMutation(CREATERATING,{
         variables: {bintang: rating, userId: user?.id, movieId: movId},
-        onCompleted: console.log("rating created"),
+        onCompleted: ()=>{setShowCreate(true)},
         refetchQueries :[
             {
                 query: GETRATINGMOV
-            }, 'getRatingsMov'
+            }, 'getRatingsMov',
+
+            {
+                query: GETUSERRATING
+            }, 'userRating'
         ]
     })
 
@@ -115,6 +124,41 @@ const RatingKomen = () => {
 
     return (
         <div>
+                <>
+                        <ToastContainer position="bottom-end" containerPosition='fixed'>
+                            <Toast bg="dark" delay={4000} onClose={() => setShowUpdate(false)} show={showUpdate} autohide animation>
+                                <Toast.Header>
+                                    <img
+                                    src="holder.js/20x20?text=%20"
+                                    className="rounded me-2"
+                                    alt=""
+                                    />
+                                    <strong className="me-auto">Update Rating Notification</strong>
+                                </Toast.Header>
+                                <Toast.Body>
+                                    Your Review has been Updated !
+                                </Toast.Body>
+                            </Toast>
+                        </ToastContainer>
+
+                   
+                        <ToastContainer position='bottom-end' containerPosition='fixed'>
+                            <Toast bg="dark" delay={4000} onClose={() => setShowCreate(false)} show={showCreate} autohide>
+                                <Toast.Header>
+                                    <img
+                                    src="holder.js/20x20?text=%20"
+                                    className="rounded me-2"
+                                    alt=""
+                                    />
+                                    <strong className="me-auto">Create Rating Notification</strong>
+                                </Toast.Header>
+                                <Toast.Body>
+                                    Thank you for your feedback !
+                                </Toast.Body>
+                            </Toast>
+                        </ToastContainer>
+                    
+                </>
                 {
                     userRating?.usersPermissionsUser.data?.attributes.ratings.data?.length>0?
 
@@ -261,7 +305,7 @@ const RatingKomen = () => {
                      errorRating?
 
                      <>
-                     <Bounce top>
+                     <Fade top>
                          <div className="text-center">
                              <small style={{color: "red"}} >
                              <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
@@ -270,7 +314,7 @@ const RatingKomen = () => {
                              </p>
                              </small>    
                          </div>
-                     </Bounce>
+                     </Fade>
                      </>
      
                      :
@@ -296,7 +340,7 @@ const RatingKomen = () => {
                 errorComment?
 
                 <>
-                    <Bounce bottom>
+                    <Fade bottom>
                          <div className="text-center">
                              <small style={{color: "red"}} >
                              <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
@@ -305,7 +349,7 @@ const RatingKomen = () => {
                              </p>
                              </small>    
                          </div>
-                    </Bounce>
+                    </Fade>
                 </>
 
                 :

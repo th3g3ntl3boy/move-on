@@ -334,6 +334,29 @@ mutation($movid: ID, $userid: ID, $komen: String){
 
 `
 
+export const ADDBOOKMARK = gql`
+mutation addBookmark($movid: ID, $userid: ID){
+  createBookmark(data: {
+    movie: $movid,
+    users_permissions_user: $userid
+  }){
+    data{
+      id
+    }
+  }
+}
+`
+
+
+export const DELETEBOOKMARK = gql`
+mutation deleteBookmark($bookid: ID!){
+  deleteBookmark(id: $bookid){
+    data{
+      id
+    }
+  }
+}
+`
 
 
 // -----------------------------------------------------------------------------------------------------------

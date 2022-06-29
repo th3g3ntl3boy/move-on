@@ -1,13 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { GETIDENTITY } from '../../../Hooks/Querry'
 import { useQuery } from '@apollo/client'
 
 
-import {Container, Row, Spinner, Alert} from 'react-bootstrap'
+import {Container, Row, Spinner, Alert, Tabs, Tab} from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Carousel from 'react-elastic-carousel'
 import Kartu from '../../../Komponen/Kartu/Kartu'
-import {Flip} from 'react-reveal';
+import {Bounce, Flip} from 'react-reveal';
 
 const breaker = [
         {width:1, itemsToShow: 1},
@@ -29,6 +29,8 @@ margin: "-25px 0 0 -25px"
 
 const User = () => {
         const {id} = useParams()
+
+        const [key, setKey] = useState('history');
         const {error, loading, data: identity} = useQuery(GETIDENTITY,{
                 variables: {id:id},
                 onCompleted: (identity) => console.log(identity)
@@ -53,7 +55,7 @@ const User = () => {
                 <Row>
                         <Flip left>
                         <h1 className="text-center">
-                                <i class="bi bi-person-circle" style={{ fontSize: 230 }}></i>
+                                <i class="bi bi-person-circle" style={{ fontSize: 150 }}></i>
                         </h1>
                         </Flip>
                         <Flip top>
@@ -67,21 +69,104 @@ const User = () => {
                         </div>
                         </Flip>
                         <br></br>
-                        <p><em><i>last preview</i></em></p>
-                        <Carousel breakPoints={breaker} enableAutoPlay="true" autoPlaySpeed="4500" transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={1} itemsToScroll={2}>
-                        {
-                                identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
-                                        <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
-                                        judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
-                                        /> 
-                                        </Link>
-                                        
-                                ))
-                        }
+
+                        <Tabs
+                        id="controlled-tab-example"
+                        activeKey={key}
+                        onSelect={(k) => setKey(k)}
+                        className="mb-3"
+                        >
+                                <Tab eventKey="history" title="History">
+                                {       identity?.usersPermissionsUser.data.attributes.histories.data?
+
+                                        <>
+                                        <Bounce left>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                        { 
+                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                                        <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        <Kartu
+                                                                        sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
+                                                                        judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        /> 
+                                                                        </Link>
+                                                                        
+                                                                ))
+                                                        }
+                                                </Carousel>
+                                        </Bounce>
+                                        </>
+
+                                        :
+
+                                        <>
+                                                                                
+                                        You haven't watched movie yet
+                                        </>
+                                }       
                        
-                        </Carousel>
+                                </Tab>
+                                <Tab eventKey="bookmarks" title="Bookmarks">
+                                         {       identity?.usersPermissionsUser.data.attributes.histories.data?
+
+                                        <>
+                                        <Bounce left>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                        { 
+                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                                        <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        <Kartu
+                                                                        sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
+                                                                        judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        /> 
+                                                                        </Link>
+                                                                        
+                                                                ))
+                                                        }
+                                                </Carousel>
+                                        </Bounce>
+                                        </>
+
+                                        :
+
+                                        <>
+                                                                                
+                                        You haven't books movie yet
+                                        </>
+                                }       
+
+                                </Tab>
+                                <Tab eventKey="rating" title="Movie you had been Rating">
+                                         {       identity?.usersPermissionsUser.data.attributes.histories.data?
+
+                                        <>
+                                        <Bounce left>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                        { 
+                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                                        <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        <Kartu
+                                                                        sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
+                                                                        judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        /> 
+                                                                        </Link>
+                                                                        
+                                                                ))
+                                                        }
+                                                </Carousel>
+                                        </Bounce>
+                                        </>
+
+                                        :
+
+                                        <>
+                                                                                
+                                        You haven't given any movie rating just yet
+                                        </>
+                                }       
+                                </Tab>
+                        </Tabs>
+                       
                 </Row>
                 </Container>
                 <h1>

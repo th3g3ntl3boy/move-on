@@ -4,7 +4,7 @@ import { Container, Row, Col, Spinner, Alert, Button, Table } from 'react-bootst
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY} from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK} from '../../Hooks/Querry.js';
 import { AuthContext } from '../../Hooks/authContext.js';
 
 // komponen
@@ -52,12 +52,12 @@ const DetailsMovies= () => {
     const {id} = useParams()
     const {user} = useContext(AuthContext)
 
-    const [show, setShow] = useState("d-none")
     const [details, setDetails] = useState("Show more")
     const [counter, setCounter]= useState(0)
-    const [view, setView] = useState(0)
 
 
+    const [book, setBook] = useState("-plus")
+    const [counter1, setCounter1] = useState(0)
     const [rating, setRating] = useState(0)
     
     const [star1, setStar1 ] = useState("")
@@ -66,17 +66,12 @@ const DetailsMovies= () => {
     const [star4, setStar4 ] = useState("")
     const [star5, setStar5 ] = useState("")
     
-
-    
-    
     const [createWatchHist, {data: dataHist}] = useMutation(VIEWHISTORY, {
         variables: {movid: id, userID: user?.id},
         onCompleted: (dataHist) => {
             console.log(dataHist)
         }
     })
-
-   
 
     const {data: dataView} = useQuery(VIEWSCOUNT,{
         variables: {movid: id},
@@ -212,8 +207,27 @@ const DetailsMovies= () => {
                                 </>
 
                             }
+                        <Row>
+                            <Col xs={9}>
+                            <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
+                            </Col>
+                            <Col xs={3} className="text-end">
                             
-                        <h3>{`${data1.movie.data.attributes.title} (${data1.movie.data.attributes.release_date.substring(0,4)})`}</h3>
+                            <button 
+                            style={styles}
+                            onClick={async ()=>{
+                                await setCounter1(counter1+1);
+                                counter1 %2===0 ? 
+                                setBook("-fill") 
+                                :
+                                setBook("-plus")
+                            }}
+                            >
+                                <i class={`bi bi-bookmark${book}`} style={{fontSize: "25px"}}></i>
+                            </button>
+                            </Col>
+                        </Row> 
+                        
                         <small>
                             <p>
                             <i class="bi bi-eye"></i>  {dataView?.histories.meta.pagination.total} Views
@@ -273,6 +287,7 @@ const DetailsMovies= () => {
                                     </tr>
                                     </tbody>
                                     </Table>
+                                    
                                 </Col>
                                
                             </Row>
@@ -342,7 +357,7 @@ const DetailsMovies= () => {
                     <Col xs lg="4" className="my-4">
 
                         {
-                            dataCat2?
+                            dataCat2?.category.data?.attributes.movies.data.length>1?
 
                             <>
                             <Bounce right>
@@ -390,7 +405,7 @@ const DetailsMovies= () => {
                         }
 
                         {
-                            dataCat1?
+                             dataCat1?.category.data?.attributes.movies.data.length>1?
 
                             <>
                             <Bounce right>

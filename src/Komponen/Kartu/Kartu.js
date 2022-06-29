@@ -23,6 +23,13 @@ const hovStar = {
     fontSize: "15px"
 }
 
+const hovBookmark = {
+    top: "4px", 
+    left:"9px", 
+    position: "absolute",
+    fontSize: "15px"
+}
+
 const hovJudul = {
     bottom: "4px",
     left: "9px",  
@@ -35,6 +42,8 @@ const hovJudul = {
 
 const Kartu = (props) => {
     const[isHover, setIsHover] = useState(false)
+    const[show, setShow] = useState(false)
+    const [book, setBook] = useState("")
 
     return (
         <div style={{overflow: 'hidden'}}>
@@ -51,8 +60,31 @@ const Kartu = (props) => {
                             className="rounded"/>
                             <Card.ImgOverlay >
                                 {
+                                    show?
+                                    <>
+                                    <div style={hovBookmark}>
+                                        <i class={`bi bi-bookmark${book}`}></i>
+                                    </div>
+                                    </>
+                                    :
+                                    <></>
+                                }
+                                {
                                     isHover &&
                                     <Fragment>
+                                        <div style={hovBookmark}>
+                                        <button 
+                                        style={styles}
+                                        onClick={()=>{
+                                            setBook("-fill");
+                                            setShow(true)
+
+                                        }}
+                                        >
+                                            <i class="bi bi-bookmark"></i>
+                                        </button>
+                                            
+                                        </div>
                                         <Card.Title style={hovStar}>
                                             <small>
                                                 <i class="bi bi-star-fill"></i> <b>4.5</b>
