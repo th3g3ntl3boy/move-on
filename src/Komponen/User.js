@@ -5,6 +5,7 @@ import { AuthContext } from '../Hooks/authContext';
 // stylesheet
 import {Button, Modal, Form, Alert, Dropdown, Row, Col, FloatingLabel} from 'react-bootstrap'
 import { Link, useNavigate} from 'react-router-dom';
+import { Fade } from 'react-reveal';
 
 
 
@@ -128,70 +129,71 @@ const User = () => {
                     <button style={styles} onClick={handleShow}>
                         <i class="bi bi-person-circle" style={{ fontSize: 25 }} ></i>
                     </button> 
+                   
+                        <Modal 
+                        show={show} 
+                        onHide={handleClose} 
+                        backdrop="static"
+                        keyboard={false}
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Login</Modal.Title>
+                            </Modal.Header>
 
-                    <Modal 
-                    show={show} 
-                    onHide={handleClose} 
-                    backdrop="static"
-                    keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Login</Modal.Title>
-                        </Modal.Header>
+                            <Modal.Body>
+                                <Form>
+                                    <FloatingLabel className="mb-3" controlId="floatingInputGrid" label="User Name">
+                                        <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value)}}/>
+                                    </FloatingLabel>
+                                    <FloatingLabel className="mb-3" controlId="floatingPassword" label="Password">
+                                        <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
+                                    </FloatingLabel>
+                                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                        <Form.Check type="checkbox" label="Show password" 
+                                        onClick={()=>{
+                                            showPass==="password" ?
+                                            setShowPass("text") : setShowPass("password")
+                                            }}/>
+                                    </Form.Group>
+                                    {
+                                        eror.map((error) =>{
+                                            return(
+                                                <Alert variant='danger'>
+                                                    {error.message}
+                                                </Alert>
+                                            )
+                                        })
+                                    }
+                                    <div className="text-end">
+                                        <Button variant="primary" type="submit" 
+                                        onClick={async (event) => {
+                                            await event.preventDefault();
+                                            await login();
+                                        }}
+                                        >
+                                            Login
+                                        </Button>
 
-                        <Modal.Body>
-                            <Form>
-                                <FloatingLabel className="mb-3" controlId="floatingInputGrid" label="User Name">
-                                    <Form.Control type="text" placeholder="User Name" onChange={(event)=>{setNama(event.target.value)}}/>
-                                </FloatingLabel>
-                                <FloatingLabel className="mb-3" controlId="floatingPassword" label="Password">
-                                    <Form.Control type={showPass} placeholder="Password" onChange={(event)=>{setPass(event.target.value);}}/>
-                                </FloatingLabel>
-                                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label="Show password" 
+                                    </div>
+                                    
+                                </Form>
+                            </Modal.Body>
+                                <Modal.Footer  >
+                            
+                                    <button style={styles}
                                     onClick={()=>{
-                                        showPass==="password" ?
-                                        setShowPass("text") : setShowPass("password")
-                                        }}/>
-                                </Form.Group>
-                                {
-                                    eror.map((error) =>{
-                                        return(
-                                            <Alert variant='danger'>
-                                                {error.message}
-                                            </Alert>
-                                        )
-                                    })
-                                }
-                                <div className="text-end">
-                                    <Button variant="primary" type="submit" 
-                                    onClick={async (event) => {
-                                        await event.preventDefault();
-                                        await login();
+                                        handleClose();
+                                        handleShow1();
                                     }}
                                     >
-                                        Login
-                                    </Button>
-
-                                </div>
-                                
-                            </Form>
-                        </Modal.Body>
-                            <Modal.Footer  >
+                                        <small>
+                                            <em>Create Account ?</em>
+                                        </small>
+                                    </button>
                         
-                                <button style={styles}
-                                onClick={()=>{
-                                    handleClose();
-                                    handleShow1();
-                                }}
-                                >
-                                    <small>
-                                        <em>Create Account ?</em>
-                                    </small>
-                                </button>
-                    
-                            </Modal.Footer>
-                    </Modal>
+                                </Modal.Footer>
+                        </Modal>
+                   
 
 
                     

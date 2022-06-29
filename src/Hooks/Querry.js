@@ -242,6 +242,27 @@ query getRatingsMov($id:ID){
 }
 `
 
+export const GETUSERRATING =gql`
+query userRating($userid: ID, $movid: ID){
+  usersPermissionsUser(id: $userid){
+    data{
+      attributes{
+        ratings(filters : {
+          movie: {id: {eq:$movid}}
+        }){
+          data{
+            id
+            attributes{
+              star
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 export const CREATERATING = gql `
 mutation updateRating($bintang: Int, $userId: ID, $movieId: ID){
   createRating(data: 
@@ -253,6 +274,20 @@ mutation updateRating($bintang: Int, $userId: ID, $movieId: ID){
   ){
     data{
       id
+      attributes{
+        star
+      }
+    }
+  }
+}
+`
+
+export const UPDATESTAR = gql`
+mutation updateRating ($rateID: ID!, $starUpdate: Int){
+  updateRating(id: $rateID, data: {
+    star: $starUpdate
+  }){
+    data{
       attributes{
         star
       }

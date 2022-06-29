@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
-import { CREATERATING, GETRATINGMOV, MOVIESDETAIL,CREATECOMMENT} from '../Hooks/Querry';
+import { CREATERATING, GETRATINGMOV, MOVIESDETAIL,CREATECOMMENT, GETUSERRATING, UPDATESTAR} from '../Hooks/Querry';
 
 import {Form, FormControl, Button} from 'react-bootstrap'
 
-import { useMutation } from '@apollo/client/react';
+import { useMutation, useQuery } from '@apollo/client/react';
 import { useParams } from 'react-router';
+import { Bounce } from 'react-reveal';
 
 
 const styles = {
@@ -33,9 +34,27 @@ const RatingKomen = () => {
 
     const [komentar, setKomentar] = useState("")
 
-    const [createRate, {loading, data}] = useMutation(CREATERATING,{
+    const {data : userRating} = useQuery(GETUSERRATING,{
+        variables: {userid : user?.id, movid: movId},
+        onCompleted: (userRating) => {
+            console.log(userRating);
+            setRating(userRating.usersPermissionsUser.data?.attributes.ratings.data[0]?.attributes.star)
+        }
+    })
+
+    const [updateRating, {data: hasUpdate}] = useMutation(UPDATESTAR,{
+        variables: {rateID: userRating?.usersPermissionsUser.data?.attributes.ratings.data[0]?.id, starUpdate: rating },
+        onCompleted: console.log("has Updated"),
+        refetchQueries :[
+            {
+                query: GETRATINGMOV
+            }, 'getRatingsMov'
+        ]
+    })
+    
+    const [createRate, {error:errorRating, loading, data}] = useMutation(CREATERATING,{
         variables: {bintang: rating, userId: user?.id, movieId: movId},
-        onCompleted: (data)=>console.log(data),
+        onCompleted: console.log("rating created"),
         refetchQueries :[
             {
                 query: GETRATINGMOV
@@ -43,7 +62,7 @@ const RatingKomen = () => {
         ]
     })
 
-    const [createComment, {data: commentid}] = useMutation(CREATECOMMENT, {
+    const [createComment, {error: errorComment, data: commentid}] = useMutation(CREATECOMMENT, {
         variables: {movid: movId, userid: user?.id, komen: komentar},
         onCompleted: (commentid) => {
             console.log(commentid)
@@ -89,9 +108,6 @@ const RatingKomen = () => {
         }
     }
 
-    
-    
-
     useEffect(()=>{
         handleStar();
         console.log(rating)
@@ -99,71 +115,168 @@ const RatingKomen = () => {
 
     return (
         <div>
-            <div className="text-center">
-                <p><em>Rate this movie</em></p>
-                <button 
-                style={styles}
-                onClick={()=>{
-                    handleStar(setRating(1));
-                    setHide("d-block")
-                }}
-                >
-                    <i class={`bi bi-star${star1}`}></i>
-                </button>
+                {
+                    userRating?.usersPermissionsUser.data?.attributes.ratings.data?.length>0?
 
-                <button 
-                style={styles}
-                onClick={()=>{
-                    handleStar(setRating(2));
-                    setHide("d-block")
-                }}
-                >
-                    <i class={`bi bi-star${star2}`}></i>
-                </button>
+                    <>
+                    <div className="text-center">
+                        <p><em>Your last rating</em></p>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(1));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star1}`}></i>
+                        </button>
 
-                <button 
-                style={styles}
-                onClick={()=>{
-                    handleStar(setRating(3));
-                    setHide("d-block")
-                }}
-                >
-                    <i class={`bi bi-star${star3}`}></i>
-                </button>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(2));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star2}`}></i>
+                        </button>
 
-                <button 
-                style={styles}
-                onClick={()=>{
-                    handleStar(setRating(4));
-                    setHide("d-block")
-                }}
-                >
-                    <i class={`bi bi-star${star4}`}></i>
-                </button>
-                
-                <button 
-                style={styles}
-                onClick={()=>{
-                    handleStar(setRating(5));
-                    setHide("d-block")
-                }}
-                >
-                    <i class={`bi bi-star${star5}`}></i>
-                </button>
-            </div>
-            <p className={`text-center ${hide}`}>
-                { 
-                <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
-                onClick={async ()=>{
-                    createRate(await setRating(rating));
-                    console.log(rating)
-                    setHide("d-none");
-                }}
-                >
-                    send
-                </button>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(3));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star3}`}></i>
+                        </button>
+
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(4));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star4}`}></i>
+                        </button>
+                        
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(5));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star5}`}></i>
+                        </button>
+                    </div>
+                    <p className={`text-center ${hide}`}>
+                        { 
+                        <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
+                        onClick={async ()=>{
+                            updateRating(await setRating(rating));
+                            console.log(rating)
+                            setHide("d-none");
+                        }}
+                        >
+                            update
+                        </button>
+                        }
+                    </p>
+                    </>
+
+                    :
+
+                    <>
+                    <div className="text-center">
+                        <p><em>Rate this movie</em></p>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(1));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star1}`}></i>
+                        </button>
+
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(2));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star2}`}></i>
+                        </button>
+
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(3));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star3}`}></i>
+                        </button>
+
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(4));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star4}`}></i>
+                        </button>
+                        
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                            handleStar(setRating(5));
+                            setHide("d-block")
+                        }}
+                        >
+                            <i class={`bi bi-star${star5}`}></i>
+                        </button>
+                    </div>
+                    <p className={`text-center ${hide}`}>
+                        { 
+                        <button className="btn btn-outline-info" style={{borderRadius: "0.8rem"}}
+                        onClick={async ()=>{
+                            createRate(await setRating(rating));
+                            console.log(rating)
+                            setHide("d-none");
+                        }}
+                        >
+                            send
+                        </button>
+                        }
+                    </p>
+                    </>
                 }
-            </p>
+            
+                {
+                     errorRating?
+
+                     <>
+                     <Bounce top>
+                         <div className="text-center">
+                             <small style={{color: "red"}} >
+                             <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
+                             <p>
+                             u need to login first, before give an rating
+                             </p>
+                             </small>    
+                         </div>
+                     </Bounce>
+                     </>
+     
+                     :
+                     <>
+                     </>
+                }
             <br></br>
             
             <Form className="d-flex">
@@ -179,6 +292,26 @@ const RatingKomen = () => {
                 onClick={()=>createComment()}
                 >Post</Button>
             </Form>
+            {
+                errorComment?
+
+                <>
+                    <Bounce bottom>
+                         <div className="text-center">
+                             <small style={{color: "red"}} >
+                             <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
+                             <p>
+                             u need to login first, before give an comment
+                             </p>
+                             </small>    
+                         </div>
+                    </Bounce>
+                </>
+
+                :
+                <>
+                </>
+            }
         </div>
     )
 }
