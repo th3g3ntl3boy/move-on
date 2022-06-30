@@ -4,8 +4,9 @@ import { Container, Row, Col, Spinner, Alert, Button, Table } from 'react-bootst
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK, GETBOOK} from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK, GETBOOK, GETIDENTITY} from '../../Hooks/Querry.js';
 import { AuthContext } from '../../Hooks/authContext.js';
+import {mean,count} from 'mathjs'
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -16,7 +17,6 @@ import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
 import Komen from '../../Komponen/Komen.js';
 import { Bounce} from 'react-reveal';
-import Pulse from 'react-reveal/Pulse';
 import Flash from 'react-reveal/Flash';
 
 const center = {
@@ -74,7 +74,12 @@ const DetailsMovies= () => {
         variables: {movid: id, userID: user?.id},
         onCompleted: (dataHist) => {
             console.log(dataHist)
-        }
+        },
+        refetchQueries: [
+            {
+                query: GETIDENTITY
+            }, 'getUser'
+        ]
     })
 
     const {data: getBook} = useQuery(GETBOOK,{
@@ -97,7 +102,10 @@ const DetailsMovies= () => {
         refetchQueries: [
             {
                 query: GETBOOK
-            }, 'getBook'
+            }, 'getBook',
+            {
+                query: GETIDENTITY
+            }, 'getUser'
         ]
     })
 
@@ -111,7 +119,10 @@ const DetailsMovies= () => {
         refetchQueries: [
             {
                 query: GETBOOK
-            }, 'getBook'
+            }, 'getBook',
+            {
+                query: GETIDENTITY
+            }, 'getUser'
         ]
     })
 
@@ -138,6 +149,10 @@ const DetailsMovies= () => {
 
     const {data : dataCat2} = useQuery(GETCATEGORYMOV,{
         variables: {id: data?.movie.data.attributes.categories.data[1]?.id, halaman:12}
+    })
+
+    const {data : dataCat3} = useQuery(GETCATEGORYMOV,{
+        variables: {id: data?.movie.data.attributes.categories.data[2]?.id, halaman:12}
     })
 
     const {data : dataRate} = useQuery(GETRATINGMOV,{
@@ -325,12 +340,16 @@ const DetailsMovies= () => {
                             <div className="tableRespons">
 
                             <Row>
+
+                                {/* pict */}
                                 <Col sm={3} className="my-2 d-none d-sm-block">
                                     <Kartu
                                         sumber={`${data1.movie.data.attributes.linkgambar}`}
                                         judul={`${data1.movie.data.attributes.title.substring(0, 20)}`} 
                                     />
                                 </Col>
+
+                                {/* table */}
                                 <Col sm={8}>
                                     <Table style={{color: "white"}}>
 
@@ -459,7 +478,23 @@ const DetailsMovies= () => {
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                     <Kartu
                                                     sumber={`${cat.attributes.linkgambar}`}
-                                                    judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                                    judul={`${cat.attributes.title.substring(0, 20)}`}
+                                                    star={mean(cat.attributes.ratings.data.length>0?
+
+                                                        cat.attributes.ratings.data.map((st)=>st.attributes.star)
+
+                                                        :
+
+                                                        0
+                                                        
+                                                        ).toFixed(1)} 
+
+                                                    view={count(cat.attributes.histories.data.length>0? 
+                                                        cat.attributes.histories.data?.map((st)=>st.id)
+                                                        :
+                                                        0
+                                                        )
+                                                    }  
                                                     />
                                             </Link>
                                             ))
@@ -508,7 +543,23 @@ const DetailsMovies= () => {
                                                     <Kartu
                                                     sumber={`${cat.attributes.linkgambar}`}
                                                     judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                                    star={mean(cat.attributes.ratings.data.length>0?
+
+                                                        cat.attributes.ratings.data.map((st)=>st.attributes.star)
+
+                                                        :
+
+                                                        0
+                                                        
+                                                        ).toFixed(1)}
+                                                    view={count(cat.attributes.histories.data.length>0? 
+                                                        cat.attributes.histories.data?.map((st)=>st.id)
+                                                        :
+                                                        0
+                                                        )
+                                                    }  
                                                     />
+                                                    
                                             </Link>
                                             ))
                                         }
@@ -521,6 +572,68 @@ const DetailsMovies= () => {
                             <></>
                         }
                        
+                       {
+                            dataCat3?.category.data?.attributes.movies.data.length>1?
+
+                            <>
+                            <Bounce right>
+                                <h3 style={{color: "white"}}>
+                                    {`More ${dataCat3?.category.data?.attributes.category} Movies`}
+                                </h3>
+                                <button style={styles}>
+                                    <Link to={`/category/${dataCat3?.category.data?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <small>
+                                        <span class="badge rounded-pill text-bg-light">Show All</span>
+                                        </small>
+                                    </Link>
+                                </button>
+                                <div className="styling-example">
+                                    <Carousel 
+                                    breakPoints={breaker} 
+                                    enableAutoPlay="true" 
+                                    autoPlaySpeed="5000" 
+                                    transitionMs="1000" 
+                                    showArrows={false} 
+                                    pagination={false}
+                                    itemPadding={[10]}
+                                    itemsToScroll={2}  
+                                    verticalMode={true}  
+                                    initialActiveIndex={0} 
+                                    outerSpacing={-30}
+                                    >
+                                        {dataCat3?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
+                                            <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                    <Kartu
+                                                    sumber={`${cat.attributes.linkgambar}`}
+                                                    judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                                    star={mean(cat.attributes.ratings.data.length>0?
+
+                                                        cat.attributes.ratings.data.map((st)=>st.attributes.star)
+
+                                                        :
+
+                                                        0
+                                                        
+                                                        ).toFixed(1)}
+                                                    view={count(cat.attributes.histories.data.length>0? 
+                                                        cat.attributes.histories.data?.map((st)=>st.id)
+                                                        :
+                                                        0
+                                                        )
+                                                    }  
+                                                    />
+                                            </Link>
+                                            ))
+                                        }
+                                    </Carousel>
+                                </div>
+                            </Bounce>
+                            </>
+
+                            :
+
+                            <></>
+                        }
                     </Col>
                 </Row>
             </Container>

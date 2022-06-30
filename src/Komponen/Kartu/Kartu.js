@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import { GETBOOK } from '../../Hooks/Querry';
+
 // stylesheet
 import { Card } from 'react-bootstrap';
 import './Kartu.css'
@@ -21,16 +21,16 @@ const hovStar = {
     position: "absolute",
     backgroundColor: "black", 
     opacity: "60%",
-    fontSize: "15px"
+    fontSize: "14px"
 }
 
-const hovBookmark = {
+const hovView= {
     top: "4px", 
     left:"9px", 
     position: "absolute",
     backgroundColor: "black", 
     opacity: "75%",
-    fontSize: "15px"
+    fontSize: "13px"
 }
 
 const hovJudul = {
@@ -75,22 +75,14 @@ const Kartu = (props) => {
                                 {
                                     isHover &&
                                     <Fragment>
-                                        {/* <div style={hovBookmark}>
-                                        <button 
-                                        style={styles}
-                                        onClick={()=>{
-                                            setBook("-fill");
-                                            setShow(true)
-
-                                        }}
-                                        >
-                                            <i class="bi bi-bookmark"></i>
-                                        </button>
-                                            
-                                        </div> */}
+                                        <div style={hovView}>
+                                            <small>
+                                            <i class="bi bi-eye"></i> {props.view}
+                                            </small>
+                                        </div>
                                         <Card.Title style={hovStar}>
                                             <small>
-                                                <i class="bi bi-star-fill"></i> <b>4.5</b>
+                                                <i class="bi bi-star-fill"></i> <b>{props.star}</b>
                                             </small>
                                         </Card.Title>
                                         <Card.Text style={hovJudul}>

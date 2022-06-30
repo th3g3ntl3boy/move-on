@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { GETCATEGORYMOV } from '../../../Hooks/Querry';
 import { useQuery } from '@apollo/client/react';
+import {mean, count} from 'mathjs'
 //Komponen
 
 import Animasi from '../../../Komponen/Animasi';
@@ -67,7 +68,24 @@ const Category= () => {
                                             <Kartu
                                             sumber={`${cat.attributes.linkgambar}`}
                                             judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                            star={mean(cat.attributes.ratings.data.length>0?
+
+                                                cat.attributes.ratings.data.map((st)=>st.attributes.star)
+
+                                                :
+
+                                                0
+                                                
+                                                ).toFixed(1)}
+
+                                            view={count(cat.attributes.histories.data.length>0? 
+                                                cat.attributes.histories.data?.map((st)=>st.id)
+                                                :
+                                                0
+                                                )
+                                            }  
                                             />
+                                            
                                     </Link>
                                     </Bounce>
                                 </Col>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { SEARCHMOV} from '../../Hooks/Querry'
 import { useLazyQuery } from '@apollo/client';
-
+import {mean, count} from 'mathjs'
 
 // stylesheet
 import { Container, Row, Col, Spinner, Alert} from 'react-bootstrap';
@@ -83,7 +83,23 @@ const  SearchResult = () => {
                                 <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                         <Kartu
                                         sumber={`${cat.attributes.linkgambar}`}
-                                        judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                        judul={`${cat.attributes.title.substring(0, 20)}`}
+                                        star={mean(cat.attributes.ratings.data.length>0?
+
+                                            cat.attributes.ratings.data.map((st)=>st.attributes.star)
+
+                                            :
+
+                                            0
+                                            
+                                            ).toFixed(1)}
+
+                                        view={count(cat.attributes.histories.data.length>0? 
+                                            cat.attributes.histories.data?.map((st)=>st.id)
+                                            :
+                                            0
+                                            )
+                                        }  
                                         />
                                 </Link>
                                 </Bounce>

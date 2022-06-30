@@ -1,9 +1,10 @@
 // library
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Carousel from 'react-elastic-carousel';
 import { TOPMOVIES, GETIDMOVIES } from '../../../Hooks/Querry.js';
 import {useQuery } from '@apollo/client';
+
 // komponen
 import Kartu from '../../../Komponen/Kartu/Kartu.js';
 
@@ -13,6 +14,7 @@ import Bounce from 'react-reveal/Bounce';
 import { Container, Row, Col, Spinner, Alert} from 'react-bootstrap';
 import Header from '../../../Komponen/Header.js';
 import Animasi from '../../../Komponen/Animasi.js';
+import {mean, count} from 'mathjs';
 
 
 
@@ -48,6 +50,7 @@ const link = `https://backend-artikel.herokuapp.com`
 const Beranda = () => {
         const ID = "ID"
         const {error, loading, data} = useQuery(TOPMOVIES)
+        
         const {data: dataIndo}= useQuery(GETIDMOVIES,{
                 variables: {code:{eq:ID}}
         })
@@ -64,7 +67,7 @@ const Beranda = () => {
                 )
         }
         const data1 = JSON.parse(JSON.stringify(data))
-        
+      
         console.log(data1)
         console.log(dataIndo)
         return(
@@ -106,9 +109,17 @@ const Beranda = () => {
                                                 {data1?.movies.data?.map((movie)=>(
                                                         <div key={movie.id}>
                                                                 <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        
                                                                         <Kartu
                                                                         sumber={`${movie.attributes.linkgambar}`}
-                                                                        judul={`${movie.attributes.title.substring(0, 20)}`} 
+                                                                        judul={`${movie.attributes.title.substring(0, 20)}`}
+                                                                        star={mean(movie.attributes.ratings.data.map((st)=>st.attributes.star)).toFixed(1)}
+                                                                        view={count(movie.attributes.histories.data.length>0? 
+                                                                                movie.attributes.histories.data.map((st)=>st.id)
+                                                                                :
+                                                                                0
+                                                                                )
+                                                                        }  
                                                                         />
                                                                 </Link>
                                                         </div>
@@ -167,7 +178,14 @@ const Beranda = () => {
                                                                         <Link to={`moviesdetail/${movie.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                                 <Kartu
                                                                                 sumber={`${movie.attributes.linkgambar}`}
-                                                                                judul={`${movie.attributes.title.substring(0, 20)}`} 
+                                                                                judul={`${movie.attributes.title.substring(0, 20)}`}
+                                                                                star={mean(movie.attributes.ratings.data.map((st)=>st.attributes.star)).toFixed(1)}
+                                                                                view={count(movie.attributes.histories.data.length>0? 
+                                                                                        movie.attributes.histories.data?.map((st)=>st.id)
+                                                                                        :
+                                                                                        0
+                                                                                        )
+                                                                                } 
                                                                                 />
                                                                         </Link>
                                                                 </div>

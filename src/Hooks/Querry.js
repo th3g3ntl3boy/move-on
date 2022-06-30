@@ -4,12 +4,27 @@ import { gql } from "@apollo/client";
 // query
 export const TOPMOVIES = gql`
 query{
-  movies(pagination: {page: 1, pageSize: 12}){
+  movies(
+    pagination: {page: 1, pageSize: 12},
+    filters: {ratings: {star: {between: [4,5]}}}
+    ){
     data{
       id
       attributes{
         title
         linkgambar
+        ratings(pagination: {limit: 500}){
+          data{
+            attributes{
+              star
+            }
+          }
+        }
+        histories(pagination: {limit: 999999}){
+          data{
+            id
+            }
+          }
       }
     }
   }
@@ -165,12 +180,25 @@ query getMovies($id: ID!){
 
 export const GETIDMOVIES = gql`
 query getIDmovies($code: StringFilterInput!){
-  movies(filters: {Region: $code}){
+  movies(filters: {Region: $code, ratings: {star: {between: [4,5]}}}
+  ){
     data{
       id
       attributes{
         title
         linkgambar
+        ratings(pagination: {limit: 500}){
+          data{
+            attributes{
+              star
+            }
+          }
+        }
+        histories(pagination: {limit: 999999}){
+          data{
+            id
+            }
+          }
       }
     }
   }
@@ -211,6 +239,11 @@ query getCategoryMov($id: ID, $halaman: Int){
                   attributes{
                     star
                   }
+                }
+              }
+              histories(pagination: {limit: 999999}){
+              data{
+                id
                 }
               }
             }
@@ -254,6 +287,18 @@ query searchMov($search: StringFilterInput){
             attributes{
               	title
                 linkgambar
+                ratings(pagination: {limit: 999999}){
+                data{
+                    attributes{
+                      star
+                    }
+                  }
+                }
+                histories(pagination: {limit: 999999}){
+                data{
+                  id
+                  }
+                }
             }
         }
     }

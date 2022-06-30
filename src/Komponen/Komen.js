@@ -1,6 +1,19 @@
 import React from 'react'
 import {Container, Row, Col, Figure, Alert} from 'react-bootstrap'
 import './Komen.css'
+
+
+
+const styles = {
+    backgroundColor: "transparent",
+    backgroundRepeat: "no-repeat",
+    border: "none",
+    cursor: "pointer",
+    overflow: "hidden",
+    outline: "none",
+    color: "white"
+};
+
 const Komen = (props) => {
   return (
     <div>
@@ -32,9 +45,19 @@ const Komen = (props) => {
                 <Col xs={1} className="left-center">
                     <div className="up">
                         <div className='text-center'>
-                        <i class="bi bi-caret-up" style={{ fontSize: 25 }}></i>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                        }}>
+                            <i class="bi bi-caret-up" style={{ fontSize: 25 }}></i>
+                        </button>
                         {' '}{props.like}{' '}
-                        <i class="bi bi-caret-down" style={{ fontSize: 25 }}></i>
+                        <button 
+                        style={styles}
+                        onClick={()=>{
+                        }}>
+                            <i class="bi bi-caret-down" style={{ fontSize: 25 }}></i>
+                        </button>
                     </div>
 
                     </div>

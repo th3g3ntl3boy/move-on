@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { AuthContext } from '../Hooks/authContext';
-import { CREATERATING, GETRATINGMOV, MOVIESDETAIL,CREATECOMMENT, GETUSERRATING, UPDATESTAR} from '../Hooks/Querry';
+import { CREATERATING, GETRATINGMOV, MOVIESDETAIL, CREATECOMMENT, GETUSERRATING, UPDATESTAR, GETIDENTITY} from '../Hooks/Querry';
 
 import {Form, FormControl, Button, Toast, ToastContainer} from 'react-bootstrap'
 
@@ -69,7 +69,10 @@ const RatingKomen = () => {
 
             {
                 query: GETUSERRATING
-            }, 'userRating'
+            }, 'userRating',
+            {
+                query: GETIDENTITY
+            }, 'getUser'
         ]
     })
 
@@ -312,7 +315,7 @@ const RatingKomen = () => {
                              <small style={{color: "red"}} >
                              <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
                              <p>
-                             u need to login first, before give an rating
+                             u have to login first, before giving a rating
                              </p>
                              </small>    
                          </div>
@@ -345,9 +348,10 @@ const RatingKomen = () => {
                     <Fade bottom>
                          <div className="text-center">
                              <small style={{color: "red"}} >
-                             <i class="bi bi-exclamation-circle-fill"></i> whoops.. sorry, 
+                             <br></br>
+                             <i class="bi bi-exclamation-circle-fill"></i> whoops.. this one also, 
                              <p>
-                             u need to login first, before give an comment
+                             u have to login first, before giving a comment
                              </p>
                              </small>    
                          </div>
