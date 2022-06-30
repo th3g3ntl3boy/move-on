@@ -48,7 +48,12 @@ const User = () => {
                         </Alert>
                 )
         }
-
+        const hist = identity?.usersPermissionsUser.data.attributes.histories.data.slice(0).reverse()
+        const history = [...new Map(hist.map(mov=>[
+                mov.attributes.movie.data.attributes.title, mov
+        ]))]
+        console.log(hist)
+        console.log(history)
         return (
         <div style={{color: "white", overflow: "hidden"}}>
                 <Container>
@@ -77,17 +82,32 @@ const User = () => {
                         className="mb-3"
                         >
                                 <Tab eventKey="history" title="History">
-                                {       identity?.usersPermissionsUser.data.attributes.histories.data?
+                                {       identity?.usersPermissionsUser.data.attributes.histories.data.length>0?
 
                                         <>
-                                        <Bounce left>
+                                        {/* <Bounce left>
                                                 <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
                                                         { 
-                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.slice(0).reverse().map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                         <Kartu
                                                                         sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
                                                                         judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        /> 
+                                                                        </Link>
+                                                                        
+                                                                ))
+                                                        }
+                                                </Carousel>
+                                        </Bounce> */}
+                                        <Bounce left>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                        { 
+                                                        history.map((riwayat)=>(
+                                                                        <Link to={`/moviesdetail/${riwayat[1].attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                                                        <Kartu
+                                                                        sumber={`${riwayat[1].attributes.movie.data.attributes.linkgambar}`}
+                                                                        judul={`${riwayat[1].attributes.movie.data.attributes.title.substring(0, 20)}`}
                                                                         /> 
                                                                         </Link>
                                                                         
@@ -107,13 +127,14 @@ const User = () => {
                        
                                 </Tab>
                                 <Tab eventKey="bookmarks" title="Bookmarks">
-                                         {       identity?.usersPermissionsUser.data.attributes.histories.data?
+                                        {       
+                                        identity?.usersPermissionsUser.data.attributes.bookmarks.data.length>0?
 
                                         <>
                                         <Bounce left>
                                                 <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
-                                                        { 
-                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                        {
+                                                        identity?.usersPermissionsUser.data.attributes.bookmarks.data?.filter((mov)=>(mov.id!==id)).slice(0).reverse().map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                         <Kartu
                                                                         sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
@@ -130,20 +151,21 @@ const User = () => {
                                         :
 
                                         <>
-                                                                                
+                                        <p>
                                         You haven't books movie yet
+                                        </p>                
                                         </>
                                 }       
 
                                 </Tab>
-                                <Tab eventKey="rating" title="Movie you had been Rating">
-                                         {       identity?.usersPermissionsUser.data.attributes.histories.data?
+                                <Tab eventKey="rating" title="Ratings">
+                                         {       identity?.usersPermissionsUser.data.attributes.ratings.data.length>0?
 
                                         <>
                                         <Bounce left>
                                                 <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
                                                         { 
-                                                        identity?.usersPermissionsUser.data.attributes.histories.data?.map((riwayat)=>(
+                                                        identity?.usersPermissionsUser.data.attributes.ratings.data?.slice(0).reverse().map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                                                         <Kartu
                                                                         sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
@@ -155,6 +177,7 @@ const User = () => {
                                                         }
                                                 </Carousel>
                                         </Bounce>
+                                        
                                         </>
 
                                         :

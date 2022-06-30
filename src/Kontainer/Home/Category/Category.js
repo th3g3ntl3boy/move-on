@@ -30,14 +30,16 @@ const center = {
 const Category= () => {
     const {id} = useParams()
     const [disapear, setDisapear] =  useState(false)
-    const [pageCounter, setPageCounter] = useState(1)
+    const [pageCounter, setPageCounter] = useState(12)
 
     const {loading, error, data} = useQuery(GETCATEGORYMOV,{
         variables: {id:id, halaman: pageCounter}
     })
     if(loading){
         return (
-            <Spinner animation="border" variant="secondary" style={center}/>
+            <div style={center}>
+                <Spinner animation="border" variant="secondary"/>
+            </div>
         )
     }
     if(error){
@@ -51,34 +53,34 @@ const Category= () => {
     return(
         <Animasi>
                 <div className="text-center" style={{color: "white"}}>
-                    <h1>{data.category.data.attributes.category}</h1>
+                    <h1>{data?.category.data.attributes.category}</h1>
                     <hr style={{color: "#7a4de2"}}></hr>
                 </div>
 
                 <Container >
                     <div style={{overflow: 'hidden'}}>
-                    <Row justify-content-md-center>
-                        {data.category.data.attributes.movies.data?.map((cat)=>(
-                            <Col lg={2} xs={6} md={3} className="my-2">
-                                <Bounce bottom>
-                                <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                        <Kartu
-                                        sumber={`${cat.attributes.linkgambar}`}
-                                        judul={`${cat.attributes.title.substring(0, 20)}`} 
-                                        />
-                                </Link>
-                                </Bounce>
-                            </Col>
-                        ))
-                        }
-                    </Row>
+                        <Row justify-content-md-center>
+                                {data?.category.data.attributes.movies.data?.map((cat)=>(
+                                <Col lg={2} xs={6} md={3} className="my-2">
+                                    <Bounce bottom>
+                                    <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                            <Kartu
+                                            sumber={`${cat.attributes.linkgambar}`}
+                                            judul={`${cat.attributes.title.substring(0, 20)}`} 
+                                            />
+                                    </Link>
+                                    </Bounce>
+                                </Col>
+                                ))
+                                }
+                        </Row>
                     {
-                        data.category.data.attributes.movies.data.length>11?
+                        data?.category.data.attributes.movies.data.length>11?
 
                         <>
                         <br></br>
                         <div className={`text-center ${disapear}`} >
-                            <button style={styles} onClick={()=> {setPageCounter(pageCounter+1);setDisapear("d-none")}}>
+                            <button style={styles} onClick={()=> {setPageCounter(pageCounter+12);setDisapear("d-none")}}>
                                 <p style={{color: "white"}}><em>
                                     <i>load more <i class="bi bi-arrow-clockwise"></i>
                                 </i></em></p>

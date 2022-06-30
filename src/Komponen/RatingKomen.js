@@ -39,6 +39,8 @@ const RatingKomen = () => {
 
     const [komentar, setKomentar] = useState("")
 
+   
+
     const {data : userRating} = useQuery(GETUSERRATING,{
         variables: {userid : user?.id, movid: movId},
         onCompleted: (userRating) => {

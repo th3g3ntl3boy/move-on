@@ -110,13 +110,13 @@ const User = () => {
                         <Dropdown.Menu >
                         <Dropdown.Item as={Link} to={`/user/${user?.id}`}>
                             <small style={styles}>
-                                Profile    
+                            <i class="bi bi-person-lines-fill"></i> Profile    
                             </small>
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={onLogout} >
                             <small style={styles}>
-                                Log out <i class="bi bi-box-arrow-right" style={{ fontSize: 15 }} ></i>
+                            <i class="bi bi-box-arrow-right" style={{ fontSize: 15 }} ></i> Log out 
                             </small>
                         </Dropdown.Item>
                         </Dropdown.Menu>

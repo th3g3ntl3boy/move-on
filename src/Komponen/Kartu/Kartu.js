@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import { GETBOOK } from '../../Hooks/Querry';
 // stylesheet
 import { Card } from 'react-bootstrap';
 import './Kartu.css'
@@ -27,6 +28,8 @@ const hovBookmark = {
     top: "4px", 
     left:"9px", 
     position: "absolute",
+    backgroundColor: "black", 
+    opacity: "75%",
     fontSize: "15px"
 }
 
@@ -59,7 +62,7 @@ const Kartu = (props) => {
                             height={200}
                             className="rounded"/>
                             <Card.ImgOverlay >
-                                {
+                                {/* {
                                     show?
                                     <>
                                     <div style={hovBookmark}>
@@ -68,11 +71,11 @@ const Kartu = (props) => {
                                     </>
                                     :
                                     <></>
-                                }
+                                } */}
                                 {
                                     isHover &&
                                     <Fragment>
-                                        <div style={hovBookmark}>
+                                        {/* <div style={hovBookmark}>
                                         <button 
                                         style={styles}
                                         onClick={()=>{
@@ -84,7 +87,7 @@ const Kartu = (props) => {
                                             <i class="bi bi-bookmark"></i>
                                         </button>
                                             
-                                        </div>
+                                        </div> */}
                                         <Card.Title style={hovStar}>
                                             <small>
                                                 <i class="bi bi-star-fill"></i> <b>4.5</b>

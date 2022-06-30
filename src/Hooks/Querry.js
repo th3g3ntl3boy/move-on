@@ -54,9 +54,30 @@ query getUser ($id : ID){
       attributes{
         username
         gender
+
+        bookmarks(filters: {
+          users_permissions_user: {id: {eq: $id}}
+        }
+        ){
+          data{
+            id
+            attributes{
+              movie{
+                data{
+                  id
+                  attributes{
+                    title
+                    linkgambar
+                  }
+                }
+              }
+            }
+          }
+        }
+
         histories(filters: {
           users_permissions_user: {id: {eq: $id}}
-        }){
+        },pagination: {limit: 99999}){
           data{
             attributes{
               movie{
@@ -71,6 +92,26 @@ query getUser ($id : ID){
             }
           }
         }
+
+        ratings(filters: {
+          users_permissions_user: {id :{eq :$id}}
+        }){
+          data{
+              id
+              attributes{
+                movie{
+                  data{
+                    id
+                    attributes{
+                      title
+                      linkgambar
+                    }
+                  }
+                }
+              }
+            }
+          }
+
       }
     }
   }
@@ -159,7 +200,7 @@ query getCategoryMov($id: ID, $halaman: Int){
       id
       attributes{
         category
-        movies(pagination: {page: $halaman, pageSize: 12}){
+        movies(pagination: {page: 1, pageSize: $halaman}){
           data{
             id
             attributes{
@@ -347,7 +388,6 @@ mutation addBookmark($movid: ID, $userid: ID){
 }
 `
 
-
 export const DELETEBOOKMARK = gql`
 mutation deleteBookmark($bookid: ID!){
   deleteBookmark(id: $bookid){
@@ -358,6 +398,23 @@ mutation deleteBookmark($bookid: ID!){
 }
 `
 
+export const GETBOOK = gql`
+query getBook($userid: ID, $movid: ID){
+	usersPermissionsUser(id: $userid){
+    data{
+      attributes{
+        bookmarks(filters: {
+          movie: {id: {eq: $movid}}
+        }){
+          data{
+            id
+          }
+        }
+      }
+    }
+  }
+}
+`
 
 // -----------------------------------------------------------------------------------------------------------
 

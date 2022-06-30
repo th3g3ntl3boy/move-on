@@ -4,7 +4,7 @@ import { Container, Row, Col, Spinner, Alert, Button, Table } from 'react-bootst
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
-import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK} from '../../Hooks/Querry.js';
+import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK, GETBOOK} from '../../Hooks/Querry.js';
 import { AuthContext } from '../../Hooks/authContext.js';
 
 // komponen
@@ -15,7 +15,8 @@ import Animasi from '../../Komponen/Animasi';
 import './DetailsMovies.css'
 import RatingKomen from '../../Komponen/RatingKomen.js';
 import Komen from '../../Komponen/Komen.js';
-import { Bounce, Zoom } from 'react-reveal';
+import { Bounce} from 'react-reveal';
+import Pulse from 'react-reveal/Pulse';
 import Flash from 'react-reveal/Flash';
 
 const center = {
@@ -57,6 +58,9 @@ const DetailsMovies= () => {
 
 
     const [book, setBook] = useState("-plus")
+    const [animate, setAnimate] = useState(false)
+    const [animate1, setAnimate1] = useState(false)
+    
     const [counter1, setCounter1] = useState(0)
     const [rating, setRating] = useState(0)
     
@@ -72,6 +76,46 @@ const DetailsMovies= () => {
             console.log(dataHist)
         }
     })
+
+    const {data: getBook} = useQuery(GETBOOK,{
+        variables: {userid: user?.id, movid: id},
+        onCompleted: (getBook) => {
+            getBook?.usersPermissionsUser.data.attributes.bookmarks.data.length>0?
+            setBook("-check-fill")
+            :
+            setBook("-plus");
+        }
+    })
+   
+    const [addbooks, {error: addError}] = useMutation(ADDBOOKMARK, {
+        variables: {movid: id, userid: user?.id}, 
+        onCompleted: () => {
+            setBook("-check-fill");
+            setAnimate(false);
+            setAnimate1(true) 
+        },
+        refetchQueries: [
+            {
+                query: GETBOOK
+            }, 'getBook'
+        ]
+    })
+
+    const [deletebooks, {error: deleteError}] = useMutation(DELETEBOOKMARK, {
+        variables: {bookid: getBook?.usersPermissionsUser.data.attributes.bookmarks.data[0]?.id }, 
+        onCompleted: () => {
+            setBook("-plus");
+            setAnimate(true);
+            setAnimate1(false) 
+        },
+        refetchQueries: [
+            {
+                query: GETBOOK
+            }, 'getBook'
+        ]
+    })
+
+    
 
     const {data: dataView} = useQuery(VIEWSCOUNT,{
         variables: {movid: id},
@@ -89,11 +133,11 @@ const DetailsMovies= () => {
     })
 
     const {data : dataCat1} = useQuery(GETCATEGORYMOV,{
-        variables: {id: data?.movie.data.attributes.categories.data[0]?.id, halaman:1}
+        variables: {id: data?.movie.data.attributes.categories.data[0]?.id, halaman:12}
     })
 
     const {data : dataCat2} = useQuery(GETCATEGORYMOV,{
-        variables: {id: data?.movie.data.attributes.categories.data[1]?.id, halaman:1}
+        variables: {id: data?.movie.data.attributes.categories.data[1]?.id, halaman:12}
     })
 
     const {data : dataRate} = useQuery(GETRATINGMOV,{
@@ -186,19 +230,21 @@ const DetailsMovies= () => {
                                 data1.movie.data.attributes.ytlink?
 
                                 <>
-                                <Bounce left duration={2500}>
-                                    <div className="video-responsive">
-                                        <iframe
-                                            width="700"
-                                            height="400"
-                                            src={`https://www.youtube.com/embed/${data1.movie.data.attributes.ytlink}`}
-                                            frameBorder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowFullScreen
-                                            title="Embedded youtube"
-                                        />                          
-                                    </div>
-                                </Bounce>
+                                <div style={{overflow: "hidden"}}>
+                                    <Bounce left duration={2500}>
+                                        <div className="video-responsive">
+                                            <iframe
+                                                width="700"
+                                                height="400"
+                                                src={`https://www.youtube.com/embed/${data1.movie.data.attributes.ytlink}`}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                                title="Embedded youtube"
+                                            />                          
+                                        </div>
+                                    </Bounce>
+                                </div>
                                 </>
 
                                 :
@@ -213,18 +259,42 @@ const DetailsMovies= () => {
                             </Col>
                             <Col xs={3} className="text-end">
                             
-                            <button 
-                            style={styles}
-                            onClick={async ()=>{
-                                await setCounter1(counter1+1);
-                                counter1 %2===0 ? 
-                                setBook("-fill") 
+                            {
+                                getBook?.usersPermissionsUser.data.attributes.bookmarks.data?.length>0?
+
+                                <>
+                                <button 
+                                style={styles}
+                                onClick={()=>{
+                                    deletebooks();
+                                }}
+                                >
+                                    <Flash when={animate}>
+                                        <p>
+                                        <i class={`bi bi-bookmark${book}`} style={{fontSize: "25px"}}></i>
+                                        </p>
+                                    </Flash>
+                                </button>
+                                </>
+
                                 :
-                                setBook("-plus")
-                            }}
-                            >
-                                <i class={`bi bi-bookmark${book}`} style={{fontSize: "25px"}}></i>
-                            </button>
+
+                                <>
+                                <button 
+                                style={styles}
+                                onClick={()=>{
+                                    addbooks();
+                                }}
+                                >   
+                                    <Flash when={animate1}>
+                                        <p>
+                                            <i class={`bi bi-bookmark${book}`} style={{fontSize: "25px"}}></i>
+                                        </p>
+                                    </Flash>
+                                </button>
+                                </>
+                            }
+                           
                             </Col>
                         </Row> 
                         
