@@ -7,7 +7,7 @@ import {mean, count} from 'mathjs'
 
 import Animasi from '../../../Komponen/Animasi';
 import Kartu from '../../../Komponen/Kartu/Kartu';
-import { Container, Col, Row, Spinner, Alert } from 'react-bootstrap';
+import { Container, Col, Row, Spinner, Alert, Pagination } from 'react-bootstrap';
 import { Bounce } from 'react-reveal';
 
 const styles = {
@@ -30,11 +30,12 @@ const center = {
 
 const Category= () => {
     const {id} = useParams()
-    const [disapear, setDisapear] =  useState(false)
     const [pageCounter, setPageCounter] = useState(12)
+    const [disapear, setDisapear] =  useState(false)
 
     const {loading, error, data} = useQuery(GETCATEGORYMOV,{
-        variables: {id:id, halaman: pageCounter}
+        variables: {id:id, halaman: pageCounter },
+        notifyOnNetworkStatusChange : false
     })
     if(loading){
         return (
@@ -51,6 +52,15 @@ const Category= () => {
             )
     }
     console.log(data)
+    // let items = [];
+    // for (let number = 1; number <= data?.category.meta.pagination.pageCount; number++) {
+    //     items.push(
+    //             <Pagination.Item key={number} active={number===pageCounter} onClick={()=>setPageCounter(number)}>
+    //                 {number}
+    //             </Pagination.Item>
+            
+    //     );
+    // }
     return(
         <Animasi>
                 <div className="text-center" style={{color: "white"}}>
@@ -93,7 +103,13 @@ const Category= () => {
                                 }
                         </Row>
                     {
-                        data?.category.data.attributes.movies.data.length>11?
+                       data?.category.data.attributes.movies.data.length>11?
+
+                    //    <>
+                    //        <br></br>
+                    //        <Pagination className="justify-content-center">{items}</Pagination>
+                    //    </>
+
 
                         <>
                         <br></br>
@@ -104,6 +120,7 @@ const Category= () => {
                                 </i></em></p>
                             </button>
                         </div>
+                    
                         </>
 
                         :

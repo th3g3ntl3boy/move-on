@@ -5,11 +5,11 @@ import { useLazyQuery } from '@apollo/client';
 import {mean, count} from 'mathjs'
 
 // stylesheet
-import { Container, Row, Col, Spinner, Alert} from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Alert, Pagination} from 'react-bootstrap';
 import Animasi from '../../Komponen/Animasi';
 import Bounce from 'react-reveal/Bounce';
 import Kartu from '../../Komponen/Kartu/Kartu';
-import Jello from 'react-reveal/Jello'
+
 
 
 
@@ -36,12 +36,14 @@ const center = {
 
 const  SearchResult = () => {
     const {name} = useParams()
-    const [animate, setAnimate] = useState(false)
-    const [disapear, setDisapear] = useState("")
+
+    const [pageCounter, setPageCounter] = useState(1)
+
+
     const [cari,{loading, error, data}] = useLazyQuery(SEARCHMOV,{
-        variables: {search: {containsi: name},
+        variables: {search: {containsi: name}, halaman: pageCounter},
         onCompleted: (data)=>console.log(data)
-    }})
+    })
 
     useEffect(() => {
         cari()
@@ -61,6 +63,16 @@ const  SearchResult = () => {
         )
     }
     console.log(data)
+
+    let items = [];
+    for (let number = 1; number <= data?.movies.meta.pagination.pageCount; number++) {
+        items.push(
+                <Pagination.Item key={number} active={number===pageCounter} onClick={()=>setPageCounter(number)}>
+                    {number}
+                </Pagination.Item>
+            
+        );
+    }
     
     return (
         <Animasi>
@@ -107,23 +119,30 @@ const  SearchResult = () => {
                         ))
                         }
                     </Row>
-                    {/* {
-                        data?.movies.meta.pagination.total &&
-                        <div>
+                    
+                    {
+                        data?.movies.meta.pagination.pageCount>1?
+
+                        <>
                             <br></br>
-                            <div className={`text-center ${disapear}`} >
-                                <button style={styles} onClick={()=> {setAnimate(true); setDisapear("d-none")}}>
-                                    <Jello when={animate}>
-                                    <p style={{color: "white"}}><em>
-                                        <i>load more <i class="bi bi-arrow-clockwise"></i>
-                                        </i></em></p>
-                                    </Jello> 
-                                </button>
-                            </div>
-                        </div>
-                        
+                            <Pagination className="justify-content-center">{items}</Pagination>
+                        </>
+
+                        // <>
+                        // <br></br>
+                        // <div className={`text-center`} >
+                        //     <button style={styles} onClick={()=> {setPageCounter(pageCounter+12)}}>
+                        //         <p style={{color: "white"}}><em>
+                        //             <i>load more <i class="bi bi-arrow-clockwise"></i>
+                        //         </i></em></p>
+                        //     </button>
+                        // </div>
+                        // </>
+
+                        :
+
+                        <></>
                     }
-                     */}
                     
                     </div>
 

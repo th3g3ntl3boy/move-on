@@ -298,6 +298,7 @@ query getCategoryMov($id: ID, $halaman: Int){
     }
   }
 }
+
 `
 
 export const GETMOVRECOMEND = gql`
@@ -320,11 +321,16 @@ query getCategory($code: StringFilterInput, $halaman: Int){
 `
 
 export const SEARCHMOV = gql`
-query searchMov($search: StringFilterInput){
-    movies(filters:{title: $search}){
+query searchMov($search: StringFilterInput, $halaman: Int){
+    movies(
+      filters:{title: $search},
+      pagination: {page: $halaman, pageSize:12},
+      sort : ["title"]
+    ){
     	meta{
           pagination{
             total
+            pageCount
           }
         }
         data{

@@ -21,8 +21,8 @@ import {mean, count} from 'mathjs';
 const breaker = [
     {width:1, itemsToShow: 1},
     {width:150, itemsToShow: 2},
-    {width:300, itemsToShow: 2, outerSpacing: -30},
-    {width:450, itemsToShow: 3, outerSpacing: -30},
+    {width:300, itemsToShow: 2, outerSpacing: -30, transitionMs: 500 },
+    {width:450, itemsToShow: 3, outerSpacing: -30, transitionMs: 500},
     {width:600, itemsToShow: 5, showArrows: true, outerSpacing: -10 },
     {width:750, itemsToShow: 5, showArrows: true, outerSpacing: -10 }
 ]
