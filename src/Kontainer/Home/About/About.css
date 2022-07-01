@@ -1,0 +1,8 @@
+@media only screen and (max-width: 420px) {
+    .respons{
+        width: 150px;
+        font-size: smaller;
+        display: inline;
+        
+    }
+}

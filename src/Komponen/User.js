@@ -16,7 +16,8 @@ const styles = {
     cursor: "pointer",
     overflow: "hidden",
     outline: "none",
-    color: "#7a4de2"
+    color: "#7a4de2",
+   
 };
 
 
@@ -104,9 +105,11 @@ const User = () => {
 
                     <Dropdown align="end">
                         <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary" style={styles}>
+                           
                             <i class="bi bi-person-circle" style={{ fontSize: 25 }} ></i>
+                            
                         </Dropdown.Toggle>
-
+                       
                         <Dropdown.Menu >
                         <Dropdown.Item as={Link} to={`/user/${user?.id}`}>
                             <small style={styles}>

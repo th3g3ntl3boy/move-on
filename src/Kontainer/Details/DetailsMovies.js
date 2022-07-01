@@ -473,6 +473,7 @@ const DetailsMovies= () => {
                                     verticalMode={true}  
                                     initialActiveIndex={0} 
                                     outerSpacing={-30}
+                                    showEmptySlots
                                     >
                                         {dataCat2?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -537,6 +538,7 @@ const DetailsMovies= () => {
                                     verticalMode={true}  
                                     initialActiveIndex={0} 
                                     outerSpacing={-30}
+                                    showEmptySlots
                                     >
                                         {dataCat1?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -600,6 +602,7 @@ const DetailsMovies= () => {
                                     verticalMode={true}  
                                     initialActiveIndex={0} 
                                     outerSpacing={-30}
+                                    showEmptySlots
                                     >
                                         {dataCat3?.category.data?.attributes.movies.data.filter((cats)=>(cats.id!==id)).map((cat)=>(
                                             <Link to={`/moviesdetail/${cat.id}`} style={{ textDecoration: 'none', color: 'black' }}>

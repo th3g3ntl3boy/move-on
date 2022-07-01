@@ -102,7 +102,7 @@ const User = () => {
                                                 </Carousel>
                                         </Bounce> */}
                                         <Bounce left>
-                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2} showEmptySlots>
                                                         { 
                                                         history.map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat[1].attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -145,7 +145,7 @@ const User = () => {
 
                                         <>
                                         <Bounce left>
-                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2} showEmptySlots>
                                                         {
                                                         identity?.usersPermissionsUser.data.attributes.bookmarks.data?.filter((mov)=>(mov.id!==id)).slice(0).reverse().map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -187,7 +187,7 @@ const User = () => {
 
                                         <>
                                         <Bounce left>
-                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2}>
+                                                <Carousel breakPoints={breaker} transitionMs="1000" showArrows={false} pagination={false} initialActiveIndex={0} itemsToScroll={2} showEmptySlots>
                                                         { 
                                                         identity?.usersPermissionsUser.data.attributes.ratings.data?.slice(0).reverse().map((riwayat)=>(
                                                                         <Link to={`/moviesdetail/${riwayat.attributes.movie.data.id}`} style={{ textDecoration: 'none', color: 'black' }}>
