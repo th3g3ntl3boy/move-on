@@ -68,8 +68,7 @@ const Beranda = () => {
         }
         const data1 = JSON.parse(JSON.stringify(data))
       
-        console.log(data1)
-        console.log(dataIndo)
+     
         return(
                 <Animasi>
                 <Fragment>
