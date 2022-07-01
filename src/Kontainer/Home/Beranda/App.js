@@ -9,6 +9,8 @@ import Category from '../Category/Category.js';
 import About from '../About/About.js';
 import DetailsMovies from '../../Details/DetailsMovies.js';
 import SearchResult from '../../Article/SearchResult.js';
+import IDMov from '../Wall/TopMovieID.js';
+import TopMov from '../Wall/TopMovies.js';
 
 // komponen
 import NavBar from '../../../Komponen/NavBar.js';
@@ -66,6 +68,8 @@ class App extends Component {
                     <Route path="moviesdetail/:id" element={<DetailsMovies />} />
                     <Route path="search/:name" element={<SearchResult/>} />
                     <Route path="user/:id" element={<User />} />
+                    <Route path="/TopMoviesRating" element={<TopMov />} />
+                    <Route path="/TopIndonesianMovies" element={<IDMov/>} />
               </Routes>
               <footer style={{position: "relative", left: "0", bottom:"0", width:"100%", height:"80px"}}>
                 <div style={{color: "#7a4de2"}}>

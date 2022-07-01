@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { GETIDENTITY } from '../../../Hooks/Querry'
 import { useQuery } from '@apollo/client'
+import {mean, count} from 'mathjs'
 
 
 import {Container, Row, Spinner, Alert, Tabs, Tab} from 'react-bootstrap'
@@ -108,6 +109,18 @@ const User = () => {
                                                                         <Kartu
                                                                         sumber={`${riwayat[1].attributes.movie.data.attributes.linkgambar}`}
                                                                         judul={`${riwayat[1].attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        star={mean(riwayat[1].attributes.movie.data.attributes.ratings.data.length>0?
+                                                                                riwayat[1].attributes.movie.data.attributes.ratings.data.map((st)=>st.attributes.star)
+                                                                                :
+                                                                                0
+                                                                                ).toFixed(1)} 
+                        
+                                                                        view={count(riwayat[1].attributes.movie.data.attributes.histories.data.length>0? 
+                                                                                riwayat[1].attributes.movie.data.attributes.histories.data?.map((st)=>st.id)
+                                                                                :
+                                                                                0
+                                                                                )}  
+                                                                         
                                                                         /> 
                                                                         </Link>
                                                                         
@@ -139,6 +152,17 @@ const User = () => {
                                                                         <Kartu
                                                                         sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
                                                                         judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        star={mean(riwayat.attributes.movie.data.attributes.ratings.data.length>0?
+                                                                                riwayat.attributes.movie.data.attributes.ratings.data.map((st)=>st.attributes.star)
+                                                                                :
+                                                                                0
+                                                                                ).toFixed(1)} 
+                        
+                                                                        view={count(riwayat.attributes.movie.data.attributes.histories.data.length>0? 
+                                                                                riwayat.attributes.movie.data.attributes.histories.data?.map((st)=>st.id)
+                                                                                :
+                                                                                0
+                                                                                )}  
                                                                         /> 
                                                                         </Link>
                                                                         
@@ -152,7 +176,7 @@ const User = () => {
 
                                         <>
                                         <p>
-                                        You haven't books movie yet
+                                        You haven't booking any movie just yet
                                         </p>                
                                         </>
                                 }       
@@ -170,6 +194,17 @@ const User = () => {
                                                                         <Kartu
                                                                         sumber={`${riwayat.attributes.movie.data.attributes.linkgambar}`}
                                                                         judul={`${riwayat.attributes.movie.data.attributes.title.substring(0, 20)}`}
+                                                                        star={mean(riwayat.attributes.movie.data.attributes.ratings.data.length>0?
+                                                                                riwayat.attributes.movie.data.attributes.ratings.data.map((st)=>st.attributes.star)
+                                                                                :
+                                                                                0
+                                                                                ).toFixed(1)} 
+                        
+                                                                        view={count(riwayat.attributes.movie.data.attributes.histories.data.length>0? 
+                                                                                riwayat.attributes.movie.data.attributes.histories.data?.map((st)=>st.id)
+                                                                                :
+                                                                                0
+                                                                                )}  
                                                                         /> 
                                                                         </Link>
                                                                         

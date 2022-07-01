@@ -83,6 +83,19 @@ query getUser ($id : ID){
                   attributes{
                     title
                     linkgambar
+                    ratings(pagination: {limit: 500}){
+                      data{
+                        attributes{
+                          star
+                        }
+                      }
+                    }
+
+                    histories(pagination: {limit: 999999}){
+                      data{
+                        id
+                        }
+                      }
                   }
                 }
               }
@@ -101,6 +114,19 @@ query getUser ($id : ID){
                   attributes{
                     title
                     linkgambar
+                    ratings(pagination: {limit: 500}){
+                      data{
+                        attributes{
+                          star
+                        }
+                      }
+                    }
+
+                    histories(pagination: {limit: 999999}){
+                      data{
+                        id
+                        }
+                      }
                   }
                 }
               }
@@ -120,6 +146,19 @@ query getUser ($id : ID){
                     attributes{
                       title
                       linkgambar
+                      ratings(pagination: {limit: 500}){
+                      data{
+                        attributes{
+                          star
+                        }
+                      }
+                    }
+
+                    histories(pagination: {limit: 999999}){
+                      data{
+                        id
+                        }
+                      }
                     }
                   }
                 }
@@ -146,6 +185,7 @@ query getMovies($id: ID!){
         release_date
         view
         linkgambar
+        
         categories{
           data{
             id
@@ -161,6 +201,11 @@ query getMovies($id: ID!){
               comment
               createdAt
               likes
+              commentlikes{
+                data{
+                  id
+                }
+              }
               users_permissions_user{
                 data{
                   id
@@ -460,6 +505,55 @@ query getBook($userid: ID, $movid: ID){
   }
 }
 `
+
+
+export const ADDLIKECOMMENT =gql`
+mutation createLikeComment($userid: ID, $commentid: ID, $status: Int){
+  createCommentlike(data: {
+    users_permissions_user: $userid
+    comment: $commentid
+    status: $status
+  }){
+    data{
+      id
+    }
+  }
+}
+`
+export const UPDATELIKECOMMENT = gql`
+mutation updateLikeComment($userid: ID, $commentid: ID!, $status: Int){
+  updateCommentlike(id: $commentid,data: {
+    users_permissions_user: $userid
+    status: $status
+  }){
+    data{
+      id
+    }
+  }
+}
+`
+
+export const GETUSERCOMMENTLIKE = gql`
+query userLikeComment($userid: ID, $commentid: ID){
+  usersPermissionsUser(id: $userid){
+    data{
+      attributes{
+        commentlikes(filters : {
+          comment: {id: {eq:$commentid}}
+        }){
+          data{
+            id
+            attributes{
+              status
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 
 // -----------------------------------------------------------------------------------------------------------
 

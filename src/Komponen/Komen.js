@@ -1,5 +1,8 @@
+// import { useMutation, useQuery } from '@apollo/client';
 import React from 'react'
-import {Container, Row, Col, Figure, Alert} from 'react-bootstrap'
+import {Container, Row, Col, Figure} from 'react-bootstrap'
+// import { ADDLIKECOMMENT, GETUSERCOMMENTLIKE, MOVIESDETAIL, UPDATELIKECOMMENT } from '../Hooks/Querry';
+// import { AuthContext } from '../Hooks/authContext';
 import './Komen.css'
 
 
@@ -15,7 +18,58 @@ const styles = {
 };
 
 const Komen = (props) => {
-  return (
+    // const {id} = useParams()
+    // const {user} = useContext(AuthContext)
+
+    // const [status, setStatus] = useState(0)
+    // const [fillUp, setFillUp] = useState("")
+    // const [fillDown, setFillDown] = useState("")
+
+    // const {data} = useQuery(MOVIESDETAIL,{
+    //     variables: {id:id}
+    // })
+
+    // const {data: userTrackComment} = useQuery(GETUSERCOMMENTLIKE,{
+    //     variables: {}
+    // })
+
+    // const [addLike, {error: errA}] = useMutation(ADDLIKECOMMENT,{
+    //     variables: {userid: user?.id, commentid: data?.movie.data.attributes.comments.data.id , status: status},
+    //     refetchQueries: [
+    //         {
+    //             query: MOVIESDETAIL
+    //         }, 'getMovies'
+    //     ]
+    // })
+
+    // const [updateLike, {error: errU}] = useMutation(UPDATELIKECOMMENT,{
+    //     variables: {userid: user?.id, commentid: data?.movie.data.attributes.comments.data.id , status: status},
+    //     refetchQueries: [
+    //         {
+    //             query: MOVIESDETAIL
+    //         }, 'getMovies'
+    //     ]
+    // })
+
+    // function handleStatus(){
+    //     if(status===0){
+    //         setFillUp("")
+    //         setFillDown("")
+    //     }if(status===1){
+    //         setFillUp("-fill")
+    //         setFillDown("")
+    //     }if(status===-1){
+    //         setFillUp("")
+    //         setFillDown("-fill")
+    //     }
+    // }
+
+    // useEffect(()=>{
+    //     handleStatus();
+    //     console.log(status)
+    // }, [status])
+
+    return (
     <div>
         <Container>
             <Row className="align-items-center">
@@ -42,26 +96,56 @@ const Komen = (props) => {
                         </div>
                     </div>
                 </Col>
-                <Col xs={1} className="left-center">
+                {/* <Col xs={1} className="left-center">
                     <div className="up">
                         <div className='text-center'>
-                        <button 
-                        style={styles}
-                        onClick={()=>{
-                        }}>
-                            <i class="bi bi-caret-up" style={{ fontSize: 25 }}></i>
-                        </button>
-                        {' '}{props.like}{' '}
-                        <button 
-                        style={styles}
-                        onClick={()=>{
-                        }}>
-                            <i class="bi bi-caret-down" style={{ fontSize: 25 }}></i>
-                        </button>
+                        {   
+                        data?.movie.data.attributes.comments.data.map((cmt)=>(
+                            cmt.commentslikes.data.length>0?
+                            <>
+                            <button
+                            style={styles}
+                            onClick={async()=>{
+                                updateLike(await setStatus(1))
+                            }}>
+                                <i class={`bi bi-caret-up${fillUp}`} style={{ fontSize: 25 }}></i>
+                            </button>
+                            {' '}{props.like}{' '}
+                            <button 
+                            style={styles}
+                            onClick={async()=>{
+                                updateLike(await setStatus(-1))
+                            }}>
+                                <i class={`bi bi-caret-down${fillDown}`} style={{ fontSize: 25 }}></i>
+                            </button>
+                            </>
+
+                            :
+
+                            <>
+                            <button
+                            style={styles}
+                            onClick={async()=>{
+                                addLike(await setStatus(1))
+                            }}>
+                                <i class={`bi bi-caret-up${fillUp}`} style={{ fontSize: 25 }}></i>
+                            </button>
+                            {' '}{props.like}{' '}
+                            <button 
+                            style={styles}
+                            onClick={async()=>{
+                                addLike(await setStatus(-1))
+                            }}>
+                                <i class={`bi bi-caret-down${fillDown}`} style={{ fontSize: 25 }}></i>
+                            </button>
+                            </>
+                        ))
+                        }
+                       
                     </div>
 
                     </div>
-                </Col>
+                </Col> */}
                 <hr></hr>
             </Row>
         </Container>

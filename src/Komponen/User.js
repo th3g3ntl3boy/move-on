@@ -24,11 +24,12 @@ const User = () => {
     // koteks
     const context = useContext(AuthContext)
     const {user, logout} = useContext(AuthContext)
-
+    let navigate = useNavigate()
+    
     const onLogout = () => {
         logout();
         localStorage.clear();
-        window.location.reload()
+        navigate('/')
     }
    
     // regis
@@ -59,7 +60,6 @@ const User = () => {
     const [showPass, setShowPass] = useState("password")
 
     // mutasi
-    let navigate = useNavigate()
     const [eror, setEror] = useState([])
     
     // regis mutation
@@ -220,7 +220,7 @@ const User = () => {
                                     <Col md>
                                         <FloatingLabel className="mb-3" controlId="floatingSelectGrid" label="Choose Gender">
                                         <Form.Select aria-label="Floating label select example" onChange={(event)=>{setGender(event.target.value)}}>
-                                            <option value={sex[0]}>Man</option>
+                                            <option value={sex[0]} defaultChecked>Man</option>
                                             <option value={sex[1]}>Woman</option>
                                         </Form.Select>
                                         </FloatingLabel>

@@ -1,12 +1,12 @@
 import React, {useEffect, useState, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Container, Row, Col, Spinner, Alert, Button, Table } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Alert, Table } from 'react-bootstrap';
 import Carousel from 'react-elastic-carousel';
 import Arrow from '../../Komponen/Arrow/Arrow.js';
 import { useQuery, useMutation } from '@apollo/client';
 import { MOVIESDETAIL, GETCATEGORYMOV, GETRATINGMOV, VIEWSCOUNT, VIEWHISTORY, DELETEBOOKMARK, ADDBOOKMARK, GETBOOK, GETIDENTITY} from '../../Hooks/Querry.js';
 import { AuthContext } from '../../Hooks/authContext.js';
-import {mean,count} from 'mathjs'
+import {mean,count, sum} from 'mathjs'
 
 // komponen
 import Kartu from '../../Komponen/Kartu/Kartu.js';
@@ -345,7 +345,8 @@ const DetailsMovies= () => {
                                 <Col sm={3} className="my-2 d-none d-sm-block">
                                     <Kartu
                                         sumber={`${data1.movie.data.attributes.linkgambar}`}
-                                        judul={`${data1.movie.data.attributes.title.substring(0, 20)}`} 
+                                        judul={`${data1.movie.data.attributes.title.substring(0, 20)}`}
+                                        
                                     />
                                 </Col>
 
@@ -424,7 +425,6 @@ const DetailsMovies= () => {
                                             user={komen.attributes.users_permissions_user.data.attributes.username}
                                             comment={komen.attributes.comment}
                                             date={komen.attributes.createdAt.substring(11,16)}
-                                            like={komen.attributes.likes}
                                             />
                                         </div>
                                     </Bounce>

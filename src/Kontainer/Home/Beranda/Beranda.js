@@ -85,11 +85,13 @@ const Beranda = () => {
                                         <Row className="flex-column-reverse flex-md-row align-items-center">
                                                 <Col>
                                                 <div className="text-end">
-                                                <button style={styles}>
-                                                        <small>
-                                                        <span class="badge rounded-pill text-bg-light">Show All</span>
-                                                        </small>
-                                                </button>
+                                                <Link to='/TopMoviesRating' style={{ textDecoration: 'none', color: 'black' }}>
+                                                        <button style={styles}>
+                                                                <small>
+                                                                <span class="badge rounded-pill text-bg-light">Show All</span>
+                                                                </small>
+                                                        </button>
+                                                </Link>
                                                 </div>
 
                                                 <div className="styling-example"
@@ -154,11 +156,13 @@ const Beranda = () => {
                                                 <Row className="flex-column-reverse flex-md-row align-items-center" >   
                                                         <Col>
                                                         <div className="text-end">
+                                                        <Link to='/TopIndonesianMovies' style={{ textDecoration: 'none', color: 'black' }}>
                                                         <button style={styles}>
                                                                 <small>
                                                                 <span class="badge rounded-pill text-bg-light">Show All</span>
                                                                 </small>
                                                         </button>
+                                                        </Link>
                                                         </div>
 
                                                         <div className="styling-example">
