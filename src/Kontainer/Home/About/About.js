@@ -27,7 +27,7 @@ const About= () => {
                         <h3>
                             <Typewriter
                                 options={{
-                                    strings: ['Agif', 'Teresia', 'Afick', 'Farhan'],
+                                    strings: ['Alghifari Arief Noerwangsa', 'Farhan Fadhil', 'Taufiq Akbar', 'Theresia Devina Rumahorbo'],
                                     autoStart: true,
                                     loop: true,
                                     delay: 100,
@@ -39,7 +39,7 @@ const About= () => {
                     <hr style={{color: "#7a4de2"}}></hr>
                         
                         <div className='text-center' style={{color: "white"}} >
-                        <h3>Thanks for the tutorial </h3>
+                        <h3>Thanks for the YouTube tutorial </h3>
                         <h5>
 
 
@@ -47,7 +47,7 @@ const About= () => {
                     <Row className="justify-content-md-center">
                       
                         <Col lg={2} xs={6} md={3} className="my-2">
-                            <Fade duration={2000}>
+                            <Fade duration={2000} delay={500}>
                                 <Figure style={{padding :"10px", margin: "20px",border: "1px solid #7a4de2"}}>
                                     <Figure.Image
                                         width={130}
@@ -65,7 +65,7 @@ const About= () => {
                         </Col>
 
                         <Col lg={2} xs={6} md={3} className="my-2">
-                        <Fade duration={2000} delay={500}>
+                        <Fade duration={2000} delay={1000}>
 
                             <Figure style={{padding :"10px", margin: "20px",border: "1px solid #7a4de2"}}>
                                 <Figure.Image
@@ -84,7 +84,7 @@ const About= () => {
                         </Col>
 
                         <Col lg={2} xs={6} md={3} className="my-2">
-                        <Fade duration={2000} delay={1000}>
+                        <Fade duration={2000} delay={1500}>
 
                             <Figure style={{padding :"10px", margin: "20px",border: "1px solid #7a4de2"}}>
                                 <Figure.Image
@@ -103,7 +103,7 @@ const About= () => {
                         </Col>
 
                         <Col lg={2} xs={6} md={3} className="my-2">
-                        <Fade duration={2000} delay={1500}>
+                        <Fade duration={2000} delay={2000}>
 
                             <Figure style={{padding :"10px", margin: "20px",border: "1px solid #7a4de2"}}>
                                 <Figure.Image
@@ -122,7 +122,7 @@ const About= () => {
                         </Col>
 
                         <Col lg={2} xs={6} md={3} className="my-2">
-                        <Fade duration={2000} delay={2000}>
+                        <Fade duration={2000} delay={2500}>
 
                             <Figure style={{padding :"10px", margin: "20px",border: "1px solid #7a4de2"}}>
                                 <Figure.Image
